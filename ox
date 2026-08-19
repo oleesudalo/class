@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OX 실시간 투표 보드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'sans-serif'],
+                    },
+                    colors: {
+                        'o-color': '#3B82F6',
+                        'x-color': '#EF4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f3f4f6;
+        }
+        
+        .vote-button {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .vote-button:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .vote-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border-radius: 50%;
+            animation: fall 3s linear infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        /* Loading spinner */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4f46e5;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen text-gray-800 p-4">
+
+    <div class="w-full max-w-2xl bg-white rounded-3xl shadow-xl overflow-hidden relative" id="app-container">
+        
+        <!-- Header -->
+        <div class="bg-indigo-600 text-white p-6 text-center relative">
+            <h1 class="text-3xl font-bold mb-2">선생님, 다 했나요?</h1>
+            <p class="text-indigo-200 text-sm">O(다 했어요) 또는 X(아직이요)를 선택해주세요.</p>
+            
+            <!-- Connection Status -->
+            <div id="connection-status" class="absolute top-4 right-4 flex items-center gap-2 text-xs bg-indigo-700/50 py-1 px-3 rounded-full">
+                <div class="loader inline-block" id="status-loader"></div>
+                <span id="status-text">서버 연결 중...</span>
+            </div>
+        </div>
+
+        <div class="p-8">
+            <div class="flex justify-center gap-6 mb-8">
+                <!-- O Button -->
+                <button id="btn-o" onclick="vote('O')" disabled
+                        class="vote-button flex flex-col items-center justify-center w-32 h-32 md:w-40 md:h-40 bg-white border-4 border-blue-500 rounded-2xl shadow-sm hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                    <span id="text-o" class="text-6xl md:text-8xl font-bold text-blue-500 leading-none">O</span>
+                    <span id="sub-o" class="mt-2 text-sm md:text-base font-semibold text-blue-600">다 했어요!</span>
+                </button>
+
+                <!-- X Button -->
+                <button id="btn-x" onclick="vote('X')" disabled
+                        class="vote-button flex flex-col items-center justify-center w-32 h-32 md:w-40 md:h-40 bg-white border-4 border-red-500 rounded-2xl shadow-sm hover:bg-red-50 focus:outline-none focus:ring-4 focus:ring-red-300">
+                    <span id="text-x" class="text-6xl md:text-8xl font-bold text-red-500 leading-none">X</span>
+                    <span id="sub-x" class="mt-2 text-sm md:text-base font-semibold text-red-600">아직이요</span>
+                </button>
+            </div>
+
+            <div class="mt-10">
+                <h2 class="text-xl font-bold text-gray-700 mb-4 text-center">실시간 투표 결과</h2>
+                
+                <!-- O Result Bar -->
+                <div class="mb-4">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-base font-medium text-blue-600">O (다 했어요)</span>
+                        <span id="count-o" class="text-base font-bold text-blue-700">0명</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div id="bar-o" class="bg-blue-500 h-4 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- X Result Bar -->
+                <div class="mb-6">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-base font-medium text-red-600">X (아직이요)</span>
+                        <span id="count-x" class="text-base font-bold text-red-700">0명</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div id="bar-x" class="bg-red-500 h-4 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Total Count -->
+                <div class="text-center text-gray-500 font-medium">
+                    총 참여 인원: <span id="total-count" class="font-bold text-gray-700">0</span>명
+                </div>
+            </div>
+            
+            <div class="mt-8 flex flex-col items-center border-t border-gray-100 pt-6">
+                <button onclick="openModal()" id="btn-reset" disabled
+                        class="flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    전체 투표 초기화
+                </button>
+                <div id="user-id-display" class="mt-4 text-xs text-gray-400 font-mono hidden">
+                    내 ID: <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 초기화 확인 모달 (alert 대체) -->
+    <div id="reset-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full mx-4 transform scale-100 transition-transform duration-300">
+            <h3 class="text-xl font-bold mb-2 text-gray-800">정말 초기화할까요?</h3>
+            <p class="text-gray-600 mb-6 text-sm">모든 학생의 투표 결과가 삭제되고 0명으로 돌아갑니다. 이 작업은 되돌릴 수 없습니다.</p>
+            <div class="flex justify-end gap-3">
+                <button onclick="closeModal()" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors">취소</button>
+                <button onclick="confirmReset()" class="px-4 py-2 bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition-colors shadow-sm shadow-red-200">초기화 진행</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase Configuration injected by environment
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        let app, db, auth;
+        let currentUserId = null;
+        let isConnected = false;
+
+        // 상태 변수
+        let votes = { O: 0, X: 0 };
+        let myVote = null;
+
+        // DOM 요소
+        const countOEl = document.getElementById('count-o');
+        const countXEl = document.getElementById('count-x');
+        const barOEl = document.getElementById('bar-o');
+        const barXEl = document.getElementById('bar-x');
+        const totalCountEl = document.getElementById('total-count');
+        const appContainer = document.getElementById('app-container');
+        
+        const btnO = document.getElementById('btn-o');
+        const btnX = document.getElementById('btn-x');
+        const btnReset = document.getElementById('btn-reset');
+        const textO = document.getElementById('text-o');
+        const subO = document.getElementById('sub-o');
+        const textX = document.getElementById('text-x');
+        const subX = document.getElementById('sub-x');
+        
+        const statusText = document.getElementById('status-text');
+        const statusLoader = document.getElementById('status-loader');
+        const userIdDisplay = document.getElementById('user-id-display');
+        const resetModal = document.getElementById('reset-modal');
+
+        async function init() {
+            try {
+                // Initialize Firebase
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Authenticate
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                currentUserId = auth.currentUser.uid;
+                
+                // Show User ID for debugging/display
+                userIdDisplay.querySelector('span').textContent = currentUserId;
+                userIdDisplay.classList.remove('hidden');
+
+                // Enable buttons
+                btnO.disabled = false;
+                btnX.disabled = false;
+                btnReset.disabled = false;
+
+                // Update Status UI
+                statusLoader.style.display = 'none';
+                statusText.textContent = '🟢 실시간 연동 중';
+                document.getElementById('connection-status').classList.replace('bg-indigo-700/50', 'bg-green-500/20');
+                document.getElementById('connection-status').classList.add('text-green-100');
+
+                // Start listening to real-time data
+                startListening();
+            } catch (error) {
+                console.error("Initialization Error:", error);
+                statusText.textContent = '🔴 연결 실패';
+                statusLoader.style.display = 'none';
+            }
+        }
+
+        function startListening() {
+            // Rule 1: Strict Paths - Using public collection for everyone to see
+            const votesCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'votes');
+            
+            // Rule 2: No Complex Queries - Fetch all votes and calculate in memory
+            onSnapshot(votesCollectionRef, (snapshot) => {
+                let countO = 0;
+                let countX = 0;
+                let tempMyVote = null;
+
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    if (data.choice === 'O') countO++;
+                    if (data.choice === 'X') countX++;
+                    
+                    // 자신이 투표한 데이터 찾기
+                    if (docSnap.id === currentUserId) {
+                        tempMyVote = data.choice;
+                    }
+                });
+
+                // 글로벌 상태 업데이트
+                votes.O = countO;
+                votes.X = countX;
+                myVote = tempMyVote; // 만약 다른 사람이 리셋했으면 null이 됨
+                
+                updateUI();
+            }, (error) => {
+                console.error("Listen Error:", error);
+            });
+        }
+
+        // 전역 스코프에 함수 등록 (HTML onclick에서 접근 가능하도록)
+        window.vote = async function(choice) {
+            if (!currentUserId) return; // Rule 3: Auth Guard
+            
+            // 시각적 피드백 즉시 제공 (낙관적 UI 업데이트)
+            createClickEffect(choice);
+            
+            const myVoteRef = doc(db, 'artifacts', appId, 'public', 'data', 'votes', currentUserId);
+
+            try {
+                if (myVote === choice) {
+                    // 이미 선택한 것을 다시 누름 -> 투표 취소
+                    await deleteDoc(myVoteRef);
+                } else {
+                    // 새로운 선택 -> 덮어쓰기
+                    await setDoc(myVoteRef, {
+                        choice: choice,
+                        timestamp: Date.now()
+                    });
+                }
+            } catch (error) {
+                console.error("Vote Error:", error);
+            }
+        };
+
+        window.openModal = function() {
+            resetModal.classList.remove('hidden');
+        };
+
+        window.closeModal = function() {
+            resetModal.classList.add('hidden');
+        };
+
+        window.confirmReset = async function() {
+            if (!currentUserId) return;
+            closeModal();
+            
+            // 시각적 효과
+            appContainer.classList.add('animate-pulse');
+            setTimeout(() => appContainer.classList.remove('animate-pulse'), 500);
+
+            try {
+                // 저장된 모든 투표 불러와서 삭제하기 (Rule 2 준수)
+                const votesCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'votes');
+                const snapshot = await getDocs(votesCollectionRef);
+                
+                const batch = writeBatch(db);
+                snapshot.forEach((docSnap) => {
+                    batch.delete(docSnap.ref);
+                });
+                
+                await batch.commit();
+                
+            } catch (error) {
+                console.error("Reset Error:", error);
+            }
+        };
+
+        function updateUI() {
+            const total = votes.O + votes.X;
+            
+            // 텍스트 업데이트
+            countOEl.textContent = `${votes.O}명`;
+            countXEl.textContent = `${votes.X}명`;
+            totalCountEl.textContent = total;
+
+            // 프로그래스 바 업데이트 (%)
+            let percentO = 0;
+            let percentX = 0;
+
+            if (total > 0) {
+                percentO = (votes.O / total) * 100;
+                percentX = (votes.X / total) * 100;
+            }
+
+            barOEl.style.width = `${percentO}%`;
+            barXEl.style.width = `${percentX}%`;
+
+            // O 버튼 시각적 상태 업데이트
+            if (myVote === 'O') {
+                btnO.classList.add('bg-blue-500');
+                btnO.classList.remove('bg-white');
+                textO.classList.replace('text-blue-500', 'text-white');
+                subO.classList.replace('text-blue-600', 'text-blue-100');
+            } else {
+                btnO.classList.remove('bg-blue-500');
+                btnO.classList.add('bg-white');
+                textO.classList.replace('text-white', 'text-blue-500');
+                subO.classList.replace('text-blue-100', 'text-blue-600');
+            }
+
+            // X 버튼 시각적 상태 업데이트
+            if (myVote === 'X') {
+                btnX.classList.add('bg-red-500');
+                btnX.classList.remove('bg-white');
+                textX.classList.replace('text-red-500', 'text-white');
+                subX.classList.replace('text-red-600', 'text-red-100');
+            } else {
+                btnX.classList.remove('bg-red-500');
+                btnX.classList.add('bg-white');
+                textX.classList.replace('text-white', 'text-red-500');
+                subX.classList.replace('text-red-100', 'text-red-600');
+            }
+        }
+
+        function createClickEffect(choice) {
+            const color = choice === 'O' ? '#3B82F6' : '#EF4444';
+            
+            for (let i = 0; i < 6; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // 버튼 위에서 터지도록 대략적인 위치 계산
+                const btn = choice === 'O' ? btnO : btnX;
+                const rect = btn.getBoundingClientRect();
+                
+                const left = rect.left + (Math.random() * rect.width);
+                const top = rect.top - 20;
+                
+                confetti.style.left = `${left}px`;
+                confetti.style.top = `${top}px`;
+                confetti.style.backgroundColor = color;
+                
+                const size = Math.random() * 6 + 4;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                
+                const duration = Math.random() * 1 + 1.5;
+                confetti.style.animationDuration = `${duration}s`;
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, duration * 1000);
+            }
+        }
+        
+        // 초기 UI 강제 렌더링 후 Firebase 연결 시작
+        updateUI();
+        init();
+    </script>
+</body>
+</html>
