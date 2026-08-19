@@ -165,12 +165,22 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Configuration injected by environment
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        // TODO: 선생님의 Firebase 설정값으로 변경해주세요!
+        // Firebase 콘솔 -> 프로젝트 설정 -> 웹 앱 추가 시 나오는 firebaseConfig 객체를 여기에 붙여넣으세요.
+        const firebaseConfig = {
+            apiKey: "AIzaSyCyw-LTnUJr9Key1abUIfnKjbsGf-Pb10M",
+            authDomain: "classox-61321.firebaseapp.com",
+            projectId: "classox-61321",
+            storageBucket: "classox-61321.firebasestorage.app",
+            messagingSenderId: "979947284583",
+            appId: "1:979947284583:web:093f3a161d3c5d06530cc2"
+        };
+        
+        // Github 등에 올릴 때 사용할 고유 앱 ID (임의로 설정 가능)
+        const appId = 'ox-vote-app-teacher-01'; 
         
         let app, db, auth;
         let currentUserId = null;
@@ -179,6 +189,11 @@
         // 상태 변수
         let votes = { O: 0, X: 0 };
         let myVote = null;
+
+        // 로컬 데모 모드를 위한 설정
+        const isConfigured = firebaseConfig.apiKey !== "YOUR_API_KEY";
+        let localVotes = JSON.parse(localStorage.getItem('oxVotes')) || {};
+        const bc = new BroadcastChannel('ox_vote_sync');
 
         // DOM 요소
         const countOEl = document.getElementById('count-o');
@@ -202,19 +217,47 @@
         const resetModal = document.getElementById('reset-modal');
 
         async function init() {
+            if (!isConfigured) {
+                console.warn("Firebase API 키가 없습니다. 로컬 데모 모드로 실행합니다.");
+                currentUserId = 'local_' + Math.random().toString(36).substr(2, 9);
+                
+                userIdDisplay.querySelector('span').textContent = currentUserId + " (Demo)";
+                userIdDisplay.classList.remove('hidden');
+
+                btnO.disabled = false;
+                btnX.disabled = false;
+                btnReset.disabled = false;
+
+                statusLoader.style.display = 'none';
+                statusText.textContent = '🟡 데모 모드 (로컬)';
+                document.getElementById('connection-status').classList.replace('bg-indigo-700/50', 'bg-yellow-500/20');
+                document.getElementById('connection-status').classList.add('text-yellow-700');
+
+                // 초기 상태 계산
+                calculateLocalVotes();
+
+                // 다른 탭(학생 화면 시뮬레이션)에서의 변경사항 수신
+                bc.onmessage = (event) => {
+                    if (event.data.type === 'UPDATE') {
+                        localVotes = event.data.votes;
+                        calculateLocalVotes();
+                    } else if (event.data.type === 'RESET') {
+                        localVotes = {};
+                        myVote = null;
+                        calculateLocalVotes();
+                    }
+                };
+                return; // 데모 모드일 경우 여기서 초기화 종료
+            }
+
             try {
                 // Initialize Firebase
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
 
-                // Authenticate
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                
+                // 익명 로그인 사용
+                await signInAnonymously(auth);
                 currentUserId = auth.currentUser.uid;
                 
                 // Show User ID for debugging/display
@@ -238,6 +281,9 @@
                 console.error("Initialization Error:", error);
                 statusText.textContent = '🔴 연결 실패';
                 statusLoader.style.display = 'none';
+                
+                // 에러 메시지 알림 (디버깅 용도)
+                console.error("Firebase 설정이 올바른지 확인해주세요. API Key 등이 비어있을 수 있습니다.");
             }
         }
 
@@ -270,7 +316,25 @@
                 updateUI();
             }, (error) => {
                 console.error("Listen Error:", error);
+                // 실시간 리스너 에러 처리 추가
+                if(error.code === 'permission-denied') {
+                     alert("데이터베이스 권한 오류입니다. Firestore 규칙이 읽기/쓰기를 허용하는지 확인해주세요.");
+                }
             });
+        }
+
+        function calculateLocalVotes() {
+            let countO = 0;
+            let countX = 0;
+            myVote = localVotes[currentUserId] || null;
+            
+            for (const uid in localVotes) {
+                if (localVotes[uid] === 'O') countO++;
+                if (localVotes[uid] === 'X') countX++;
+            }
+            votes.O = countO;
+            votes.X = countX;
+            updateUI();
         }
 
         // 전역 스코프에 함수 등록 (HTML onclick에서 접근 가능하도록)
@@ -280,6 +344,20 @@
             // 시각적 피드백 즉시 제공 (낙관적 UI 업데이트)
             createClickEffect(choice);
             
+            if (!isConfigured) {
+                if (myVote === choice) {
+                    delete localVotes[currentUserId];
+                    myVote = null;
+                } else {
+                    localVotes[currentUserId] = choice;
+                    myVote = choice;
+                }
+                localStorage.setItem('oxVotes', JSON.stringify(localVotes));
+                calculateLocalVotes();
+                bc.postMessage({ type: 'UPDATE', votes: localVotes });
+                return;
+            }
+
             const myVoteRef = doc(db, 'artifacts', appId, 'public', 'data', 'votes', currentUserId);
 
             try {
@@ -313,6 +391,15 @@
             // 시각적 효과
             appContainer.classList.add('animate-pulse');
             setTimeout(() => appContainer.classList.remove('animate-pulse'), 500);
+
+            if (!isConfigured) {
+                localVotes = {};
+                myVote = null;
+                localStorage.removeItem('oxVotes');
+                calculateLocalVotes();
+                bc.postMessage({ type: 'RESET' });
+                return;
+            }
 
             try {
                 // 저장된 모든 투표 불러와서 삭제하기 (Rule 2 준수)
