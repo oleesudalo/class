@@ -9,106 +9,50 @@
     <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            /* 깔끔한 밝은 배경 */
-            background-color: #f8fafc; 
-            color: #334155; /* 기본 텍스트 색상 (문서 내) */
+            background-color: #f1f5f9; /* 배경은 깔끔한 연회색 */
+            color: #334155;
         }
 
-        /* 문서 외곽의 텍스트 색상 변경 (제목 등) */
-        .text-gray-800 { color: #475569; }
-        .text-black { color: #0f172a; }
-        .header-shadow {
-            text-shadow: 3px 3px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white;
-        }
-
-        .document-container {
-            background-color: white;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border: 4px solid #94a3b8; /* 바깥쪽 회색 테두리 */
-            border-radius: 1.5rem;
-            position: relative;
-        }
-
-        .document-container::before {
-            content: '';
-            position: absolute;
-            top: 4px; left: 4px; right: 4px; bottom: 4px;
-            border: 2px solid #e2e8f0; /* 안쪽 연한 테두리 */
-            border-radius: 1.25rem;
-            pointer-events: none;
-        }
-
-        /* 텍스트 입력 영역 스타일 (초록-파랑 톤) */
+        /* 텍스트 입력 영역 공통 스타일 */
         textarea, input[type="text"] {
             width: 100%;
             border: none;
             background-color: transparent;
-            resize: none;
             outline: none;
             color: #334155;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, box-shadow 0.2s;
         }
 
+        /* 텍스트 영역 스크롤바 숨김 (자동 늘어남 처리를 위해) */
+        textarea {
+            resize: none;
+            overflow: hidden; 
+            line-height: 1.6;
+        }
+
+        /* 입력칸 마우스 오버/포커스 시 에메랄드-파랑 계열 포인트 */
         textarea:hover, input[type="text"]:hover,
         textarea:focus, input[type="text"]:focus {
-            background-color: #f0fdfa; /* 연한 청록색 톤 배경 */
+            background-color: #f0fdfa;
             border-radius: 0.25rem;
-            box-shadow: inset 0 0 0 1px #2dd4bf; /* 틸(Teal) 포커스 테두리 */
+            box-shadow: inset 0 0 0 1px #06b6d4;
         }
 
-        /* 스크롤바 커스텀 */
-        textarea::-webkit-scrollbar {
-            width: 8px;
-        }
-        textarea::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        textarea::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        textarea::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        /* 인쇄 스타일 설정 */
+        /* PDF 인쇄용 스타일 */
         @media print {
-            body {
-                background: white;
-                margin: 0;
-                padding: 0;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .document-container {
-                box-shadow: none;
-                border: 2px solid #ccc;
-                width: 100%;
-                margin: 0;
-                padding: 20px;
-            }
-            textarea, input[type="text"] {
-                box-shadow: none !important;
-                background-color: transparent !important;
-            }
-            /* 인쇄 시 스크롤이 아닌 전체 내용이 나오게 함 */
-            textarea {
-                overflow: visible;
-            }
-            .header-shadow {
-                text-shadow: none;
-                color: black;
-            }
-            .text-gray-800 { color: black; }
+            body { background: white; margin: 0; padding: 0; }
+            .no-print { display: none !important; }
+            /* 인쇄 시 그라데이션 테두리를 깔끔한 단색으로 변경 */
+            .gradient-border-wrap { background: none !important; border: 2px solid #cbd5e1 !important; padding: 0 !important; box-shadow: none !important;}
+            .inner-document { border-radius: 0 !important; padding: 20px !important; }
+            textarea, input[type="text"] { box-shadow: none !important; background-color: transparent !important; }
         }
     </style>
 </head>
 <body class="p-4 md:p-8 min-h-screen flex flex-col items-center">
 
-    <div class="w-full max-w-4xl flex justify-end mb-4 no-print">
-        <button onclick="window.print()" class="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition duration-300 flex items-center gap-2" title="인쇄 대상에서 'PDF로 저장'을 선택해주세요.">
+    <div class="w-full max-w-4xl flex justify-end mb-4 no-print px-2">
+        <button onclick="window.print()" class="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-bold py-2.5 px-6 rounded-full shadow-md transition duration-300 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
@@ -116,131 +60,128 @@
         </button>
     </div>
 
-    <!-- 전체 문서 컨테이너 -->
-    <div class="w-full max-w-4xl relative">
-        
-        <!-- 상단 헤더 영역 -->
-        <div class="flex flex-col mb-6 z-10 relative px-4">
-            <div class="mb-4">
-                <p class="text-gray-800 font-bold text-lg mb-1 whitespace-nowrap">AI와 대화하며 만드는 나만의 게임</p>
-                <h1 class="text-5xl font-black text-black tracking-tight header-shadow whitespace-nowrap">게임 기획서</h1>
-            </div>
+    <div class="gradient-border-wrap w-full max-w-4xl bg-gradient-to-br from-emerald-400 to-cyan-500 p-[4px] rounded-3xl shadow-xl">
+        <div class="inner-document bg-white w-full h-full rounded-[1.6rem] p-6 md:p-12 relative z-10">
             
-            <!-- 학년, 반, 이름 입력란 (에메랄드 톤) -->
-            <div class="bg-white rounded-full px-6 py-3 shadow-md border-2 border-gray-200 flex flex-wrap gap-4 items-center w-full max-w-lg mt-4">
-                <div class="flex items-center gap-2 flex-1 min-w-[80px]">
-                    <label class="font-bold whitespace-nowrap">학년:</label>
-                    <input type="text" class="w-full border-b border-gray-300 focus:border-emerald-500" placeholder="0">
-                </div>
-                <div class="flex items-center gap-2 flex-1 min-w-[80px]">
-                    <label class="font-bold whitespace-nowrap">반:</label>
-                    <input type="text" class="w-full border-b border-gray-300 focus:border-emerald-500" placeholder="0">
-                </div>
-                <div class="flex items-center gap-2 flex-1 min-w-[100px]">
-                    <label class="font-bold whitespace-nowrap">이름:</label>
-                    <input type="text" class="w-full border-b border-gray-300 focus:border-emerald-500" placeholder="홍길동">
-                </div>
-            </div>
-        </div>
-
-        <div class="document-container p-6 md:p-10 pt-8 z-0">
-            
-            <!-- 게임 기본 정보 -->
-            <div class="bg-gray-50 rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-center gap-6 border border-gray-200">
-                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
-                    <span class="text-4xl">🤖</span>
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-10 border-b-2 border-gray-100 pb-6">
+                <div>
+                    <p class="text-gray-500 font-bold text-lg mb-1 whitespace-nowrap">AI와 대화하며 만드는 나만의 게임</p>
+                    <h1 class="text-5xl font-black text-black tracking-tight whitespace-nowrap">게임 기획서</h1>
                 </div>
                 
-                <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 w-full">
+                <!-- 학년, 반, 이름 입력란 -->
+                <div class="flex flex-wrap gap-4 items-center bg-gray-50 px-5 py-3 rounded-xl border border-gray-200">
+                    <div class="flex items-center gap-2 w-20">
+                        <label class="font-bold text-gray-700 whitespace-nowrap">학년:</label>
+                        <input type="text" class="border-b-2 border-gray-300 focus:border-emerald-500 pb-0.5 text-center font-medium" placeholder="0">
+                    </div>
+                    <div class="flex items-center gap-2 w-20">
+                        <label class="font-bold text-gray-700 whitespace-nowrap">반:</label>
+                        <input type="text" class="border-b-2 border-gray-300 focus:border-emerald-500 pb-0.5 text-center font-medium" placeholder="0">
+                    </div>
+                    <div class="flex items-center gap-2 w-28">
+                        <label class="font-bold text-gray-700 whitespace-nowrap">이름:</label>
+                        <input type="text" class="border-b-2 border-gray-300 focus:border-emerald-500 pb-0.5 text-center font-medium" placeholder="홍길동">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 mb-12 flex flex-col md:flex-row items-center gap-6 border border-gray-200 shadow-sm relative overflow-hidden">
+                <!-- 미세한 배경 장식 -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-100 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
+                
+                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 border border-gray-100 z-10">
+                    <span class="text-3xl">🤖</span>
+                </div>
+                
+                <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 w-full z-10">
                     <div class="flex items-center gap-3 col-span-1 md:col-span-2">
                         <label class="font-bold text-gray-700 whitespace-nowrap">게임 제목:</label>
-                        <input type="text" class="text-lg font-bold border-b border-gray-300 focus:border-emerald-500 pb-1 flex-1" placeholder="내 멋진 게임 이름">
+                        <input type="text" class="text-lg font-bold border-b border-gray-300 focus:border-cyan-500 pb-1 flex-1" placeholder="내 멋진 게임 이름">
                     </div>
                     <div class="flex items-center gap-3">
                         <label class="font-bold text-gray-700 whitespace-nowrap">플레이 시간:</label>
-                        <input type="text" class="text-right w-16 border-b border-gray-300 focus:border-emerald-500 pb-1" placeholder="00">
-                        <span class="text-gray-600 text-sm">[분]</span>
+                        <input type="text" class="text-right w-16 border-b border-gray-300 focus:border-cyan-500 pb-1" placeholder="00">
+                        <span class="text-gray-500 text-sm font-medium">[분]</span>
                     </div>
                     <div class="flex items-center gap-3">
                         <label class="font-bold text-gray-700 whitespace-nowrap">게임 개발자:</label>
-                        <input type="text" class="border-b border-gray-300 focus:border-emerald-500 pb-1 flex-1" placeholder="개발자 이름">
+                        <input type="text" class="border-b border-gray-300 focus:border-cyan-500 pb-1 flex-1" placeholder="개발자 이름">
                     </div>
                 </div>
             </div>
 
-            <!-- 핵심 설계 -->
-            <div class="mb-12">
-                <h2 class="text-2xl font-black mb-4 flex items-center gap-2">
-                    <span>🎮</span> <span class="text-black">핵심 설계</span>
+            <div class="mb-14">
+                <h2 class="text-2xl font-black text-black mb-4 flex items-center gap-2">
+                    <span class="text-2xl">🎮</span> 핵심 설계
                 </h2>
                 
-                <div class="border-t-2 border-gray-400">
+                <div class="border-t-2 border-gray-400 border-b-2">
                     <!-- 테이블 헤더 -->
-                    <div class="grid grid-cols-[100px_1fr] bg-gray-100 border-b border-gray-300">
-                        <div class="p-3 font-bold text-gray-700 text-center">단계</div>
-                        <div class="p-3 font-bold text-gray-700 border-l border-gray-300">보상</div>
+                    <div class="flex bg-gray-100 border-b border-gray-300">
+                        <div class="w-28 p-3 font-bold text-gray-700 text-center shrink-0 border-r border-gray-300">단계</div>
+                        <div class="flex-1 p-3 font-bold text-gray-700 text-center">보상</div>
                     </div>
                     
                     <!-- 입력 줄 1 -->
-                    <div class="grid grid-cols-[100px_1fr] border-b border-gray-200">
-                        <div class="p-4 font-medium text-gray-600 text-center flex items-center justify-center">게임의 목표</div>
-                        <div class="p-3 border-l border-gray-200 h-full">
-                            <textarea class="w-full h-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="플레이어는 게임에서 무엇을 달성해야 하나요?"></textarea>
+                    <div class="flex border-b border-gray-200 min-h-[80px]">
+                        <div class="w-28 bg-gray-50 p-4 font-medium text-gray-700 flex items-center justify-center text-center shrink-0 border-r border-gray-200">게임의 목표</div>
+                        <div class="flex-1 p-3 flex">
+                            <textarea class="w-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="플레이어는 게임에서 무엇을 달성해야 하나요?"></textarea>
                         </div>
                     </div>
                     
                     <!-- 입력 줄 2 -->
-                    <div class="grid grid-cols-[100px_1fr] border-b border-gray-200">
-                        <div class="p-4 font-medium text-gray-600 text-center flex items-center justify-center">승리 조건</div>
-                        <div class="p-3 border-l border-gray-200 h-full">
-                            <textarea class="w-full h-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="어떻게 하면 게임에서 이길 수 있나요?"></textarea>
+                    <div class="flex border-b border-gray-200 min-h-[80px]">
+                        <div class="w-28 bg-gray-50 p-4 font-medium text-gray-700 flex items-center justify-center text-center shrink-0 border-r border-gray-200">승리 조건</div>
+                        <div class="flex-1 p-3 flex">
+                            <textarea class="w-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="어떻게 하면 게임에서 이길 수 있나요?"></textarea>
                         </div>
                     </div>
                     
                     <!-- 입력 줄 3 -->
-                    <div class="grid grid-cols-[100px_1fr]">
-                        <div class="p-4 font-medium text-gray-600 text-center flex items-center justify-center">패배 조건</div>
-                        <div class="p-3 border-l border-gray-200 h-full">
-                            <textarea class="w-full h-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="어떤 경우에 게임 오버가 되나요?"></textarea>
+                    <div class="flex min-h-[80px]">
+                        <div class="w-28 bg-gray-50 p-4 font-medium text-gray-700 flex items-center justify-center text-center shrink-0 border-r border-gray-200">패배 조건</div>
+                        <div class="flex-1 p-3 flex">
+                            <textarea class="w-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="어떤 경우에 게임 오버가 되나요?"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 보상 시스템 -->
             <div class="mb-8">
-                <h2 class="text-2xl font-black mb-4 flex items-center gap-2">
-                    <span>💎</span> <span class="text-black">보상 시스템</span>
+                <h2 class="text-2xl font-black text-black mb-4 flex items-center gap-2">
+                    <span class="text-2xl">💎</span> 보상 시스템
                 </h2>
                 
-                <div class="border-t-2 border-gray-400">
+                <div class="border-t-2 border-gray-400 border-b-2">
                     <!-- 테이블 헤더 -->
-                    <div class="grid grid-cols-[100px_1fr] bg-gray-100 border-b border-gray-300">
-                        <div class="p-3 font-bold text-gray-700 text-center">항목</div>
-                        <div class="p-3 font-bold text-gray-700 border-l border-gray-300">내용</div>
+                    <div class="flex bg-gray-100 border-b border-gray-300">
+                        <div class="w-28 p-3 font-bold text-gray-700 text-center shrink-0 border-r border-gray-300">항목</div>
+                        <div class="flex-1 p-3 font-bold text-gray-700 text-center">내용</div>
                     </div>
                     
                     <!-- 입력 줄 1 -->
-                    <div class="grid grid-cols-[100px_1fr] border-b border-gray-200">
-                        <div class="p-4 font-medium text-gray-600 text-center flex items-center justify-center">기본</div>
-                        <div class="p-3 border-l border-gray-200 h-full">
-                            <textarea class="w-full h-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="적을 처치하거나 아이템을 먹었을 때 기본적으로 얻는 것은?"></textarea>
+                    <div class="flex border-b border-gray-200 min-h-[80px]">
+                        <div class="w-28 bg-gray-50 p-4 font-medium text-gray-700 flex items-center justify-center text-center shrink-0 border-r border-gray-200">기본</div>
+                        <div class="flex-1 p-3 flex">
+                            <textarea class="w-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="적을 처치하거나 아이템을 먹었을 때 기본적으로 얻는 것은?"></textarea>
                         </div>
                     </div>
                     
                     <!-- 입력 줄 2 -->
-                    <div class="grid grid-cols-[100px_1fr] border-b border-gray-200">
-                        <div class="p-4 font-medium text-gray-600 text-center flex items-center justify-center">보너스</div>
-                        <div class="p-3 border-l border-gray-200 h-full">
-                            <textarea class="w-full h-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="스테이지를 빨리 깨거나 특별한 행동을 했을 때 주는 보상은?"></textarea>
+                    <div class="flex border-b border-gray-200 min-h-[80px]">
+                        <div class="w-28 bg-gray-50 p-4 font-medium text-gray-700 flex items-center justify-center text-center shrink-0 border-r border-gray-200">보너스</div>
+                        <div class="flex-1 p-3 flex">
+                            <textarea class="w-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="스테이지를 빨리 깨거나 특별한 행동을 했을 때 주는 보상은?"></textarea>
                         </div>
                     </div>
 
                     <!-- 입력 줄 3 -->
-                    <div class="grid grid-cols-[100px_1fr] border-b border-gray-200">
-                        <div class="p-4 font-medium text-gray-600 text-center flex items-center justify-center">특별</div>
-                        <div class="p-3 border-l border-gray-200 h-full">
-                            <textarea class="w-full h-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="[연속 성공 시] 어떤 특별한 보상을 주나요?"></textarea>
+                    <div class="flex min-h-[80px]">
+                        <div class="w-28 bg-gray-50 p-4 font-medium text-gray-700 flex items-center justify-center text-center shrink-0 border-r border-gray-200">특별</div>
+                        <div class="flex-1 p-3 flex">
+                            <textarea class="w-full min-h-[60px] p-2 placeholder-gray-400 text-gray-700" placeholder="[연속 성공 시] 어떤 특별한 보상을 주나요?"></textarea>
                         </div>
                     </div>
                 </div>
@@ -248,5 +189,32 @@
 
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textareas = document.querySelectorAll('textarea');
+            
+            function autoResize(textarea) {
+                // 기존 높이를 초기화한 후 scrollHeight 기준으로 다시 설정
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            }
+
+            textareas.forEach(textarea => {
+                // 페이지 진입 시 초기 설정
+                autoResize(textarea);
+                
+                // 사용자가 입력할 때마다 높이 조절 트리거
+                textarea.addEventListener('input', function() {
+                    autoResize(this);
+                });
+            });
+            
+            // 윈도우 크기가 변할 때도 재조정 (반응형 대응)
+            window.addEventListener('resize', () => {
+                textareas.forEach(textarea => autoResize(textarea));
+            });
+        });
+    </script>
 </body>
 </html>
