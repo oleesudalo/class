@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학교 문제 해결 활동지</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6; /* Tailwind gray-100 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #ffffff; /* Clean white background */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Softer shadow */
+            max-width: 800px;
+            width: 100%;
+            font-size: 1.5rem; /* Base text size */
+            color: #1f2937; /* Tailwind gray-800 */
+            line-height: 2; /* Comfortable line height */
+        }
+
+        .auto-expand-input {
+            border: none;
+            border-bottom: 2px solid #1f2937; /* The underline */
+            background: transparent;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            padding: 0 5px;
+            margin: 0 5px;
+            text-align: center;
+            outline: none;
+            min-width: 150px; /* Minimum width */
+            /* Using ch unit for character width approx */
+            width: 15ch; 
+            transition: width 0.1s ease;
+        }
+
+        .sentence-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            margin-bottom: 10px; /* Spacing between lines */
+        }
+        
+        .sentence-part {
+            white-space: nowrap;
+        }
+
+        /* Specific minimum widths based on expected input */
+        #problem-input { min-width: 150px; }
+        #technology-input { min-width: 250px; }
+        #sdg-input { min-width: 100px; }
+        
+        .title-main {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2563eb; /* Tailwind blue-600 */
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .title-sub {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4b5563; /* Tailwind gray-600 */
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                font-size: 1.2rem;
+                padding: 20px;
+            }
+            .auto-expand-input {
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1 class="title-main">SDGs x 광주</h1>
+        <h2 class="title-sub">엔트리로 디자인하는 미래도시 광주</h2>
+
+        <div class="sentence-container">
+            <span class="sentence-part">우리 학교의</span>
+            <input type="text" id="problem-input" class="auto-expand-input" placeholder="어떤" aria-label="해결할 문제 입력">
+            <span class="sentence-part">문제를 해결하기 위해</span>
+        </div>
+        
+        <div class="sentence-container">
+            <input type="text" id="technology-input" class="auto-expand-input" placeholder="어떤" aria-label="사용할 기술 입력">
+            <span class="sentence-part">기술을 사용합니다.</span>
+        </div>
+
+        <div class="sentence-container">
+            <span class="sentence-part">이것을 SDGs</span>
+            <input type="text" id="sdg-input" class="auto-expand-input" placeholder="몇" aria-label="연결할 SDGs 번호 입력">
+            <span class="sentence-part">번과 연결합니다.</span>
+        </div>
+        
+        <div class="mt-8 flex justify-center" data-html2canvas-ignore="true">
+            <button id="download-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                작성완료(저장)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('.auto-expand-input');
+
+            // Function to resize input based on content
+            const resizeInput = (input) => {
+                // Determine length of text, or use placeholder length if empty
+                const textLength = input.value.length || input.placeholder.length || 1;
+                // Add a small buffer (e.g., 2ch) to prevent text clipping
+                const newWidth = Math.max(textLength + 2, 5); // Minimum width of 5ch
+                
+                // Set the width in 'ch' units (roughly the width of the '0' character)
+                input.style.width = newWidth + 'ch';
+            };
+
+            // Initialize widths on load
+            inputs.forEach(input => {
+                resizeInput(input);
+                
+                // Add event listener to resize on input
+                input.addEventListener('input', function() {
+                    resizeInput(this);
+                });
+            });
+
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.addEventListener('click', () => {
+                // 다운로드할 영역 선택 (카드 전체)
+                const element = document.querySelector('.card');
+                
+                // 윈도우 너비가 좁을 때 글자가 깨지거나 줄바꿈이 과도하게 일어나는 것을 방지하기 위해
+                // PDF 생성용 옵션 설정
+                const opt = {
+                    margin:       [10, 10, 10, 10], // 여백 설정
+                    filename:     '미래도시_광주_활동지.pdf',
+                    image:        { type: 'jpeg', quality: 1 },
+                    html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' } // 가로 방향 출력
+                };
+
+                // html2pdf 라이브러리를 사용하여 PDF 생성 및 다운로드
+                html2pdf().set(opt).from(element).save();
+            });
+        });
+    </script>
+</body>
+</html>
