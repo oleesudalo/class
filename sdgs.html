@@ -125,24 +125,42 @@
         document.addEventListener('DOMContentLoaded', () => {
             const inputs = document.querySelectorAll('.auto-expand-input');
 
-            // Function to resize input based on content
+            // 한글 글자 짤림 현상을 해결하기 위해 실제 픽셀 너비를 측정하는 숨김 span 요소 생성
+            const measureSpan = document.createElement('span');
+            measureSpan.style.visibility = 'hidden';
+            measureSpan.style.position = 'absolute';
+            measureSpan.style.whiteSpace = 'pre';
+            document.body.appendChild(measureSpan);
+
+            // Function to resize input based on exact pixel width
             const resizeInput = (input) => {
-                // Determine length of text, or use placeholder length if empty
-                const textLength = input.value.length || input.placeholder.length || 1;
-                // Add a small buffer (e.g., 2ch) to prevent text clipping
-                const newWidth = Math.max(textLength + 2, 5); // Minimum width of 5ch
+                // 입력칸의 폰트 스타일을 측정용 span에 동일하게 적용
+                const computedStyle = window.getComputedStyle(input);
+                measureSpan.style.font = computedStyle.font;
+                measureSpan.style.letterSpacing = computedStyle.letterSpacing;
                 
-                // Set the width in 'ch' units (roughly the width of the '0' character)
-                input.style.width = newWidth + 'ch';
+                // 입력된 텍스트나 placeholder 텍스트를 측정용 span에 삽입
+                measureSpan.textContent = input.value || input.placeholder || '';
+                
+                // 실제 글자가 차지하는 픽셀 너비 측정 (커서 및 여유 공간을 위해 20px 추가)
+                const textWidth = measureSpan.offsetWidth + 20;
+                
+                // CSS에 설정된 최소 너비(min-width) 가져오기
+                const minWidth = parseInt(computedStyle.minWidth) || 100;
+                
+                // 실제 텍스트 너비와 최소 너비 중 더 큰 값을 적용
+                input.style.width = Math.max(textWidth, minWidth) + 'px';
             };
 
-            // Initialize widths on load
-            inputs.forEach(input => {
-                resizeInput(input);
-                
-                // Add event listener to resize on input
-                input.addEventListener('input', function() {
-                    resizeInput(this);
+            // Initialize widths on load (웹 폰트가 완전히 로드된 후 계산해야 정확함)
+            document.fonts.ready.then(() => {
+                inputs.forEach(input => {
+                    resizeInput(input);
+                    
+                    // Add event listener to resize on input
+                    input.addEventListener('input', function() {
+                        resizeInput(this);
+                    });
                 });
             });
 
