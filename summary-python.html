@@ -757,6 +757,33 @@ html.fallback-fullscreen .main{
     font-size:15px;
   }
 }
+
+#real-hub .mock-set-card .mock-start-wide{
+  width:100%;
+  min-height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:16px;
+  border:none;
+  border-radius:12px;
+  background:var(--accent);
+  color:#fff;
+  font:inherit;
+  font-weight:900;
+  font-size:16px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:.18s ease;
+}
+#real-hub .mock-set-card .mock-start-wide:hover{
+  filter:brightness(.96);
+  transform:translateY(-1px);
+}
+#real-hub .mock-set-card .mock-start-wide:active{
+  transform:translateY(0) scale(.99);
+}
 </style>
 </head>
 <body>
@@ -1962,7 +1989,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 1</h4>
 <span class="mock-level">기초</span>
 </div>
-<p>1회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="1" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
@@ -1970,7 +1996,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 2</h4>
 <span class="mock-level">기초</span>
 </div>
-<p>2회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="2" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
@@ -1978,7 +2003,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 3</h4>
 <span class="mock-level">기초</span>
 </div>
-<p>3회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="3" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
@@ -1986,7 +2010,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 4</h4>
 <span class="mock-level">중간</span>
 </div>
-<p>4회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="4" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
@@ -1994,7 +2017,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 5</h4>
 <span class="mock-level">중간</span>
 </div>
-<p>5회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="5" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
@@ -2002,7 +2024,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 6</h4>
 <span class="mock-level">중간</span>
 </div>
-<p>6회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="6" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
@@ -2010,7 +2031,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 7</h4>
 <span class="mock-level">중간</span>
 </div>
-<p>7회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="7" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
@@ -2018,7 +2038,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 8</h4>
 <span class="mock-level">종합</span>
 </div>
-<p>8회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="8" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
@@ -2026,7 +2045,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 9</h4>
 <span class="mock-level">종합</span>
 </div>
-<p>9회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="9" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
@@ -2034,7 +2052,6 @@ print(avg)   # 90.0</div>
 <h4>연습문제 10</h4>
 <span class="mock-level">종합</span>
 </div>
-<p>10회 전용 서로 다른 10문제 · 10개 카테고리 종합 · 빈칸형 기초 연습</p>
 <button class="start-mock" data-exam="10" type="button">시작하기</button>
 </div>
 </div>
@@ -2878,80 +2895,80 @@ result = double(number)
 <h4>1회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="1" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="1" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
 <div class="mock-set-top">
 <h4>2회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="2" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="2" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
 <div class="mock-set-top">
 <h4>3회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="3" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="3" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
 <div class="mock-set-top">
 <h4>4회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="4" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="4" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
 <div class="mock-set-top">
 <h4>5회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="5" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="5" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
 <div class="mock-set-top">
 <h4>6회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="6" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="6" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
 <div class="mock-set-top">
 <h4>7회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="7" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="7" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
 <div class="mock-set-top">
 <h4>8회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="8" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="8" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
 <div class="mock-set-top">
 <h4>9회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="9" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="9" type="button">시작하기</button>
 </div>
 <div class="mock-set-card">
 <div class="mock-set-top">
 <h4>10회 모의고사</h4>
 <span class="mock-level">실전형</span>
 </div>
-<p>10문제 · 조건문/반복문/리스트/딕셔너리/함수 각 2문제 · 실전형 빈칸</p>
-<button class="start-real" data-exam="10" type="button">시작하기</button>
+
+<button class="start-real mock-start-wide" data-exam="10" type="button">시작하기</button>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="1" id="real-1">
