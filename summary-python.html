@@ -675,6 +675,17 @@ th{background:#fafbfc}
   .real-exam .mock-bottom-bar .feedback{grid-row:2}
   .real-exam .real-inline-nav{grid-row:3}
 }
+
+.formula-hint{
+  margin:10px 0 14px;
+  padding:11px 14px;
+  border-radius:10px;
+  background:#fff8e8;
+  border:1px solid #f1ddb0;
+  font-size:14px;
+  font-weight:800;
+  color:#6b4f16;
+}
 </style>
 </head>
 <body>
@@ -2198,7 +2209,7 @@ def multiply(a,b):
     <input aria-label="빈칸 ⓑ" autocomplete="off" class="blank-input" data-answer="return" placeholder="ⓑ" spellcheck="false" type="text"/> product
 result = <input aria-label="빈칸 ⓒ" autocomplete="off" class="blank-input" data-answer="multiply" placeholder="ⓒ" spellcheck="false" type="text"/>(6,7)
 print(result)
-</div><div class="mock-bottom-bar"><div class="mock-output"><b>완성 후 예상 결과:</b> 42</div><div class="practice-actions"><button class="check-answer" type="button">정답 확인</button><button class="reset-answer" type="button">다시 풀기</button></div><div class="feedback"></div><div class="mock-inline-nav"><button class="mock-prev-inline" data-index="9" type="button">← 이전</button><button class="mock-next-inline" data-index="9" type="button">목록</button></div></div><div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ </strong><code>*</code><div class="answer-explain">두 수를 곱해 결과를 만들어야 하는 자리이므로 곱셈 연산자가 들어갑니다.</div><br/><br/><strong>ⓑ </strong><code>return</code><div class="answer-explain">함수 안에서 계산한 값을 함수 밖의 호출 위치로 돌려주어야 하므로 return이 필요합니다.</div><br/><br/><strong>ⓒ </strong><code>multiply</code><div class="answer-explain">앞에서 정의된 multiply 기능을 실제로 실행해야 하는 자리이므로 함수 이름 multiply를 사용합니다.</div></div></div></div></section><section class="section mock-exam" data-exam="4" id="mock-4"><div class="mock-exam-head"><div><div class="overview-kicker">BASIC PRACTICE · 04</div><h3>4회 Python 기초연습</h3><div class="mock-meta">10문제 · 회차마다 서로 다른 문제 · 현재 문제 <span class="mock-current">1</span>/10</div></div><button class="mock-home" type="button">기초연습 목록</button></div><div class="mock-progress"><button class="mock-dot active" data-q="0" type="button">1</button><button class="mock-dot" data-q="1" type="button">2</button><button class="mock-dot" data-q="2" type="button">3</button><button class="mock-dot" data-q="3" type="button">4</button><button class="mock-dot" data-q="4" type="button">5</button><button class="mock-dot" data-q="5" type="button">6</button><button class="mock-dot" data-q="6" type="button">7</button><button class="mock-dot" data-q="7" type="button">8</button><button class="mock-dot" data-q="8" type="button">9</button><button class="mock-dot" data-q="9" type="button">10</button></div><div class="mock-question active" data-q="0"><div class="mock-question-head"><span class="mock-qno">문제 1</span><span class="mock-cat">변수</span><span class="mock-status">빈칸 3개</span></div><div class="practice-card mock-practice"><h4>섭씨를 화씨로 변환하기</h4><div class="mock-condition"><b>문제 조건</b><ul><li>섭씨 온도는 25도입니다.</li><li>화씨 온도는 섭씨에 9를 곱하고 5로 나눈 뒤 32를 더해 계산합니다.</li><li>중간 계산을 순서대로 저장해 최종 화씨 온도를 구합니다.</li></ul></div><div class="mock-instruction">아래 코드를 전체적으로 읽고, 문제 조건과 실행 결과를 근거로 빈칸을 완성하세요. <b>함수명·연산자·조건식이 문제 조건에 그대로 적혀 있지 않으므로</b> 코드의 흐름을 이해한 뒤 알맞은 표현을 입력해야 합니다.</div><div class="practice-code mock-code"># 섭씨를 화씨로 변환하기
+</div><div class="mock-bottom-bar"><div class="mock-output"><b>완성 후 예상 결과:</b> 42</div><div class="practice-actions"><button class="check-answer" type="button">정답 확인</button><button class="reset-answer" type="button">다시 풀기</button></div><div class="feedback"></div><div class="mock-inline-nav"><button class="mock-prev-inline" data-index="9" type="button">← 이전</button><button class="mock-next-inline" data-index="9" type="button">목록</button></div></div><div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ </strong><code>*</code><div class="answer-explain">두 수를 곱해 결과를 만들어야 하는 자리이므로 곱셈 연산자가 들어갑니다.</div><br/><br/><strong>ⓑ </strong><code>return</code><div class="answer-explain">함수 안에서 계산한 값을 함수 밖의 호출 위치로 돌려주어야 하므로 return이 필요합니다.</div><br/><br/><strong>ⓒ </strong><code>multiply</code><div class="answer-explain">앞에서 정의된 multiply 기능을 실제로 실행해야 하는 자리이므로 함수 이름 multiply를 사용합니다.</div></div></div></div></section><section class="section mock-exam" data-exam="4" id="mock-4"><div class="mock-exam-head"><div><div class="overview-kicker">BASIC PRACTICE · 04</div><h3>4회 Python 기초연습</h3><div class="mock-meta">10문제 · 회차마다 서로 다른 문제 · 현재 문제 <span class="mock-current">1</span>/10</div></div><button class="mock-home" type="button">기초연습 목록</button></div><div class="mock-progress"><button class="mock-dot active" data-q="0" type="button">1</button><button class="mock-dot" data-q="1" type="button">2</button><button class="mock-dot" data-q="2" type="button">3</button><button class="mock-dot" data-q="3" type="button">4</button><button class="mock-dot" data-q="4" type="button">5</button><button class="mock-dot" data-q="5" type="button">6</button><button class="mock-dot" data-q="6" type="button">7</button><button class="mock-dot" data-q="7" type="button">8</button><button class="mock-dot" data-q="8" type="button">9</button><button class="mock-dot" data-q="9" type="button">10</button></div><div class="mock-question active" data-q="0"><div class="mock-question-head"><span class="mock-qno">문제 1</span><span class="mock-cat">변수</span><span class="mock-status">빈칸 3개</span></div><div class="practice-card mock-practice"><h4>섭씨를 화씨로 변환하기</h4><div class="mock-condition"><b>문제 조건</b><ul><li>섭씨 온도는 25도입니다.</li><li>화씨 온도는 섭씨에 9를 곱하고 5로 나눈 뒤 32를 더해 계산합니다.</li><li>중간 계산을 순서대로 저장해 최종 화씨 온도를 구합니다.</li></ul></div><div class="formula-hint">※ 화씨 변환 공식: 화씨 = 섭씨 × 9 ÷ 5 + 32</div><div class="mock-instruction">아래 코드를 전체적으로 읽고, 문제 조건과 실행 결과를 근거로 빈칸을 완성하세요. <b>함수명·연산자·조건식이 문제 조건에 그대로 적혀 있지 않으므로</b> 코드의 흐름을 이해한 뒤 알맞은 표현을 입력해야 합니다.</div><div class="practice-code mock-code"># 섭씨를 화씨로 변환하기
 
 celsius = 25
 
@@ -3848,7 +3859,7 @@ print(result)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>섭씨를 화씨로 변환</h4>
-<div class="real-exam-stem">다음은 섭씨 25도를 화씨로 변환하는 Python 프로그램이다. 빈칸 ⓐ에 들어갈 계산식을 작성하시오.</div>
+<div class="real-exam-stem">다음은 섭씨 25도를 화씨로 변환하는 Python 프로그램이다. 빈칸 ⓐ에 들어갈 계산식을 작성하시오.</div><div class="formula-hint">※ 화씨 변환 공식: 화씨 = 섭씨 × 9 ÷ 5 + 32</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">celsius = 25
 
