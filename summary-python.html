@@ -3623,7 +3623,7 @@ print(get_average([80, 90, 100]))</div>
 <div class="practice-code mock-code">member = False
 total = 60000
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="member or total &gt;= 50000|total &gt;= 50000 or member|member or total&gt;=50000|total&gt;=50000 or member" placeholder="ⓐ" spellcheck="false" type="text"/>:
+if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="member or total &gt;= 50000|total &gt;= 50000 or member|member or total&gt;=50000|total&gt;=50000 or member|member == True or total &gt;= 50000|member==True or total&gt;=50000|total &gt;= 50000 or member == True|total&gt;=50000 or member==True|True == member or total &gt;= 50000|True==member or total&gt;=50000" placeholder="ⓐ" spellcheck="false" type="text"/>:
     delivery = 0
 else:
     delivery = 3000
@@ -3651,18 +3651,20 @@ print(delivery)</div>
 <span class="mock-level">상</span>
 </div>
 <div class="practice-card mock-practice">
-<h4>삼각형 생성 가능 여부</h4>
-<div class="real-exam-stem">다음은 세 변의 길이로 삼각형을 만들 수 있는지 확인하는 Python 프로그램이다. 3, 4, 5가 입력된 경우 '가능'이 출력되도록 빈칸 ⓐ를 작성하시오.</div>
+<h4>과락 여부 판정</h4>
+<div class="real-exam-stem">다음은 세 과목 중 한 과목이라도 40점 미만이면 '과락'을 출력하는 Python 프로그램이다. 국어 65점, 영어 55점, 수학 30점이 입력된 경우 '과락'이 출력되도록 빈칸 ⓐ를 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
-<div class="practice-code mock-code">a = 3
-b = 4
-c = 5
+<div class="practice-code mock-code">
+kor = 65
+eng = 55
+math = 30
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="a + b &gt; c and a + c &gt; b and b + c &gt; a|a+b&gt;c and a+c&gt;b and b+c&gt;a" placeholder="ⓐ" spellcheck="false" type="text"/>:
-    print("가능")
+if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="kor &lt; 40 or eng &lt; 40 or math &lt; 40|kor&lt;40 or eng&lt;40 or math&lt;40" placeholder="ⓐ" spellcheck="false" type="text"/>:
+    print("과락")
 else:
-    print("불가능")</div>
-<div class="mock-output"><b>【실행 결과】</b> 가능</div>
+    print("통과")
+</div>
+<div class="mock-output"><b>【실행 결과】</b> 과락</div>
 <div class="mock-bottom-bar">
 <div class="practice-actions">
 <button class="check-answer" type="button">정답 확인</button>
@@ -3674,7 +3676,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>a + b &gt; c and a + c &gt; b and b + c &gt; a</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>kor &lt; 40 or eng &lt; 40 or math &lt; 40</code><div class="answer-explain">세 과목 중 하나라도 40점 미만이면 과락이므로, 국어·영어·수학의 세 조건을 '또는' 조건으로 연결해야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -6252,7 +6254,8 @@ print(result)</div>
 </section><div class="footer">SW·AI 교육강사 2급 실기 대비용 Python 기초 학습 웹앱 · 학습용 레퍼런스</div>
 </main>
 </div>
-<script>
+<script>const ANSWER_ENGINE_VERSION = '2026-09-19-v23';
+
 
 // 페이지를 열 때 항상 맨 위에서 시작
 if ('scrollRestoration' in history) {
