@@ -686,11 +686,85 @@ th{background:#fafbfc}
   font-weight:800;
   color:#6b4f16;
 }
+
+.fullscreen-btn{
+  width:100%;
+  min-height:46px;
+  margin:0 0 18px;
+  padding:11px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:12px;
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  font:inherit;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:.18s ease;
+}
+.fullscreen-btn:hover{
+  background:rgba(255,255,255,.14);
+  border-color:rgba(255,255,255,.32);
+}
+.fullscreen-btn:active{
+  transform:scale(.98);
+}
+.fullscreen-icon{
+  font-size:20px;
+  line-height:1;
+}
+.fullscreen-btn.is-fullscreen{
+  background:rgba(109,87,255,.28);
+  border-color:rgba(169,157,255,.55);
+}
+
+/* Fullscreen API가 없는 브라우저를 위한 앱형 전체화면 대체 모드 */
+html.fallback-fullscreen,
+html.fallback-fullscreen body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+html.fallback-fullscreen .app{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100dvh;
+  max-width:none;
+  max-height:none;
+  z-index:999999;
+  border-radius:0;
+  margin:0;
+  background:var(--bg);
+}
+html.fallback-fullscreen .sidebar{
+  height:100dvh;
+}
+html.fallback-fullscreen .main{
+  height:100dvh;
+}
+
+/* 태블릿/터치 화면에서도 누르기 쉽게 */
+@media (pointer:coarse){
+  .fullscreen-btn{
+    min-height:52px;
+    font-size:15px;
+  }
+}
 </style>
 </head>
 <body>
 <div class="layout">
-<aside class="sidebar">
+<aside class="sidebar"><button aria-label="전체화면으로 보기" class="fullscreen-btn" id="fullscreenBtn" type="button">
+<span aria-hidden="true" class="fullscreen-icon">⛶</span>
+<span class="fullscreen-text">전체화면</span>
+</button>
 <div class="brand">SW·AI 교육강사 자격 실기 대비</div>
 <h1>Python 기초<br/>한눈에 보는 레퍼런스</h1>
 <div class="badge">2급 · 텍스트 프로그래밍</div>
@@ -6484,6 +6558,103 @@ const hashId = location.hash ? location.hash.replace('#','') : firstId;
 const validIds = secs.map(sec => sec.id);
 showSection(validIds.includes(hashId) ? hashId : firstId);
 resetPageScrollToTop();
+
+
+// 전체화면 버튼: 데스크톱 + Android 태블릿 + iPad Safari 계열 대응
+(function(){
+  const btn = document.getElementById('fullscreenBtn');
+  if(!btn) return;
+
+  const text = btn.querySelector('.fullscreen-text');
+  const root = document.documentElement;
+
+  function nativeFullscreenElement(){
+    return document.fullscreenElement ||
+           document.webkitFullscreenElement ||
+           document.msFullscreenElement ||
+           null;
+  }
+
+  function isFallbackFullscreen(){
+    return root.classList.contains('fallback-fullscreen');
+  }
+
+  function updateFullscreenButton(){
+    const active = !!nativeFullscreenElement() || isFallbackFullscreen();
+    btn.classList.toggle('is-fullscreen', active);
+    if(text) text.textContent = active ? '전체화면 종료' : '전체화면';
+    btn.setAttribute('aria-label', active ? '전체화면 종료' : '전체화면으로 보기');
+  }
+
+  async function enterNativeFullscreen(){
+    const el = document.documentElement;
+
+    if(el.requestFullscreen){
+      await el.requestFullscreen();
+      return true;
+    }
+    if(el.webkitRequestFullscreen){
+      el.webkitRequestFullscreen();
+      return true;
+    }
+    if(el.msRequestFullscreen){
+      el.msRequestFullscreen();
+      return true;
+    }
+    return false;
+  }
+
+  async function exitNativeFullscreen(){
+    if(document.exitFullscreen){
+      await document.exitFullscreen();
+      return true;
+    }
+    if(document.webkitExitFullscreen){
+      document.webkitExitFullscreen();
+      return true;
+    }
+    if(document.msExitFullscreen){
+      document.msExitFullscreen();
+      return true;
+    }
+    return false;
+  }
+
+  btn.addEventListener('click', async ()=>{
+    try{
+      if(nativeFullscreenElement()){
+        await exitNativeFullscreen();
+      }else if(isFallbackFullscreen()){
+        root.classList.remove('fallback-fullscreen');
+      }else{
+        const supported =
+          !!document.documentElement.requestFullscreen ||
+          !!document.documentElement.webkitRequestFullscreen ||
+          !!document.documentElement.msRequestFullscreen;
+
+        if(supported){
+          await enterNativeFullscreen();
+        }else{
+          // iOS/iPadOS 등 Fullscreen API가 제한되는 환경의 대체 모드
+          root.classList.add('fallback-fullscreen');
+          window.scrollTo(0,0);
+        }
+      }
+    }catch(err){
+      // 브라우저가 전체화면 요청을 거부한 경우에도 레이아웃형 전체화면으로 전환
+      root.classList.toggle('fallback-fullscreen');
+      window.scrollTo(0,0);
+    }
+    updateFullscreenButton();
+  });
+
+  document.addEventListener('fullscreenchange', updateFullscreenButton);
+  document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+  document.addEventListener('MSFullscreenChange', updateFullscreenButton);
+
+  updateFullscreenButton();
+})();
+
 </script>
 </body>
 </html>
