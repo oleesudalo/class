@@ -784,6 +784,22 @@ html.fallback-fullscreen .main{
 #real-hub .mock-set-card .mock-start-wide:active{
   transform:translateY(0) scale(.99);
 }
+
+.full-line-blank{
+  display:inline-block;
+  width:min(760px, 92%) !important;
+  min-width:420px;
+  max-width:92%;
+  min-height:44px;
+  padding:8px 12px;
+  box-sizing:border-box;
+}
+@media(max-width:760px){
+  .full-line-blank{
+    width:88% !important;
+    min-width:0;
+  }
+}
 </style>
 </head>
 <body>
@@ -4276,11 +4292,12 @@ print(get_grade(82))</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>윤년 판정</h4>
-<div class="real-exam-stem">다음은 연도가 윤년인지 확인하는 Python 프로그램이다. 2024가 윤년으로 출력되도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 연도가 윤년인지 확인하는 Python 프로그램이다. 2024가 윤년으로 출력되도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">year = 2024
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="year % 400 == 0 or (year % 4 == 0 and year % 100 != 0)|year%400==0 or (year%4==0 and year%100!=0)" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 윤년 판정 조건 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if year % 400 == 0 or (year % 4 == 0 and year % 100 != 0):|if year%400==0 or (year%4==0 and year%100!=0):" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print("윤년")
 else:
     print("평년")</div>
@@ -4296,7 +4313,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>year % 400 == 0 or (year % 4 == 0 and year % 100 != 0)</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if year % 400 == 0 or (year % 4 == 0 and year % 100 != 0):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -4307,13 +4324,14 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>구매 금액별 할인율</h4>
-<div class="real-exam-stem">다음은 구매 금액에 따라 할인율을 결정하는 Python 프로그램이다. 120000원일 때 0.15가 출력되도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 구매 금액에 따라 할인율을 결정하는 Python 프로그램이다. 120000원일 때 0.15가 출력되도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">total = 120000
 
 if total &gt;= 100000:
     rate = 0.15
-<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="elif" placeholder="ⓐ" spellcheck="false" type="text"/> total &gt;= 50000:
+# 구매 금액별 할인율 코드 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="elif total &gt;= 50000:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     rate = 0.10
 else:
     rate = 0
@@ -4331,7 +4349,7 @@ print(rate)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>elif</code><div class="answer-explain">앞의 조건이 거짓일 때 새로운 조건을 이어서 검사해야 하므로 중간 조건 분기가 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>elif total &gt;= 50000:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -4342,10 +4360,11 @@ print(rate)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>별 삼각형</h4>
-<div class="real-exam-stem">다음은 첫 줄에 별 1개, 마지막 줄에 별 5개가 출력되는 삼각형을 만드는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 첫 줄에 별 1개, 마지막 줄에 별 5개가 출력되는 삼각형을 만드는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">for i in range(1, 6):
-    print(<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="&quot;*&quot; * i|'*' * i|&quot;*&quot;*i|'*'*i" placeholder="ⓐ" spellcheck="false" type="text"/>)</div>
+    # 별 삼각형 출력하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="print(&quot;*&quot; * i)|print('*' * i)|print(&quot;*&quot;*i)|print('*'*i)" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/></div>
 <div class="mock-output"><b>【실행 결과】</b> * / ** / *** / **** / *****</div>
 <div class="mock-bottom-bar">
 <div class="practice-actions">
@@ -4358,7 +4377,7 @@ print(rate)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>"*" * i</code><div class="answer-explain">주어진 변수와 계산 조건을 코드 식으로 표현한 부분입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print("*" * i)</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -4369,10 +4388,11 @@ print(rate)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>역삼각형 별</h4>
-<div class="real-exam-stem">다음은 별을 5개부터 1개까지 한 줄씩 줄여 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 별을 5개부터 1개까지 한 줄씩 줄여 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">for i in range(5):
-    for j in <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="range(5 - i)|range(5-i)" placeholder="ⓐ" spellcheck="false" type="text"/>:
+    # 역삼각형 별 반복문 작성하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="for j in range(5 - i):|for j in range(5-i):" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
         print("*", end="")
     print()</div>
 <div class="mock-output"><b>【실행 결과】</b> ***** / **** / *** / ** / *</div>
@@ -4387,7 +4407,7 @@ print(rate)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>range(5 - i)</code><div class="answer-explain">반복해야 하는 시작값과 끝값을 만족하도록 반복 범위를 지정한 표현입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for j in range(5 - i):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -4398,14 +4418,15 @@ print(rate)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>중복 없이 새 리스트 만들기</h4>
-<div class="real-exam-stem">다음은 원본 리스트에서 중복되는 값을 제외하고 새로운 리스트를 만드는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 원본 리스트에서 중복되는 값을 제외하고 새로운 리스트를 만드는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">numbers = [1, 2, 2, 3, 1, 4]
 unique = []
 
 for n in numbers:
     if n not in unique:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="unique.append(n)" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 중복 없이 새 리스트 만들기 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="unique.append(n)" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(unique)</div>
 <div class="mock-output"><b>【실행 결과】</b> [1, 2, 3, 4]</div>
@@ -4420,7 +4441,7 @@ print(unique)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>unique.append(n)</code><div class="answer-explain">조건을 만족한 값을 새로운 리스트의 맨 뒤에 저장해야 하므로 이 코드가 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>unique.append(n)</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -4431,14 +4452,15 @@ print(unique)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>기준 이상 점수만 저장</h4>
-<div class="real-exam-stem">다음은 점수 리스트에서 80점 이상인 값만 새로운 리스트에 저장하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 점수 리스트에서 80점 이상인 값만 새로운 리스트에 저장하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = [75, 82, 90, 68, 88]
 passed = []
 
 for score in scores:
     if score &gt;= 80:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="passed.append(score)" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 기준 이상 점수만 저장 처리하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="passed.append(score)" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(passed)</div>
 <div class="mock-output"><b>【실행 결과】</b> [82, 90, 88]</div>
@@ -4453,7 +4475,7 @@ print(passed)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>passed.append(score)</code><div class="answer-explain">조건을 만족한 값을 새로운 리스트의 맨 뒤에 저장해야 하므로 이 코드가 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>passed.append(score)</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -4464,11 +4486,12 @@ print(passed)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>대출 상태 추가</h4>
-<div class="real-exam-stem">다음은 도서 정보에 대출 여부를 새 항목으로 추가하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 도서 정보에 대출 여부를 새 항목으로 추가하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">book = {"title": "AI 이야기", "author": "김강사"}
 
-book["borrowed"] = <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="False" placeholder="ⓐ" spellcheck="false" type="text"/>
+# 대출 상태 추가 처리하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer='book["borrowed"] = False' placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(book["borrowed"])</div>
 <div class="mock-output"><b>【실행 결과】</b> False</div>
@@ -4483,7 +4506,7 @@ print(book["borrowed"])</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>False</code><div class="answer-explain">거짓 상태를 저장해야 하므로 논리값 False가 들어갑니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>book["borrowed"] = False</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -4494,12 +4517,13 @@ print(book["borrowed"])</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>캐릭터 체력 감소</h4>
-<div class="real-exam-stem">다음은 캐릭터가 피해를 입은 뒤 남은 체력을 딕셔너리에 저장하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 캐릭터가 피해를 입은 뒤 남은 체력을 딕셔너리에 저장하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">player = {"name": "Hero", "hp": 100}
 damage = 30
 
-player["hp"] = <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="player[&quot;hp&quot;] - damage|player['hp'] - damage|player[&quot;hp&quot;]-damage|player['hp']-damage" placeholder="ⓐ" spellcheck="false" type="text"/>
+# 캐릭터 체력 감소 처리하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="player[&quot;hp&quot;] = player[&quot;hp&quot;] - damage|player[&quot;hp&quot;] = player['hp'] - damage|player[&quot;hp&quot;] = player[&quot;hp&quot;]-damage|player[&quot;hp&quot;] = player['hp']-damage" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(player["hp"])</div>
 <div class="mock-output"><b>【실행 결과】</b> 70</div>
@@ -4514,7 +4538,7 @@ print(player["hp"])</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>player["hp"] - damage</code><div class="answer-explain">딕셔너리는 key를 이용해 원하는 값을 조회하거나 수정하므로 해당 key 또는 접근식이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>player["hp"] = player["hp"] - damage</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -4525,7 +4549,7 @@ print(player["hp"])</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>두 쌍의 합 누적</h4>
-<div class="real-exam-stem">다음은 두 수의 합을 반환하는 함수를 이용해 리스트의 값을 두 쌍으로 나누어 합산하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 두 수의 합을 반환하는 함수를 이용해 리스트의 값을 두 쌍으로 나누어 합산하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def sum_pair(a, b):
     return a + b
@@ -4534,7 +4558,8 @@ numbers = [10, 20, 30, 40]
 total = 0
 
 for i in range(len(numbers) // 2):
-    total += <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="sum_pair(numbers[i * 2], numbers[i * 2 + 1])|sum_pair(numbers[i*2], numbers[i*2+1])" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 두 쌍의 합 누적 처리하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="total += sum_pair(numbers[i * 2], numbers[i * 2 + 1])|total += sum_pair(numbers[i*2], numbers[i*2+1])" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(total)</div>
 <div class="mock-output"><b>【실행 결과】</b> 100</div>
@@ -4549,7 +4574,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>sum_pair(numbers[i * 2], numbers[i * 2 + 1])</code><div class="answer-explain">주어진 변수와 계산 조건을 코드 식으로 표현한 부분입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += sum_pair(numbers[i * 2], numbers[i * 2 + 1])</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -4560,13 +4585,14 @@ print(total)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>입력·처리·출력 분리</h4>
-<div class="real-exam-stem">다음은 입력, 처리, 출력 기능을 함수로 분리한 Python 프로그램이다. double 함수가 전달받은 수의 두 배를 반환하도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 입력, 처리, 출력 기능을 함수로 분리한 Python 프로그램이다. double 함수가 전달받은 수의 두 배를 반환하도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def get_number():
     return int(input("정수: "))
 
 def double(n):
-    return <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="n * 2|n*2" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 입력·처리·출력 분리 결과 반환하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="return n * 2|return n*2" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 def print_result(value):
     print("결과:", value)
@@ -4586,7 +4612,7 @@ print_result(result)</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>n * 2</code><div class="answer-explain">주어진 변수와 계산 조건을 코드 식으로 표현한 부분입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return n * 2</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="6" id="real-6">
@@ -4607,12 +4633,13 @@ print_result(result)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>장학금 대상 판정</h4>
-<div class="real-exam-stem">다음은 평균 점수가 90점 이상이고 출석률이 0.9 이상인 경우 장학금 대상자로 판정하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 평균 점수가 90점 이상이고 출석률이 0.9 이상인 경우 장학금 대상자로 판정하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">average = 92
 attendance = 0.95
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="average &gt;= 90 and attendance &gt;= 0.9|average&gt;=90 and attendance&gt;=0.9" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 장학금 대상 판정 조건 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if average &gt;= 90 and attendance &gt;= 0.9:|if average&gt;=90 and attendance&gt;=0.9:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print("장학금 대상")
 else:
     print("대상 아님")</div>
@@ -4628,7 +4655,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>average &gt;= 90 and attendance &gt;= 0.9</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if average &gt;= 90 and attendance &gt;= 0.9:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -4639,13 +4666,14 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>재고 상태 알림</h4>
-<div class="real-exam-stem">다음은 재고 수량에 따라 '품절', '재고 부족', '재고 충분'을 출력하는 Python 프로그램이다. 재고가 3개일 때 '재고 부족'이 출력되도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 재고 수량에 따라 '품절', '재고 부족', '재고 충분'을 출력하는 Python 프로그램이다. 재고가 3개일 때 '재고 부족'이 출력되도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">stock = 3
 
 if stock == 0:
     state = "품절"
-<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="elif" placeholder="ⓐ" spellcheck="false" type="text"/> stock &lt; 5:
+# 재고 상태 알림 코드 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="elif stock &lt; 5:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     state = "재고 부족"
 else:
     state = "재고 충분"
@@ -4663,7 +4691,7 @@ print(state)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>elif</code><div class="answer-explain">앞의 조건이 거짓일 때 새로운 조건을 이어서 검사해야 하므로 중간 조건 분기가 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>elif stock &lt; 5:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -4674,13 +4702,14 @@ print(state)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>5층 피라미드</h4>
-<div class="real-exam-stem">다음은 5층 피라미드 모양으로 별을 출력하는 Python 프로그램이다. 별의 개수가 1, 3, 5, 7, 9개로 늘어나도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 5층 피라미드 모양으로 별을 출력하는 Python 프로그램이다. 별의 개수가 1, 3, 5, 7, 9개로 늘어나도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">floor = 5
 
 for i in range(floor):
     print(" " * (floor - i - 1), end="")
-    print("*" * <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="(i * 2 + 1)|i * 2 + 1|i*2+1" placeholder="ⓐ" spellcheck="false" type="text"/>)</div>
+    # 5층 피라미드 출력하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer='print("*" * (i * 2 + 1))|print("*" * i * 2 + 1)|print("*" * i*2+1)' placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/></div>
 <div class="mock-output"><b>【실행 결과】</b> 5층 피라미드 출력</div>
 <div class="mock-bottom-bar">
 <div class="practice-actions">
@@ -4693,7 +4722,7 @@ for i in range(floor):
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>(i * 2 + 1)</code><div class="answer-explain">주어진 변수와 계산 조건을 코드 식으로 표현한 부분입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print("*" * (i * 2 + 1))</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -4704,13 +4733,14 @@ for i in range(floor):
 </div>
 <div class="practice-card mock-practice">
 <h4>리스트 값 누적</h4>
-<div class="real-exam-stem">다음은 리스트에 저장된 모든 값을 반복문으로 더하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 리스트에 저장된 모든 값을 반복문으로 더하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">numbers = [10, 20, 30, 40]
 total = 0
 
 for n in numbers:
-    <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="total += n|total+=n" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 리스트 값 누적 처리하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="total += n|total+=n" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(total)</div>
 <div class="mock-output"><b>【실행 결과】</b> 100</div>
@@ -4725,7 +4755,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -4736,11 +4766,12 @@ print(total)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>마지막 요소 가져오기</h4>
-<div class="real-exam-stem">다음은 리스트의 마지막 요소를 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 리스트의 마지막 요소를 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">colors = ["red", "green", "blue"]
 
-print(colors[<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="-1" placeholder="ⓐ" spellcheck="false" type="text"/>])</div>
+# 마지막 요소 가져오기 출력하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="print(colors[-1])" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/></div>
 <div class="mock-output"><b>【실행 결과】</b> blue</div>
 <div class="mock-bottom-bar">
 <div class="practice-actions">
@@ -4753,7 +4784,7 @@ print(colors[<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-inpu
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>-1</code><div class="answer-explain">Python 리스트의 위치 번호를 이용해 문제에서 요구한 요소를 가리키는 값입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print(colors[-1])</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -4764,11 +4795,12 @@ print(colors[<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-inpu
 </div>
 <div class="practice-card mock-practice">
 <h4>인덱스로 전체 리스트 순회</h4>
-<div class="real-exam-stem">다음은 리스트의 인덱스를 이용해 모든 값을 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 리스트의 인덱스를 이용해 모든 값을 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">numbers = [10, 20, 30]
 
-for i in <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="range(len(numbers))" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 인덱스로 전체 리스트 순회 반복문 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="for i in range(len(numbers)):" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print(numbers[i])</div>
 <div class="mock-output"><b>【실행 결과】</b> 10 20 30</div>
 <div class="mock-bottom-bar">
@@ -4782,7 +4814,7 @@ for i in <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" d
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>range(len(numbers))</code><div class="answer-explain">반복해야 하는 시작값과 끝값을 만족하도록 반복 범위를 지정한 표현입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for i in range(len(numbers)):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -4793,13 +4825,14 @@ for i in <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" d
 </div>
 <div class="practice-card mock-practice">
 <h4>점수 딕셔너리 합계</h4>
-<div class="real-exam-stem">다음은 학생별 점수가 저장된 딕셔너리의 모든 점수를 합산하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 학생별 점수가 저장된 딕셔너리의 모든 점수를 합산하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = {"민수": 80, "지현": 90, "서연": 70}
 total = 0
 
 for name in scores:
-    <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="total += scores[name]|total+=scores[name]" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 점수 딕셔너리 합계 계산하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="total += scores[name]|total+=scores[name]" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(total)</div>
 <div class="mock-output"><b>【실행 결과】</b> 240</div>
@@ -4814,7 +4847,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += scores[name]</code><div class="answer-explain">딕셔너리는 key를 이용해 원하는 값을 조회하거나 수정하므로 해당 key 또는 접근식이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += scores[name]</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -4825,14 +4858,15 @@ print(total)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>80점 이상 학생 수</h4>
-<div class="real-exam-stem">다음은 학생별 점수 딕셔너리에서 80점 이상인 학생 수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 학생별 점수 딕셔너리에서 80점 이상인 학생 수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = {"민수": 75, "지현": 90, "서연": 82}
 count = 0
 
 for name in scores:
     if scores[name] &gt;= 80:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="count += 1|count+=1" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 80점 이상 학생 수 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="count += 1|count+=1" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(count)</div>
 <div class="mock-output"><b>【실행 결과】</b> 2</div>
@@ -4847,7 +4881,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count += 1</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count += 1</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -4858,13 +4892,14 @@ print(count)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>두 수 중 큰 값 반환</h4>
-<div class="real-exam-stem">다음은 두 수 중 큰 값을 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 두 수 중 큰 값을 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def bigger(a, b):
     if a &gt;= b:
         return a
     else:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="return b" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 두 수 중 큰 값 반환 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="return b" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(bigger(7, 12))</div>
 <div class="mock-output"><b>【실행 결과】</b> 12</div>
@@ -4879,7 +4914,7 @@ print(bigger(7, 12))</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return b</code><div class="answer-explain">조건에 해당하는 값을 함수의 결과로 돌려주어야 하므로 이 코드가 들어갑니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return b</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -4890,14 +4925,15 @@ print(bigger(7, 12))</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>리스트 짝수 개수 함수</h4>
-<div class="real-exam-stem">다음은 리스트 안의 짝수 개수를 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 리스트 안의 짝수 개수를 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def count_even(numbers):
     count = 0
     for n in numbers:
         if n % 2 == 0:
             count += 1
-    <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="return count" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 리스트 짝수 개수 함수 코드 작성하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="return count" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(count_even([1, 2, 4, 7, 8]))</div>
 <div class="mock-output"><b>【실행 결과】</b> 3</div>
@@ -4912,7 +4948,7 @@ print(count_even([1, 2, 4, 7, 8]))</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return count</code><div class="answer-explain">조건에 해당하는 값을 함수의 결과로 돌려주어야 하므로 이 코드가 들어갑니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return count</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="7" id="real-7">
@@ -4933,13 +4969,14 @@ print(count_even([1, 2, 4, 7, 8]))</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>모든 과목 합격 여부</h4>
-<div class="real-exam-stem">다음은 세 과목이 모두 60점 이상일 때만 최종 합격으로 판정하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 세 과목이 모두 60점 이상일 때만 최종 합격으로 판정하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">kor = 75
 eng = 80
 math = 65
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="kor &gt;= 60 and eng &gt;= 60 and math &gt;= 60|kor&gt;=60 and eng&gt;=60 and math&gt;=60" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 모든 과목 합격 여부 조건 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if kor &gt;= 60 and eng &gt;= 60 and math &gt;= 60:|if kor&gt;=60 and eng&gt;=60 and math&gt;=60:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print("최종 합격")
 else:
     print("불합격")</div>
@@ -4955,7 +4992,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>kor &gt;= 60 and eng &gt;= 60 and math &gt;= 60</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if kor &gt;= 60 and eng &gt;= 60 and math &gt;= 60:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -4966,11 +5003,12 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>3과 5의 공배수 판정</h4>
-<div class="real-exam-stem">다음은 주어진 수가 3과 5로 모두 나누어지는지 확인하는 Python 프로그램이다. 30이 입력된 경우 '공배수'가 출력되도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 주어진 수가 3과 5로 모두 나누어지는지 확인하는 Python 프로그램이다. 30이 입력된 경우 '공배수'가 출력되도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">num = 30
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="num % 3 == 0 and num % 5 == 0|num%3==0 and num%5==0" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 3과 5의 공배수 판정 조건 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if num % 3 == 0 and num % 5 == 0:|if num%3==0 and num%5==0:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print("공배수")
 else:
     print("아님")</div>
@@ -4986,7 +5024,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>num % 3 == 0 and num % 5 == 0</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if num % 3 == 0 and num % 5 == 0:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -4997,14 +5035,15 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>리스트 최댓값 찾기</h4>
-<div class="real-exam-stem">다음은 내장 최댓값 함수를 사용하지 않고 리스트의 가장 큰 값을 찾는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 내장 최댓값 함수를 사용하지 않고 리스트의 가장 큰 값을 찾는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">numbers = [7, 12, 5, 20, 9]
 biggest = numbers[0]
 
 for n in numbers:
     if n &gt; biggest:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="biggest = n|biggest=n" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 리스트 최댓값 찾기 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="biggest = n|biggest=n" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(biggest)</div>
 <div class="mock-output"><b>【실행 결과】</b> 20</div>
@@ -5019,7 +5058,7 @@ print(biggest)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>biggest = n</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>biggest = n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -5030,14 +5069,15 @@ print(biggest)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>기준 이상 점수 개수</h4>
-<div class="real-exam-stem">다음은 점수 리스트에서 80점 이상인 학생 수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 점수 리스트에서 80점 이상인 학생 수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = [75, 82, 90, 68, 88]
 count = 0
 
 for score in scores:
     if score &gt;= 80:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="count += 1|count+=1" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 기준 이상 점수 개수 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="count += 1|count+=1" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(count)</div>
 <div class="mock-output"><b>【실행 결과】</b> 3</div>
@@ -5052,7 +5092,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count += 1</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count += 1</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -5063,13 +5103,14 @@ print(count)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>2차원 리스트 전체 합계</h4>
-<div class="real-exam-stem">다음은 2차원 리스트의 모든 요소를 인덱스를 이용해 합산하는 Python 프로그램이다. 안쪽 반복문의 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 2차원 리스트의 모든 요소를 인덱스를 이용해 합산하는 Python 프로그램이다. 안쪽 반복문의 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = [[10, 20], [30, 40], [50, 60]]
 total = 0
 
 for i in range(len(scores)):
-    for j in <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="range(len(scores[i]))" placeholder="ⓐ" spellcheck="false" type="text"/>:
+    # 2차원 리스트 전체 합계 반복문 작성하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="for j in range(len(scores[i])):" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
         total += scores[i][j]
 
 print(total)</div>
@@ -5085,7 +5126,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>range(len(scores[i]))</code><div class="answer-explain">반복해야 하는 시작값과 끝값을 만족하도록 반복 범위를 지정한 표현입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for j in range(len(scores[i])):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -5096,14 +5137,15 @@ print(total)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>점수 평균 이상 개수</h4>
-<div class="real-exam-stem">다음은 점수 리스트에서 전체 평균 이상인 점수의 개수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 점수 리스트에서 전체 평균 이상인 점수의 개수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = [70, 80, 90, 100]
 average = sum(scores) / len(scores)
 count = 0
 
 for score in scores:
-    if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="score &gt;= average|score&gt;=average" placeholder="ⓐ" spellcheck="false" type="text"/>:
+    # 점수 평균 이상 개수 조건 작성하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if score &gt;= average:|if score&gt;=average:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
         count += 1
 
 print(count)</div>
@@ -5119,7 +5161,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>score &gt;= average</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if score &gt;= average:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -5130,13 +5172,14 @@ print(count)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>상품 재고 부족 개수</h4>
-<div class="real-exam-stem">다음은 상품별 재고 딕셔너리에서 재고가 5개 미만인 상품의 개수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 상품별 재고 딕셔너리에서 재고가 5개 미만인 상품의 개수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">stock = {"연필": 10, "지우개": 3, "자": 2}
 count = 0
 
 for item in stock:
-    if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="stock[item] &lt; 5|stock[item]&lt;5" placeholder="ⓐ" spellcheck="false" type="text"/>:
+    # 상품 재고 부족 개수 조건 작성하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if stock[item] &lt; 5:|if stock[item]&lt;5:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
         count += 1
 
 print(count)</div>
@@ -5152,7 +5195,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>stock[item] &lt; 5</code><div class="answer-explain">딕셔너리는 key를 이용해 원하는 값을 조회하거나 수정하므로 해당 key 또는 접근식이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if stock[item] &lt; 5:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -5163,12 +5206,13 @@ print(count)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>점수에 따라 상태 저장</h4>
-<div class="real-exam-stem">다음은 학생의 점수에 따라 pass 값을 변경하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 학생의 점수에 따라 pass 값을 변경하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">student = {"name": "민수", "score": 65, "pass": False}
 
 if student["score"] &gt;= 60:
-    <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="student[&quot;pass&quot;] = True|student['pass'] = True|student[&quot;pass&quot;]=True|student['pass']=True" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 점수에 따라 상태 저장 처리하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="student[&quot;pass&quot;] = True|student['pass'] = True|student[&quot;pass&quot;]=True|student['pass']=True" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(student["pass"])</div>
 <div class="mock-output"><b>【실행 결과】</b> True</div>
@@ -5183,7 +5227,7 @@ print(student["pass"])</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>student["pass"] = True</code><div class="answer-explain">딕셔너리는 key를 이용해 원하는 값을 조회하거나 수정하므로 해당 key 또는 접근식이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>student["pass"] = True</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -5194,12 +5238,13 @@ print(student["pass"])</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>리스트 합계 함수</h4>
-<div class="real-exam-stem">다음은 리스트의 모든 값을 반복문으로 더해 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 리스트의 모든 값을 반복문으로 더해 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def list_total(numbers):
     total = 0
     for n in numbers:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="total += n|total+=n" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 리스트 합계 함수 계산하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="total += n|total+=n" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     return total
 
 print(list_total([10, 20, 30]))</div>
@@ -5215,7 +5260,7 @@ print(list_total([10, 20, 30]))</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -5226,12 +5271,13 @@ print(list_total([10, 20, 30]))</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>팩토리얼 함수</h4>
-<div class="real-exam-stem">다음은 전달받은 정수의 팩토리얼을 계산하여 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 전달받은 정수의 팩토리얼을 계산하여 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def factorial(n):
     result = 1
     for i in range(1, n + 1):
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="result *= i|result*=i" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 팩토리얼 함수 계산하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="result *= i|result*=i" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     return result
 
 print(factorial(5))</div>
@@ -5247,7 +5293,7 @@ print(factorial(5))</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result *= i</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result *= i</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="8" id="real-8">
@@ -5268,12 +5314,13 @@ print(factorial(5))</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>지역별 배송 조건</h4>
-<div class="real-exam-stem">다음은 지역과 주문 금액에 따라 무료 배송 여부를 결정하는 Python 프로그램이다. 서울이면서 주문 금액이 30000원 이상인 경우 무료 배송이 되도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 지역과 주문 금액에 따라 무료 배송 여부를 결정하는 Python 프로그램이다. 서울이면서 주문 금액이 30000원 이상인 경우 무료 배송이 되도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">region = "서울"
 total = 35000
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="region == &quot;서울&quot; and total &gt;= 30000|region==&quot;서울&quot; and total&gt;=30000|region == '서울' and total &gt;= 30000" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 지역별 배송 조건 조건 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if region == &quot;서울&quot; and total &gt;= 30000:|if region==&quot;서울&quot; and total&gt;=30000:|if region == '서울' and total &gt;= 30000:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     delivery = 0
 else:
     delivery = 3000
@@ -5291,7 +5338,7 @@ print(delivery)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>region == "서울" and total &gt;= 30000</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if region == "서울" and total &gt;= 30000:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -5302,14 +5349,15 @@ print(delivery)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>비밀번호 재시도 판정</h4>
-<div class="real-exam-stem">다음은 비밀번호가 틀렸더라도 남은 시도 횟수가 있으면 다시 시도하도록 안내하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 비밀번호가 틀렸더라도 남은 시도 횟수가 있으면 다시 시도하도록 안내하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">correct = False
 remain = 2
 
 if correct:
     print("로그인")
-elif <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="remain &gt; 0|remain&gt;0" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 비밀번호 재시도 판정 조건 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="elif remain &gt; 0:|elif remain&gt;0:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print("다시 시도")
 else:
     print("접근 차단")</div>
@@ -5325,7 +5373,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>remain &gt; 0</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>elif remain &gt; 0:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -5336,10 +5384,11 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>좌표 조합 출력</h4>
-<div class="real-exam-stem">다음은 두 개의 반복문을 사용하여 (1,1), (1,2), (2,1), (2,2)를 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 두 개의 반복문을 사용하여 (1,1), (1,2), (2,1), (2,2)를 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">for i in range(1, 3):
-    for j in <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="range(1, 3)|range(1,3)" placeholder="ⓐ" spellcheck="false" type="text"/>:
+    # 좌표 조합 출력 반복문 작성하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="for j in range(1, 3):|for j in range(1,3):" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
         print(i, j)</div>
 <div class="mock-output"><b>【실행 결과】</b> 1 1 / 1 2 / 2 1 / 2 2</div>
 <div class="mock-bottom-bar">
@@ -5353,7 +5402,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>range(1, 3)</code><div class="answer-explain">반복해야 하는 시작값과 끝값을 만족하도록 반복 범위를 지정한 표현입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for j in range(1, 3):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -5364,14 +5413,15 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>2차원 리스트 전체 합</h4>
-<div class="real-exam-stem">다음은 2차원 리스트의 모든 요소를 중첩 반복문으로 더하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 2차원 리스트의 모든 요소를 중첩 반복문으로 더하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">data = [[1, 2], [3, 4], [5, 6]]
 total = 0
 
 for row in data:
     for value in row:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="total += value|total+=value" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 2차원 리스트 전체 합 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="total += value|total+=value" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(total)</div>
 <div class="mock-output"><b>【실행 결과】</b> 21</div>
@@ -5386,7 +5436,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += value</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += value</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -5397,14 +5447,15 @@ print(total)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>최솟값 직접 찾기</h4>
-<div class="real-exam-stem">다음은 내장 최솟값 함수를 사용하지 않고 리스트의 가장 작은 값을 찾는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 내장 최솟값 함수를 사용하지 않고 리스트의 가장 작은 값을 찾는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">numbers = [8, 3, 12, 5]
 smallest = numbers[0]
 
 for n in numbers:
     if n &lt; smallest:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="smallest = n|smallest=n" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 최솟값 직접 찾기 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="smallest = n|smallest=n" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(smallest)</div>
 <div class="mock-output"><b>【실행 결과】</b> 3</div>
@@ -5419,7 +5470,7 @@ print(smallest)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>smallest = n</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>smallest = n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -5430,14 +5481,15 @@ print(smallest)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>양수만 더하기</h4>
-<div class="real-exam-stem">다음은 리스트에서 양수만 골라 합계를 구하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 리스트에서 양수만 골라 합계를 구하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">numbers = [-3, 5, -1, 7, 2]
 total = 0
 
 for n in numbers:
     if n &gt; 0:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="total += n|total+=n" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 양수만 더하기 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="total += n|total+=n" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(total)</div>
 <div class="mock-output"><b>【실행 결과】</b> 14</div>
@@ -5452,7 +5504,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -5463,11 +5515,12 @@ print(total)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>빈 딕셔너리에 정보 저장</h4>
-<div class="real-exam-stem">다음은 빈 딕셔너리에 이름과 점수를 차례대로 저장하는 Python 프로그램이다. 점수 90이 저장되도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 빈 딕셔너리에 이름과 점수를 차례대로 저장하는 Python 프로그램이다. 점수 90이 저장되도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">student = {}
 student["name"] = "민수"
-<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="student[&quot;score&quot;] = 90|student['score'] = 90|student[&quot;score&quot;]=90|student['score']=90" placeholder="ⓐ" spellcheck="false" type="text"/>
+# 빈 딕셔너리에 정보 저장 처리하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="student[&quot;score&quot;] = 90|student['score'] = 90|student[&quot;score&quot;]=90|student['score']=90" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(student)</div>
 <div class="mock-output"><b>【실행 결과】</b> {'name': '민수', 'score': 90}</div>
@@ -5482,7 +5535,7 @@ print(student)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>student["score"] = 90</code><div class="answer-explain">딕셔너리는 key를 이용해 원하는 값을 조회하거나 수정하므로 해당 key 또는 접근식이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>student["score"] = 90</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -5493,13 +5546,14 @@ print(student)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>영한 단어 조회</h4>
-<div class="real-exam-stem">다음은 영단어와 뜻을 저장한 딕셔너리에서 apple의 뜻을 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 영단어와 뜻을 저장한 딕셔너리에서 apple의 뜻을 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">words = {"apple": "사과", "banana": "바나나"}
 
 key = "apple"
 
-print(words[<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="key" placeholder="ⓐ" spellcheck="false" type="text"/>])</div>
+# 영한 단어 조회 출력하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="print(words[key])" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/></div>
 <div class="mock-output"><b>【실행 결과】</b> 사과</div>
 <div class="mock-bottom-bar">
 <div class="practice-actions">
@@ -5512,7 +5566,7 @@ print(words[<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>key</code><div class="answer-explain">앞에서 정의한 key 변수 또는 함수를 이 위치에서 사용해야 전체 코드 흐름이 완성됩니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print(words[key])</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -5523,13 +5577,14 @@ print(words[<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input
 </div>
 <div class="practice-card mock-practice">
 <h4>할인 금액 함수</h4>
-<div class="real-exam-stem">다음은 상품 금액이 50000원 이상이면 10퍼센트 할인된 금액을 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 상품 금액이 50000원 이상이면 10퍼센트 할인된 금액을 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def discount(price):
     if price &gt;= 50000:
         return price * 0.9
     else:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="return price" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 할인 금액 함수 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="return price" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(discount(30000))</div>
 <div class="mock-output"><b>【실행 결과】</b> 30000</div>
@@ -5544,7 +5599,7 @@ print(discount(30000))</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return price</code><div class="answer-explain">조건에 해당하는 값을 함수의 결과로 돌려주어야 하므로 이 코드가 들어갑니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return price</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -5555,12 +5610,13 @@ print(discount(30000))</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>딕셔너리 점수 조회 함수</h4>
-<div class="real-exam-stem">다음은 학생 이름을 전달받아 딕셔너리에서 점수를 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 학생 이름을 전달받아 딕셔너리에서 점수를 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = {"민수": 80, "지현": 90}
 
 def get_score(name):
-    return <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="scores[name]" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 딕셔너리 점수 조회 함수 결과 반환하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="return scores[name]" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(get_score("지현"))</div>
 <div class="mock-output"><b>【실행 결과】</b> 90</div>
@@ -5575,7 +5631,7 @@ print(get_score("지현"))</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>scores[name]</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return scores[name]</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="9" id="real-9">
@@ -5596,12 +5652,13 @@ print(get_score("지현"))</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>성적 우수상 판정</h4>
-<div class="real-exam-stem">다음은 평균이 90점 이상이거나 수학 점수가 100점이면 우수상 대상으로 판정하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 평균이 90점 이상이거나 수학 점수가 100점이면 우수상 대상으로 판정하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">average = 86
 math = 100
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="average &gt;= 90 or math == 100|math == 100 or average &gt;= 90|average&gt;=90 or math==100|math==100 or average&gt;=90" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 성적 우수상 판정 조건 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if average &gt;= 90 or math == 100:|if math == 100 or average &gt;= 90:|if average&gt;=90 or math==100:|if math==100 or average&gt;=90:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print("우수상 대상")
 else:
     print("대상 아님")</div>
@@ -5617,7 +5674,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>average &gt;= 90 or math == 100</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if average &gt;= 90 or math == 100:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -5628,13 +5685,14 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>중첩 조건으로 좌석 배정</h4>
-<div class="real-exam-stem">다음은 나이가 13세 미만인 경우 보호자 동반 여부를 추가로 확인하는 Python 프로그램이다. 10세이고 보호자가 있는 경우 '입장 가능'이 출력되도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 나이가 13세 미만인 경우 보호자 동반 여부를 추가로 확인하는 Python 프로그램이다. 10세이고 보호자가 있는 경우 '입장 가능'이 출력되도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">age = 10
 guardian = True
 
 if age &lt; 13:
-    if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="guardian" placeholder="ⓐ" spellcheck="false" type="text"/>:
+    # 중첩 조건으로 좌석 배정 조건 작성하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if guardian:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
         print("입장 가능")
     else:
         print("보호자 필요")
@@ -5652,7 +5710,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>guardian</code><div class="answer-explain">앞에서 정의한 guardian 변수 또는 함수를 이 위치에서 사용해야 전체 코드 흐름이 완성됩니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if guardian:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -5663,14 +5721,15 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>2차원 리스트 짝수 개수</h4>
-<div class="real-exam-stem">다음은 2차원 리스트에서 짝수의 개수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 2차원 리스트에서 짝수의 개수를 세는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">data = [[1, 2, 3], [4, 5, 6]]
 count = 0
 
 for row in data:
     for value in row:
-        if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="value % 2 == 0|value%2==0" placeholder="ⓐ" spellcheck="false" type="text"/>:
+        # 2차원 리스트 짝수 개수 조건 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if value % 2 == 0:|if value%2==0:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
             count += 1
 
 print(count)</div>
@@ -5686,7 +5745,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>value % 2 == 0</code><div class="answer-explain">짝수는 2로 나누었을 때 나머지가 0이므로 이 조건식으로 판별할 수 있습니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if value % 2 == 0:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -5697,13 +5756,14 @@ print(count)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>목표값을 찾으면 반복 종료</h4>
-<div class="real-exam-stem">다음은 리스트를 순회하다가 값 7을 찾으면 반복을 종료하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 리스트를 순회하다가 값 7을 찾으면 반복을 종료하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">numbers = [2, 4, 7, 9, 12]
 
 for n in numbers:
     if n == 7:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="break" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 목표값을 찾으면 반복 종료 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="break" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print(n)</div>
 <div class="mock-output"><b>【실행 결과】</b> 2 4</div>
 <div class="mock-bottom-bar">
@@ -5717,7 +5777,7 @@ for n in numbers:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>break</code><div class="answer-explain">목표 값을 찾은 시점에서 반복을 즉시 끝내야 하므로 반복 종료 명령이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>break</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -5728,13 +5788,14 @@ for n in numbers:
 </div>
 <div class="practice-card mock-practice">
 <h4>행마다 최댓값 저장</h4>
-<div class="real-exam-stem">다음은 2차원 리스트의 각 행에서 가장 큰 값을 새로운 리스트에 저장하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 2차원 리스트의 각 행에서 가장 큰 값을 새로운 리스트에 저장하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">data = [[3, 8, 2], [10, 4, 6]]
 result = []
 
 for row in data:
-    <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="result.append(max(row))" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 행마다 최댓값 저장 처리하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="result.append(max(row))" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(result)</div>
 <div class="mock-output"><b>【실행 결과】</b> [8, 10]</div>
@@ -5749,7 +5810,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result.append(max(row))</code><div class="answer-explain">조건을 만족한 값을 새로운 리스트의 맨 뒤에 저장해야 하므로 이 코드가 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result.append(max(row))</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -5760,11 +5821,12 @@ print(result)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>리스트 역순 출력</h4>
-<div class="real-exam-stem">다음은 리스트의 값을 뒤에서부터 앞쪽 순서로 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 리스트의 값을 뒤에서부터 앞쪽 순서로 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">numbers = [1, 2, 3, 4, 5]
 
-for i in <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="range(len(numbers) - 1, -1, -1)|range(len(numbers)-1,-1,-1)" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 리스트 역순 출력 반복문 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="for i in range(len(numbers) - 1, -1, -1):|for i in range(len(numbers)-1,-1,-1):" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print(numbers[i])</div>
 <div class="mock-output"><b>【실행 결과】</b> 5 4 3 2 1</div>
 <div class="mock-bottom-bar">
@@ -5778,7 +5840,7 @@ for i in <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" d
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>range(len(numbers) - 1, -1, -1)</code><div class="answer-explain">반복해야 하는 시작값과 끝값을 만족하도록 반복 범위를 지정한 표현입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for i in range(len(numbers) - 1, -1, -1):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -5789,7 +5851,7 @@ for i in <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" d
 </div>
 <div class="practice-card mock-practice">
 <h4>평균 점수 계산</h4>
-<div class="real-exam-stem">다음은 학생별 점수 딕셔너리의 평균을 계산하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 학생별 점수 딕셔너리의 평균을 계산하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = {"A": 80, "B": 90, "C": 100}
 total = 0
@@ -5797,7 +5859,8 @@ total = 0
 for name in scores:
     total += scores[name]
 
-average = <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="total / len(scores)|total/len(scores)" placeholder="ⓐ" spellcheck="false" type="text"/>
+# 평균 점수 계산 계산하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="average = total / len(scores)|average = total/len(scores)" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(average)</div>
 <div class="mock-output"><b>【실행 결과】</b> 90.0</div>
@@ -5812,7 +5875,7 @@ print(average)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total / len(scores)</code><div class="answer-explain">리스트의 전체 요소 개수를 기준으로 계산하거나 반복해야 하는 자리입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>average = total / len(scores)</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -5823,7 +5886,7 @@ print(average)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>최고 점수 학생 찾기</h4>
-<div class="real-exam-stem">다음은 학생별 점수 딕셔너리에서 가장 높은 점수를 가진 학생을 찾는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 학생별 점수 딕셔너리에서 가장 높은 점수를 가진 학생을 찾는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = {"민수": 80, "지현": 95, "서연": 88}
 best_name = ""
@@ -5832,7 +5895,8 @@ best_score = -1
 for name in scores:
     if scores[name] &gt; best_score:
         best_score = scores[name]
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="best_name = name|best_name=name" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 최고 점수 학생 찾기 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="best_name = name|best_name=name" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(best_name)</div>
 <div class="mock-output"><b>【실행 결과】</b> 지현</div>
@@ -5847,7 +5911,7 @@ print(best_name)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>best_name = name</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>best_name = name</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -5858,13 +5922,14 @@ print(best_name)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>2차원 리스트 합계 함수</h4>
-<div class="real-exam-stem">다음은 2차원 리스트의 모든 값을 합산하여 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 2차원 리스트의 모든 값을 합산하여 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def total_2d(data):
     total = 0
     for row in data:
         for value in row:
-            <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="total += value|total+=value" placeholder="ⓐ" spellcheck="false" type="text"/>
+            # 2차원 리스트 합계 함수 계산하기
+            <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="total += value|total+=value" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     return total
 
 print(total_2d([[1, 2], [3, 4]]))</div>
@@ -5880,7 +5945,7 @@ print(total_2d([[1, 2], [3, 4]]))</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += value</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += value</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -5891,10 +5956,11 @@ print(total_2d([[1, 2], [3, 4]]))</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>합격 여부 반환 함수</h4>
-<div class="real-exam-stem">다음은 점수를 전달받아 60점 이상이면 True를 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 점수를 전달받아 60점 이상이면 True를 반환하는 Python 함수이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def is_pass(score):
-    return <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="score &gt;= 60|score&gt;=60" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 합격 여부 반환 함수 결과 반환하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="return score &gt;= 60|return score&gt;=60" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(is_pass(75))</div>
 <div class="mock-output"><b>【실행 결과】</b> True</div>
@@ -5909,7 +5975,7 @@ print(is_pass(75))</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>score &gt;= 60</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return score &gt;= 60</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="10" id="real-10">
@@ -5930,12 +5996,13 @@ print(is_pass(75))</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>평균과 최저점 동시 판정</h4>
-<div class="real-exam-stem">다음은 평균이 80점 이상이고 모든 과목이 60점 이상일 때 합격으로 판정하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 평균이 80점 이상이고 모든 과목이 60점 이상일 때 합격으로 판정하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = [90, 85, 65]
 average = sum(scores) / len(scores)
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="average &gt;= 80 and min(scores) &gt;= 60|average&gt;=80 and min(scores)&gt;=60" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 평균과 최저점 동시 판정 조건 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if average &gt;= 80 and min(scores) &gt;= 60:|if average&gt;=80 and min(scores)&gt;=60:" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print("합격")
 else:
     print("불합격")</div>
@@ -5951,7 +6018,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>average &gt;= 80 and min(scores) &gt;= 60</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if average &gt;= 80 and min(scores) &gt;= 60:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -5962,13 +6029,14 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>쿠폰 적용 여부</h4>
-<div class="real-exam-stem">다음은 회원이면서 쿠폰을 가지고 있거나, 주문 금액이 100000원 이상이면 할인을 적용하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 회원이면서 쿠폰을 가지고 있거나, 주문 금액이 100000원 이상이면 할인을 적용하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">member = True
 coupon = True
 total = 40000
 
-if <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="member and coupon or total &gt;= 100000|(member and coupon) or total &gt;= 100000|total &gt;= 100000 or (member and coupon)" placeholder="ⓐ" spellcheck="false" type="text"/>:
+# 쿠폰 적용 여부 조건 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="if member and coupon or total &gt;= 100000:|if (member and coupon) or total &gt;= 100000:|if total &gt;= 100000 or (member and coupon):" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print("할인 적용")
 else:
     print("할인 없음")</div>
@@ -5984,7 +6052,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>member and coupon or total &gt;= 100000</code><div class="answer-explain">문제에서 제시한 조건을 참·거짓으로 판정하기 위한 조건식입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if member and coupon or total &gt;= 100000:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -5995,11 +6063,12 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>3의 배수 건너뛰기</h4>
-<div class="real-exam-stem">다음은 1부터 10까지 반복하면서 3의 배수는 출력하지 않는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 1부터 10까지 반복하면서 3의 배수는 출력하지 않는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">for i in range(1, 11):
     if i % 3 == 0:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="continue" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 3의 배수 건너뛰기 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="continue" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     print(i)</div>
 <div class="mock-output"><b>【실행 결과】</b> 1 2 4 5 7 8 10</div>
 <div class="mock-bottom-bar">
@@ -6013,7 +6082,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>continue</code><div class="answer-explain">현재 반복의 나머지 코드를 건너뛰고 다음 반복으로 이동해야 하는 자리입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>continue</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -6024,7 +6093,7 @@ else:
 </div>
 <div class="practice-card mock-practice">
 <h4>0이 나오기 전까지 합계</h4>
-<div class="real-exam-stem">다음은 리스트의 값을 순서대로 확인하다가 0을 만나면 반복을 종료하고, 그 전까지의 합계를 구하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 리스트의 값을 순서대로 확인하다가 0을 만나면 반복을 종료하고, 그 전까지의 합계를 구하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">numbers = [5, 3, 4, 0, 9]
 total = 0
@@ -6032,7 +6101,8 @@ total = 0
 for n in numbers:
     if n == 0:
         break
-    <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="total += n|total+=n" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 0이 나오기 전까지 합계 계산하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="total += n|total+=n" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(total)</div>
 <div class="mock-output"><b>【실행 결과】</b> 12</div>
@@ -6047,7 +6117,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -6058,14 +6128,15 @@ print(total)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>두 리스트 같은 위치끼리 더하기</h4>
-<div class="real-exam-stem">다음은 두 리스트의 같은 위치에 있는 값을 더해 새로운 리스트를 만드는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 두 리스트의 같은 위치에 있는 값을 더해 새로운 리스트를 만드는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">a = [10, 20, 30]
 b = [1, 2, 3]
 result = []
 
 for i in range(len(a)):
-    <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="result.append(a[i] + b[i])|result.append(a[i]+b[i])" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 두 리스트 같은 위치끼리 더하기 코드 작성하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="result.append(a[i] + b[i])|result.append(a[i]+b[i])" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(result)</div>
 <div class="mock-output"><b>【실행 결과】</b> [11, 22, 33]</div>
@@ -6080,7 +6151,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result.append(a[i] + b[i])</code><div class="answer-explain">조건을 만족한 값을 새로운 리스트의 맨 뒤에 저장해야 하므로 이 코드가 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result.append(a[i] + b[i])</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -6091,7 +6162,7 @@ print(result)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>합격·불합격 결과 리스트</h4>
-<div class="real-exam-stem">다음은 점수 리스트를 이용해 각 학생의 합격 여부를 새로운 리스트에 저장하는 Python 프로그램이다. 60점 이상이면 '합격'으로 처리하도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 점수 리스트를 이용해 각 학생의 합격 여부를 새로운 리스트에 저장하는 Python 프로그램이다. 60점 이상이면 '합격'으로 처리하도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = [55, 70, 90, 40]
 result = []
@@ -6100,7 +6171,8 @@ for score in scores:
     if score &gt;= 60:
         result.append("합격")
     else:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="result.append(&quot;불합격&quot;)|result.append('불합격')" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 합격·불합격 결과 리스트 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="result.append(&quot;불합격&quot;)|result.append('불합격')" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(result)</div>
 <div class="mock-output"><b>【실행 결과】</b> ['불합격', '합격', '합격', '불합격']</div>
@@ -6115,7 +6187,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result.append("불합격")</code><div class="answer-explain">조건을 만족한 값을 새로운 리스트의 맨 뒤에 저장해야 하므로 이 코드가 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result.append("불합격")</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -6126,14 +6198,15 @@ print(result)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>등급 딕셔너리 만들기</h4>
-<div class="real-exam-stem">다음은 학생별 점수를 이용해 합격 여부를 새로운 딕셔너리에 저장하는 Python 프로그램이다. 60점 이상은 '합격'으로 처리하도록 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 학생별 점수를 이용해 합격 여부를 새로운 딕셔너리에 저장하는 Python 프로그램이다. 60점 이상은 '합격'으로 처리하도록 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">scores = {"민수": 55, "지현": 80}
 result = {}
 
 for name in scores:
     if scores[name] &gt;= 60:
-        <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="result[name] = &quot;합격&quot;|result[name] = '합격'|result[name]=&quot;합격&quot;" placeholder="ⓐ" spellcheck="false" type="text"/>
+        # 등급 딕셔너리 만들기 코드 작성하기
+        <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="result[name] = &quot;합격&quot;|result[name] = '합격'|result[name]=&quot;합격&quot;" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
     else:
         result[name] = "불합격"
 
@@ -6150,7 +6223,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result[name] = "합격"</code><div class="answer-explain">딕셔너리는 key를 이용해 원하는 값을 조회하거나 수정하므로 해당 key 또는 접근식이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result[name] = "합격"</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -6161,13 +6234,14 @@ print(result)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>상품 총 재고</h4>
-<div class="real-exam-stem">다음은 상품별 재고 수량이 저장된 딕셔너리에서 전체 재고 수를 계산하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 상품별 재고 수량이 저장된 딕셔너리에서 전체 재고 수를 계산하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">stock = {"연필": 10, "지우개": 5, "자": 7}
 total = 0
 
 for item in stock:
-    <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="total += stock[item]|total+=stock[item]" placeholder="ⓐ" spellcheck="false" type="text"/>
+    # 상품 총 재고 코드 작성하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="total += stock[item]|total+=stock[item]" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(total)</div>
 <div class="mock-output"><b>【실행 결과】</b> 22</div>
@@ -6182,7 +6256,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += stock[item]</code><div class="answer-explain">딕셔너리는 key를 이용해 원하는 값을 조회하거나 수정하므로 해당 key 또는 접근식이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += stock[item]</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -6193,7 +6267,7 @@ print(total)</div>
 </div>
 <div class="practice-card mock-practice">
 <h4>함수를 반복문에서 호출</h4>
-<div class="real-exam-stem">다음은 숫자 리스트의 각 값을 두 배로 만드는 함수를 반복문 안에서 호출하여 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 숫자 리스트의 각 값을 두 배로 만드는 함수를 반복문 안에서 호출하여 출력하는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def double(n):
     return n * 2
@@ -6201,7 +6275,8 @@ print(total)</div>
 numbers = [1, 2, 3]
 
 for n in numbers:
-    print(<input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="double(n)" placeholder="ⓐ" spellcheck="false" type="text"/>)</div>
+    # 함수를 반복문에서 호출 출력하기
+    <input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="print(double(n))" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/></div>
 <div class="mock-output"><b>【실행 결과】</b> 2 4 6</div>
 <div class="mock-bottom-bar">
 <div class="practice-actions">
@@ -6214,7 +6289,7 @@ for n in numbers:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>double(n)</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print(double(n))</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -6225,7 +6300,7 @@ for n in numbers:
 </div>
 <div class="practice-card mock-practice">
 <h4>함수 결과를 다른 함수에 전달</h4>
-<div class="real-exam-stem">다음은 두 수의 합을 구한 뒤 그 결과를 두 배로 만드는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오.</div>
+<div class="real-exam-stem">다음은 두 수의 합을 구한 뒤 그 결과를 두 배로 만드는 Python 프로그램이다. 빈칸 ⓐ를 작성하시오. 주석을 참고하여 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def add(a, b):
     return a + b
@@ -6233,7 +6308,8 @@ for n in numbers:
 def double(n):
     return n * 2
 
-result = <input aria-label="빈칸 ⓐ" autocomplete="off" class="blank-input" data-answer="double(add(3, 4))" placeholder="ⓐ" spellcheck="false" type="text"/>
+# 함수 결과를 다른 함수에 전달 코드 작성하기
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="result = double(add(3, 4))" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(result)</div>
 <div class="mock-output"><b>【실행 결과】</b> 14</div>
@@ -6248,7 +6324,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>double(add(3, 4))</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result = double(add(3, 4))</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 주석의 지시에 맞는 한 줄 전체를 완성하는 형태입니다.</div></div>
 </div>
 </div>
 </section><div class="footer">SW·AI 교육강사 2급 실기 대비용 Python 기초 학습 웹앱 · 학습용 레퍼런스</div>
@@ -6567,6 +6643,12 @@ function canonicalPythonExpression(value){
   s = stripOuterParens(s);
   s = normalizeCompoundAssignment(s);
 
+  // 한 줄 전체를 입력하는 실전 문제: if/elif/while 내부 조건식도 의미 기준으로 비교
+  const statementMatch = s.match(/^(if|elif|while)\s+(.+):$/);
+  if(statementMatch){
+    return statementMatch[1] + ' ' + canonicalPythonExpression(statementMatch[2]) + ':';
+  }
+
   // 최상위 or 항은 순서가 달라도 같은 순수 조건식으로 인정
   const orParts = splitTopLevelKeyword(s, 'or');
   if(orParts.length > 1){
@@ -6684,6 +6766,11 @@ document.querySelectorAll('.practice-card').forEach(card=>{
 
 // 빈칸 입력칸: 입력 내용이 길어지면 가로폭도 자동으로 늘어나도록 조절
 function autoResizeBlankInput(input){
+  if(input.classList.contains('full-line-blank')){
+    input.style.width = 'min(760px, 92%)';
+    return;
+  }
+
   const accepted = (input.dataset.answer || '').split('|');
   const longestAnswer = accepted.reduce((a,b)=> a.length >= b.length ? a : b, '');
   const sample = input.value.length > longestAnswer.length ? input.value : longestAnswer;
