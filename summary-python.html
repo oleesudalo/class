@@ -3450,7 +3450,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>i % 2 == 0</code><div class="answer-explain">짝수는 2로 나누었을 때 나머지가 0이므로 이 조건식으로 판별할 수 있습니다.</div><br/><br/><strong>ⓑ</strong> <code>total += i</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>i % 2 == 0</code><div class="answer-explain">짝수는 2로 나누었을 때 나머지가 0이므로 이 조건식으로 판별할 수 있습니다.</div><br/><br/><strong>ⓑ</strong> <code>total += i</code><div class="answer-explain">i가 짝수인 경우에만 이 줄이 실행됩니다. 현재 짝수 i를 total에 계속 더해야 1부터 20까지의 짝수 합을 구할 수 있으므로 total += i를 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -3513,7 +3513,7 @@ print(biggest)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>biggest = n</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>biggest = n</code><div class="answer-explain">n이 지금까지 저장된 biggest보다 큰 경우에만 실행되는 부분입니다. 가장 큰 값을 갱신하려면 biggest에 현재 n을 저장해야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -3745,7 +3745,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count += 1</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count += 1</code><div class="answer-explain">현재 i가 홀수일 때만 실행되는 부분이므로, 홀수를 하나 찾을 때마다 count를 1씩 증가시켜 개수를 세어야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -3776,7 +3776,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result *= i</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result *= i</code><div class="answer-explain">팩토리얼은 1부터 5까지의 수를 계속 곱한 결과입니다. 반복 중인 i를 기존 result에 곱해 다시 저장해야 하므로 result *= i가 필요합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -4106,7 +4106,7 @@ while count &gt; 0:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count -= 1</code><div class="answer-explain">문제의 실행 결과와 코드 흐름을 만족시키기 위해 이 표현이 필요합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count -= 1</code><div class="answer-explain">while문이 반복될 때마다 count를 줄이지 않으면 count &gt; 0이 계속 참이 되어 무한 반복됩니다. 5부터 1까지 내려가려면 매 반복마다 count를 1씩 감소시켜야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -4333,7 +4333,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if year % 400 == 0 or (year % 4 == 0 and year % 100 != 0):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if year % 400 == 0 or (year % 4 == 0 and year % 100 != 0):</code><div class="answer-explain">윤년은 400의 배수이거나, 4의 배수이면서 100의 배수가 아닌 해입니다. 두 경우 중 하나만 만족해도 윤년이므로 or로 연결하고, 두 번째 기준은 두 조건을 모두 만족해야 하므로 and로 묶습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -4368,7 +4368,7 @@ print(rate)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>elif total &gt;= 50000:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>elif total &gt;= 50000:</code><div class="answer-explain">100000원 이상인 경우는 앞의 if에서 이미 처리됩니다. 따라서 그 조건에 해당하지 않으면서 50000원 이상인 경우만 추가로 확인하면 50000원 이상 100000원 미만 구간을 판정할 수 있습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -4395,7 +4395,7 @@ print(rate)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print("*" * i)</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>print("*" * i)</code><div class="answer-explain">i가 1부터 5까지 변할 때 별을 i개씩 출력해야 하므로 문자열 '*'을 i번 반복해서 출력합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -4424,7 +4424,7 @@ print(rate)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for j in range(5 - i):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>for j in range(5 - i):</code><div class="answer-explain">바깥 반복의 i가 0, 1, 2, 3, 4로 증가할수록 별의 개수는 5, 4, 3, 2, 1개로 줄어야 합니다. 따라서 안쪽 반복 횟수를 5-i로 정합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -4457,7 +4457,7 @@ print(unique)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>unique.append(n)</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>unique.append(n)</code><div class="answer-explain">n이 unique에 없을 때만 실행되는 위치이므로, 현재 값 n을 unique 리스트의 맨 뒤에 추가하면 중복 없이 새 리스트를 만들 수 있습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -4490,7 +4490,7 @@ print(passed)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>passed.append(score)</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>passed.append(score)</code><div class="answer-explain">score가 80점 이상일 때만 실행되는 위치이므로, 조건을 만족한 현재 점수를 passed 리스트에 추가해야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -4520,7 +4520,7 @@ print(book["borrowed"])</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>book["borrowed"] = False</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>book["borrowed"] = False</code><div class="answer-explain">대출 여부를 새 항목으로 저장해야 하고 초기 상태는 '대출되지 않음'이므로 borrowed 키에 False를 저장합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -4551,7 +4551,7 @@ print(player["hp"])</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>player["hp"] = player["hp"] - damage</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>player["hp"] = player["hp"] - damage</code><div class="answer-explain">현재 체력에서 damage만큼 감소한 값을 다시 hp 항목에 저장해야 하므로 기존 hp 값에서 damage를 뺀 결과를 같은 키에 대입합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -4586,7 +4586,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += sum_pair(numbers[i * 2], numbers[i * 2 + 1])</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>total += sum_pair(numbers[i * 2], numbers[i * 2 + 1])</code><div class="answer-explain">반복문의 i에 따라 0·1번, 2·3번 요소를 한 쌍으로 묶어 sum_pair()에 전달해야 합니다. 각 쌍의 합을 기존 total에 계속 더해야 하므로 +=로 누적합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -4623,7 +4623,7 @@ print_result(result)</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return n * 2</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>return n * 2</code><div class="answer-explain">double 함수는 전달받은 n의 두 배를 결과로 돌려줘야 합니다. 따라서 n에 2를 곱한 값을 return으로 반환합니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="6" id="real-6">
@@ -4665,7 +4665,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if average &gt;= 90 and attendance &gt;= 0.9:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if average &gt;= 90 and attendance &gt;= 0.9:</code><div class="answer-explain">장학금 대상이 되려면 평균 90점 이상과 출석률 0.9 이상을 동시에 만족해야 하므로 두 조건을 and로 연결한 if문이 필요합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -4700,7 +4700,7 @@ print(state)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>elif stock &lt; 5:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>elif stock &lt; 5:</code><div class="answer-explain">stock이 0인 경우는 앞의 if에서 이미 '품절'로 처리됩니다. 그 외에서 stock이 5보다 작으면 1~4개이므로 '재고 부족'에 해당해 elif 조건을 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -4730,7 +4730,7 @@ for i in range(floor):
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print("*" * (i * 2 + 1))</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>print("*" * (i * 2 + 1))</code><div class="answer-explain">피라미드의 별 개수는 1, 3, 5, 7, 9처럼 층이 하나 내려갈 때마다 2개씩 증가합니다. i가 0부터 시작하므로 i*2+1로 각 층의 별 개수를 만들 수 있습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -4762,7 +4762,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>total += n</code><div class="answer-explain">리스트에서 현재 꺼낸 값 n을 반복할 때마다 total에 더해야 전체 합계를 구할 수 있으므로 total += n으로 누적합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -4790,7 +4790,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print(colors[-1])</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>print(colors[-1])</code><div class="answer-explain">Python에서 인덱스 -1은 리스트의 마지막 요소를 가리키므로 colors[-1]을 출력하면 마지막 색상을 바로 가져올 수 있습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -4819,7 +4819,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for i in range(len(numbers)):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>for i in range(len(numbers)):</code><div class="answer-explain">리스트의 모든 인덱스를 사용하려면 0부터 len(numbers)-1까지 반복해야 합니다. range(len(numbers))가 정확히 그 인덱스 범위를 만듭니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -4851,7 +4851,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += scores[name]</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>total += scores[name]</code><div class="answer-explain">반복 중인 name을 이용해 scores[name]으로 현재 학생의 점수를 가져오고, 그 값을 total에 계속 더해야 전체 점수 합계가 됩니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -4884,7 +4884,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count += 1</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>count += 1</code><div class="answer-explain">80점 이상인 학생을 발견할 때마다 count를 1씩 증가시켜야 하므로 count += 1로 개수를 누적합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -4916,7 +4916,7 @@ print(bigger(7, 12))</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return b</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>return b</code><div class="answer-explain">앞의 if는 a가 더 크거나 같은 경우 a를 반환합니다. else는 b가 더 큰 경우이므로 b를 함수 결과로 반환해야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -4949,7 +4949,7 @@ print(count_even([1, 2, 4, 7, 8]))</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return count</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>return count</code><div class="answer-explain">반복문이 끝나면 짝수의 개수가 count에 저장되어 있습니다. 함수 밖에서 그 값을 사용할 수 있도록 return count로 반환합니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="7" id="real-7">
@@ -4992,7 +4992,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if kor &gt;= 60 and eng &gt;= 60 and math &gt;= 60:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if kor &gt;= 60 and eng &gt;= 60 and math &gt;= 60:</code><div class="answer-explain">세 과목이 모두 60점 이상이어야 합격이므로 국어, 영어, 수학의 세 조건을 모두 and로 연결해야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -5023,7 +5023,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if num % 3 == 0 and num % 5 == 0:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if num % 3 == 0 and num % 5 == 0:</code><div class="answer-explain">3과 5의 공배수는 두 수로 나누었을 때 나머지가 모두 0이어야 합니다. 따라서 두 나머지 조건을 and로 연결합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -5056,7 +5056,7 @@ print(biggest)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>biggest = n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>biggest = n</code><div class="answer-explain">현재 값 n이 지금까지 저장한 biggest보다 클 때 실행되는 부분이므로 biggest를 n으로 바꾸면 반복이 끝난 뒤 가장 큰 값만 남습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -5089,7 +5089,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>count += 1</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>count += 1</code><div class="answer-explain">80점 이상인 점수를 찾을 때마다 합격 학생 수를 한 명씩 늘려야 하므로 count += 1이 필요합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -5122,7 +5122,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for j in range(len(scores[i])):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>for j in range(len(scores[i])):</code><div class="answer-explain">현재 행은 scores[i]이므로 그 행의 열 개수만큼 j를 반복해야 합니다. range(len(scores[i]))를 사용하면 현재 행의 모든 열 인덱스를 순회할 수 있습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -5156,7 +5156,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if score &gt;= average:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if score &gt;= average:</code><div class="answer-explain">현재 score가 전체 평균 average 이상인 경우만 세어야 하므로 score &gt;= average를 if 조건으로 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -5189,7 +5189,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if stock[item] &lt; 5:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if stock[item] &lt; 5:</code><div class="answer-explain">현재 상품 item의 재고는 stock[item]으로 가져옵니다. 재고가 5개 미만인 상품만 세어야 하므로 stock[item] &lt; 5를 조건으로 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -5220,7 +5220,7 @@ print(student["pass"])</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>student["pass"] = True</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>student["pass"] = True</code><div class="answer-explain">점수가 합격 기준을 만족한 경우 student 딕셔너리의 pass 상태를 참으로 바꿔야 하므로 해당 키에 True를 저장합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -5252,7 +5252,7 @@ print(list_total([10, 20, 30]))</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>total += n</code><div class="answer-explain">함수 안에서 리스트의 각 값 n을 total에 계속 더해야 최종 합계를 만들 수 있으므로 total += n을 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -5284,7 +5284,7 @@ print(factorial(5))</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result *= i</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>result *= i</code><div class="answer-explain">팩토리얼은 1부터 n까지의 값을 차례대로 곱한 결과입니다. 반복 중인 i를 기존 result에 계속 곱해 저장해야 하므로 result *= i가 필요합니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="8" id="real-8">
@@ -5328,7 +5328,7 @@ print(delivery)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if region == "서울" and total &gt;= 30000:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if region == "서울" and total &gt;= 30000:</code><div class="answer-explain">무료 배송은 '서울 지역'과 '주문 금액 30000원 이상'을 동시에 만족해야 하므로 두 조건을 and로 연결합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -5362,7 +5362,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>elif remain &gt; 0:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>elif remain &gt; 0:</code><div class="answer-explain">앞의 if에서 비밀번호가 맞는 경우를 처리한 뒤, 틀린 경우 중 남은 시도 횟수가 0보다 클 때 다시 시도해야 하므로 elif remain &gt; 0을 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -5390,7 +5390,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for j in range(1, 3):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>for j in range(1, 3):</code><div class="answer-explain">바깥 반복의 i와 조합할 j도 1과 2를 차례대로 가져야 하므로 range(1, 3)으로 안쪽 반복 범위를 정합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -5423,7 +5423,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += value</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>total += value</code><div class="answer-explain">2차원 리스트의 안쪽 반복에서 현재 요소가 value에 들어옵니다. 모든 요소의 합을 구하려면 value를 total에 계속 누적해야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -5456,7 +5456,7 @@ print(smallest)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>smallest = n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>smallest = n</code><div class="answer-explain">n이 현재 smallest보다 작을 때 실행되는 부분이므로 smallest를 n으로 바꾸면 반복이 끝난 뒤 가장 작은 값이 남습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -5489,7 +5489,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>total += n</code><div class="answer-explain">양수인 n만 이 위치까지 오므로, 그 값을 total에 누적하면 음수는 제외하고 양수만 더할 수 있습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -5519,7 +5519,7 @@ print(student)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>student["score"] = 90</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>student["score"] = 90</code><div class="answer-explain">student 딕셔너리에 점수 항목을 새로 만들고 90을 저장해야 하므로 score 키에 90을 대입합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -5549,7 +5549,7 @@ key = "apple"
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print(words[key])</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>print(words[key])</code><div class="answer-explain">조회할 단어가 key 변수에 저장되어 있으므로 words[key]로 해당 뜻을 가져와 print()로 출력합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -5581,7 +5581,7 @@ print(discount(30000))</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return price</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>return price</code><div class="answer-explain">50000원 이상인 경우는 앞의 if에서 할인된 금액을 이미 반환합니다. else에서는 할인 대상이 아니므로 입력받은 원래 price를 그대로 반환해야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -5612,7 +5612,7 @@ print(get_score("지현"))</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return scores[name]</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>return scores[name]</code><div class="answer-explain">함수의 매개변수 name에 학생 이름이 들어오므로 scores[name]으로 해당 학생의 점수를 찾고 그 값을 return으로 반환합니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="9" id="real-9">
@@ -5654,7 +5654,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if average &gt;= 90 or math == 100:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if average &gt;= 90 or math == 100:</code><div class="answer-explain">평균이 90점 이상이거나 수학이 100점이면 둘 중 하나만 만족해도 우수상 대상이므로 두 조건을 or로 연결합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -5689,7 +5689,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if guardian:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if guardian:</code><div class="answer-explain">바깥 if에서 이미 13세 미만인 경우만 들어온 상태입니다. 이 안에서는 보호자 동반 여부만 추가로 확인하면 되므로 guardian을 조건으로 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -5723,7 +5723,7 @@ print(count)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if value % 2 == 0:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if value % 2 == 0:</code><div class="answer-explain">짝수는 2로 나누었을 때 나머지가 0입니다. 현재 value가 짝수일 때만 count를 증가시키기 위해 이 조건식을 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -5754,7 +5754,7 @@ for n in numbers:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>break</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>break</code><div class="answer-explain">값 7을 찾은 순간 더 이상 뒤의 값을 확인할 필요가 없으므로 break로 반복문을 즉시 종료합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -5786,7 +5786,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result.append(max(row))</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>result.append(max(row))</code><div class="answer-explain">각 row의 가장 큰 값을 구한 뒤 결과 리스트에 차례대로 저장해야 하므로 max(row)의 결과를 result에 append합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -5815,7 +5815,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for i in range(len(numbers) - 1, -1, -1):</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>for i in range(len(numbers) - 1, -1, -1):</code><div class="answer-explain">마지막 인덱스 len(numbers)-1에서 시작해 0까지 거꾸로 이동해야 합니다. range의 끝값은 포함되지 않으므로 -1을 끝값으로 두고, -1씩 감소하도록 세 번째 값을 -1로 지정합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -5849,7 +5849,7 @@ print(average)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>average = total / len(scores)</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>average = total / len(scores)</code><div class="answer-explain">평균은 전체 점수 합계 total을 학생 수 len(scores)로 나눈 값이므로 그 계산 결과를 average에 저장합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -5884,7 +5884,7 @@ print(best_name)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>best_name = name</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>best_name = name</code><div class="answer-explain">현재 name의 점수가 지금까지의 최고점보다 높을 때 실행되는 부분이므로 최고 점수 학생 이름을 현재 name으로 바꿔 저장합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -5917,7 +5917,7 @@ print(total_2d([[1, 2], [3, 4]]))</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += value</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>total += value</code><div class="answer-explain">2차원 리스트의 모든 value를 방문하고 있으므로 각 value를 total에 계속 더하면 전체 합계를 구할 수 있습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -5946,7 +5946,7 @@ print(is_pass(75))</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return score &gt;= 60</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>return score &gt;= 60</code><div class="answer-explain">이 함수는 점수가 60점 이상인지에 대한 참·거짓 값을 바로 결과로 돌려주면 되므로 비교식 score &gt;= 60을 return합니다.</div></div>
 </div>
 </div>
 </section><section class="section real-exam" data-exam="10" id="real-10">
@@ -5988,7 +5988,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if average &gt;= 80 and min(scores) &gt;= 60:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if average &gt;= 80 and min(scores) &gt;= 60:</code><div class="answer-explain">합격하려면 평균 80점 이상과 모든 과목 60점 이상을 동시에 만족해야 합니다. min(scores)가 60 이상이면 가장 낮은 점수도 60 이상이므로 두 조건을 and로 연결합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -6021,7 +6021,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if member and coupon or total &gt;= 100000:</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if member and coupon or total &gt;= 100000:</code><div class="answer-explain">할인은 '회원이면서 쿠폰이 있음' 또는 '주문 금액이 100000원 이상' 중 하나라도 만족하면 적용됩니다. 따라서 첫 두 조건을 and로 묶고, 금액 조건과는 or로 연결합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -6050,7 +6050,7 @@ else:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>continue</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>continue</code><div class="answer-explain">3의 배수인 경우에는 아래의 print(i)를 실행하지 않고 바로 다음 반복으로 넘어가야 하므로 continue를 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -6084,7 +6084,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += n</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>total += n</code><div class="answer-explain">0을 만나면 앞에서 break로 반복을 끝냅니다. 따라서 이 줄까지 도달한 n은 모두 합산 대상이므로 total에 계속 더합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="4">
@@ -6117,7 +6117,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result.append(a[i] + b[i])</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>result.append(a[i] + b[i])</code><div class="answer-explain">같은 인덱스 i의 a[i]와 b[i]를 더한 값을 새 리스트 result에 차례대로 저장해야 하므로 계산 결과를 append합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="5">
@@ -6152,7 +6152,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result.append("불합격")</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>result.append("불합격")</code><div class="answer-explain">이 줄은 score가 60점 미만인 else 영역이므로 해당 학생의 결과로 '불합격'을 result 리스트에 추가해야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="6">
@@ -6187,7 +6187,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result[name] = "합격"</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>result[name] = "합격"</code><div class="answer-explain">이 줄은 점수가 60점 이상인 경우에 실행되므로 현재 학생 name을 key로 사용해 결과 딕셔너리에 '합격'을 저장합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="7">
@@ -6219,7 +6219,7 @@ print(total)</div>
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>total += stock[item]</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>total += stock[item]</code><div class="answer-explain">현재 item의 재고 수량은 stock[item]으로 가져올 수 있습니다. 모든 상품의 재고 합계를 구하려면 이 값을 total에 계속 누적해야 합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="8">
@@ -6251,7 +6251,7 @@ for n in numbers:
 <button class="real-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print(double(n))</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>print(double(n))</code><div class="answer-explain">반복문에서 현재 숫자 n을 double() 함수에 전달해 두 배로 만든 뒤 바로 출력해야 하므로 print(double(n))을 사용합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="9">
@@ -6262,7 +6262,7 @@ for n in numbers:
 </div>
 <div class="practice-card mock-practice">
 <h4>함수 결과를 다른 함수에 전달</h4>
-<div class="real-exam-stem">다음은 두 수의 합을 구한 뒤 그 결과를 두 배로 만드는 Python 프로그램이다. 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
+<div class="real-exam-stem">다음은 두 수의 합을 구한 뒤 그 결과를 두 배로 만드는 Python 프로그램이다. 첫 번째 수는 3, 두 번째 수는 4를 사용한다. 두 수를 add 함수에 전달한 결과를 다시 double 함수에 전달하도록 빈 줄 전체에 들어갈 코드를 한 줄로 작성하시오.</div>
 <div class="real-code-label">【Python 코드】</div>
 <div class="practice-code mock-code">def add(a, b):
     return a + b
@@ -6270,7 +6270,7 @@ for n in numbers:
 def double(n):
     return n * 2
 
-<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="result = double(add(3, 4))" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
+<input aria-label="한 줄 전체 코드 입력" autocomplete="off" class="blank-input full-line-blank" data-answer="result = double(add(3, 4))|result = double(add(4, 3))|result=double(add(4,3))|result=double(add(3,4))" placeholder="한 줄 전체 코드 입력" spellcheck="false" type="text"/>
 
 print(result)</div>
 <div class="mock-output"><b>【실행 결과】</b> 14</div>
@@ -6285,7 +6285,7 @@ print(result)</div>
 <button class="real-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>result = double(add(3, 4))</code><div class="answer-explain">이 문제는 코드의 일부 표현만 채우는 것이 아니라, 빈 줄 전체에 들어갈 코드를 한 줄로 완성하는 형태입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>result = double(add(3, 4))</code><div class="answer-explain">먼저 add(3, 4)로 3과 4의 합인 7을 구합니다. 그 결과 7을 double() 함수에 전달하면 14가 되므로, 두 함수를 안쪽부터 차례대로 호출해 result에 저장합니다. 덧셈은 순서를 바꿔도 결과가 같으므로 add(4, 3)으로 작성해도 정답으로 인정됩니다.</div></div>
 </div>
 </div>
 </section><section class="section" id="past-hub">
@@ -6352,7 +6352,7 @@ print(result)</div>
 <button class="past-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if i % 3 == 0:</code><div class="answer-explain">3의 배수는 3으로 나누었을 때 나머지가 0이므로 그 조건을 if문으로 작성합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if i % 3 == 0:</code><div class="answer-explain">3의 배수는 3으로 나누었을 때 나머지가 0입니다. 따라서 현재 i를 3으로 나눈 나머지가 0인지 확인하는 if문이 필요합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -6381,7 +6381,7 @@ print(result)</div>
 <button class="past-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>for i in range(1, 10):</code><div class="answer-explain">1부터 9까지 차례대로 사용해야 하므로 반복 범위를 1부터 10 직전까지 지정합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>for i in range(1, 10):</code><div class="answer-explain">구구단에서 곱하는 수는 1부터 9까지 필요합니다. range의 끝값 10은 포함되지 않으므로 range(1, 10)을 사용하면 1~9를 정확히 반복할 수 있습니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -6410,7 +6410,7 @@ print(average([80, 90, 100]))</div>
 <button class="past-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>return sum(numbers) / len(numbers)</code><div class="answer-explain">평균은 전체 합계를 개수로 나눈 값이며, 함수의 결과로 사용하려면 return으로 반환해야 합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>return sum(numbers) / len(numbers)</code><div class="answer-explain">평균은 리스트의 합계를 요소 개수로 나눈 값입니다. 함수 밖에서 평균값을 사용할 수 있도록 그 계산 결과를 return으로 반환합니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -6440,7 +6440,7 @@ print(numbers)</div>
 <button class="past-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>numbers.sort(reverse=True)</code><div class="answer-explain">리스트 자체를 정렬할 때 sort()를 사용하며, reverse=True를 지정하면 내림차순으로 정렬됩니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>numbers.sort(reverse=True)</code><div class="answer-explain">numbers 리스트 자체를 큰 값부터 정렬해야 하므로 sort()를 사용하고, reverse=True를 지정해 내림차순으로 정렬합니다.</div></div>
 </div>
 </div>
 </section><section class="section past-year" data-year="2025" id="past-2025">
@@ -6480,7 +6480,7 @@ print(numbers)</div>
 <button class="past-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>while count &lt; 10:</code><div class="answer-explain">조건이 참인 동안 계속 반복해야 하므로 while문에 count가 10보다 작은 조건을 작성합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>while count &lt; 10:</code><div class="answer-explain">count가 10보다 작은 동안에만 계속 반복해야 하므로 while의 조건을 count &lt; 10으로 작성합니다. 반복 안에서 count가 1씩 증가해 10이 되면 반복이 끝납니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="1">
@@ -6511,7 +6511,7 @@ else:
 <button class="past-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>if num % 2 == 0:</code><div class="answer-explain">짝수는 2로 나누었을 때 나머지가 0이므로 그 조건을 if문에 작성합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>if num % 2 == 0:</code><div class="answer-explain">짝수는 2로 나누었을 때 나머지가 0입니다. 따라서 그 조건을 if문으로 작성하면 참일 때 '짝수', 거짓일 때 '홀수'가 출력됩니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="2">
@@ -6541,7 +6541,7 @@ print(numbers)</div>
 <button class="past-next-inline" type="button">다음 →</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>numbers.insert(1, 15)</code><div class="answer-explain">insert(위치, 값)은 지정한 인덱스 앞에 새 값을 삽입합니다. 인덱스 1은 두 번째 위치입니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>numbers.insert(1, 15)</code><div class="answer-explain">두 번째 위치는 인덱스 1입니다. insert(1, 15)를 사용하면 기존 인덱스 1의 값 앞에 15가 삽입됩니다.</div></div>
 </div>
 </div>
 <div class="mock-question" data-q="3">
@@ -6571,7 +6571,7 @@ for i in range(floor):
 <button class="past-next-inline" type="button">목록</button>
 </div>
 </div>
-<div class="answer-note"><b>정답과 설명</b><br/><br/><strong>ⓐ</strong> <code>print(" " * (floor - i - 1), end="")</code><div class="answer-explain">floor가 14이므로 첫 반복(i=0)에서 floor-i-1은 13이 됩니다. end=""를 사용해 공백 뒤에 별을 같은 줄에 이어 출력합니다.</div></div>
+<div class="answer-note"><b>정답과 설명</b><br/><br/><code>print(" " * (floor - i - 1), end="")</code><div class="answer-explain">첫 줄에서 i가 0이고 floor가 14이므로 floor-i-1은 13이 되어 공백 13칸을 만듭니다. end=""를 사용해야 다음 별 출력이 같은 줄에 이어집니다.</div></div>
 </div>
 </div>
 </section><div class="footer">SW·AI 교육강사 2급 실기 대비용 Python 기초 학습 웹앱 · 학습용 레퍼런스</div>
