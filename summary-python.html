@@ -1057,6 +1057,20 @@ html.fallback-fullscreen .main{
     padding:4px;
   }
 }
+
+/* CBT 안내 이미지 크기 조정: 1번, 3번 이미지만 기존의 절반 크기 */
+#cbt-guide .cbt-step-card:nth-of-type(1) .cbt-step-content img,
+#cbt-guide .cbt-step-card:nth-of-type(3) .cbt-step-content img{
+  width:50%;
+  max-width:540px;
+}
+@media(max-width:760px){
+  #cbt-guide .cbt-step-card:nth-of-type(1) .cbt-step-content img,
+  #cbt-guide .cbt-step-card:nth-of-type(3) .cbt-step-content img{
+    width:70%;
+    max-width:none;
+  }
+}
 </style>
 </head>
 <body>
