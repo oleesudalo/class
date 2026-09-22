@@ -184,29 +184,34 @@
   }
 
 
+
   .seat-page{
-    max-width:1100px;
+    max-width:1080px;
     margin:0 auto;
   }
   .seat-board{
-    background:#d9eaff;
-    border:1px solid #c7dcf6;
-    border-radius:28px;
+    background:#f7f9fc;
+    border:1px solid #e3e8ef;
+    border-radius:26px;
     padding:28px;
-    box-shadow:var(--shadow);
+    box-shadow:0 14px 36px rgba(28,39,60,.07);
   }
   .seat-board-top{
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:14px;
-    margin-bottom:20px;
-    color:#49627f;
-    font-size:13px;
+    margin-bottom:22px;
+    padding:0 2px;
   }
   .seat-board-title{
+    font-size:15px;
     font-weight:800;
-    color:#22354d;
+    color:#243447;
+  }
+  .seat-board-sub{
+    font-size:12px;
+    color:#8a96a8;
   }
   .seat-grid{
     display:grid;
@@ -214,74 +219,78 @@
     gap:18px;
   }
   .seat{
-    position:relative;
-    min-height:126px;
+    min-height:112px;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:rgba(255,255,255,.72);
-    border:1px solid rgba(92,126,164,.18);
-    border-radius:20px;
-    padding:18px 12px 24px;
-  }
-  .seat::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:10px;
-    transform:translateX(-50%);
-    width:54px;
-    height:16px;
-    border-radius:50%;
-    background:#bfe6dc;
-    border:2px solid rgba(52,95,91,.22);
   }
   .seat-card-btn{
-    position:relative;
-    z-index:1;
     width:100%;
-    border:1px solid #81773c;
-    border-radius:13px;
-    background:linear-gradient(#f8e8a2,#e9d477);
-    box-shadow:0 3px 8px rgba(58,51,18,.14);
-    padding:10px 8px 12px;
+    min-height:92px;
+    border:1px solid #dde3eb;
+    border-radius:16px;
+    background:#ffffff;
+    box-shadow:
+      0 2px 5px rgba(32,47,67,.04),
+      0 8px 20px rgba(32,47,67,.05);
+    padding:14px 12px;
     cursor:pointer;
-    color:#1c1c16;
-    transition:.18s ease;
+    color:#1f2937;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
   .seat-card-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 7px 14px rgba(58,51,18,.16);
+    transform:translateY(-3px);
+    border-color:#cbd6e3;
+    box-shadow:
+      0 4px 10px rgba(32,47,67,.06),
+      0 12px 26px rgba(32,47,67,.08);
   }
-  .seat-card-btn.nonlinked{
+  .seat-card-btn.empty{
     cursor:default;
+    background:
+      linear-gradient(180deg,#fbfcfe,#f4f6f9);
+    border-style:dashed;
+    border-color:#d8dee7;
+    box-shadow:none;
   }
-  .seat-card-btn.nonlinked:hover{
+  .seat-card-btn.empty:hover{
     transform:none;
+    box-shadow:none;
+    border-color:#d8dee7;
   }
   .seat-class{
     display:block;
     font-size:10px;
-    color:#6f6740;
-    margin-bottom:2px;
+    font-weight:700;
+    letter-spacing:.08em;
+    color:#9aa5b3;
+    margin-bottom:6px;
   }
   .seat-name{
     display:block;
-    font-size:24px;
-    font-weight:900;
+    font-size:22px;
+    font-weight:850;
     letter-spacing:-.04em;
+    color:#172033;
+  }
+  .seat-empty-text{
+    display:block;
+    font-size:14px;
+    font-weight:700;
+    color:#a6afbc;
   }
   .seat-note{
-    margin-top:18px;
+    margin-top:20px;
     padding:13px 15px;
     border-radius:12px;
-    background:rgba(255,255,255,.58);
-    color:#50657e;
+    background:#ffffff;
+    border:1px solid #e7ebf0;
+    color:#657386;
     font-size:13px;
     line-height:1.65;
   }
   .seat-note strong{
-    color:#243b55;
+    color:#26364a;
   }
   @media(max-width:900px){
     .seat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -289,8 +298,9 @@
   @media(max-width:520px){
     .seat-board{padding:18px}
     .seat-grid{grid-template-columns:1fr 1fr;gap:12px}
-    .seat{min-height:108px;padding:12px 8px 20px}
-    .seat-name{font-size:20px}
+    .seat{min-height:96px}
+    .seat-card-btn{min-height:82px;padding:12px 9px}
+    .seat-name{font-size:19px}
   }
 
   @media(max-width:920px){.ref-grid{grid-template-columns:1fr}}
@@ -354,7 +364,7 @@
         <div class="seat-board">
           <div class="seat-board-top">
             <span class="seat-board-title">교실 앞쪽</span>
-            <span>4열 × 4행</span>
+            <span class="seat-board-sub">4열 × 4행 · 학생 이름 클릭 시 구현 가이드 이동</span>
           </div>
           <div class="seat-grid">
             <div class="seat"><button class="seat-card-btn" onclick="openStudent('sunhong')">
@@ -363,10 +373,11 @@
             </button></div><div class="seat"><button class="seat-card-btn" onclick="openStudent('ayun')">
               <span class="seat-class">중등게임</span>
               <span class="seat-name">김아윤</span>
-            </button></div><div class="seat"><button class="seat-card-btn nonlinked" type="button" title="현재 학생별 가이드 목록에 없음">
-              <span class="seat-class">중등게임</span>
-              <span class="seat-name">김유민</span>
-            </button></div><div class="seat"><button class="seat-card-btn" onclick="openStudent('taehong')">
+            </button></div><div class="seat">
+            <button class="seat-card-btn empty" type="button" aria-label="빈 책상">
+              <span class="seat-empty-text">빈 책상</span>
+            </button>
+          </div><div class="seat"><button class="seat-card-btn" onclick="openStudent('taehong')">
               <span class="seat-class">중등게임</span>
               <span class="seat-name">김태홍</span>
             </button></div><div class="seat"><button class="seat-card-btn" onclick="openStudent('hanul')">
@@ -407,9 +418,7 @@
               <span class="seat-name">최지온</span>
             </button></div>
           </div>
-          <div class="seat-note">
-            <strong>참고:</strong> 자리표 사진에는 <b>김유민</b> 학생도 표시되어 있지만 현재 학생별 구현 가이드 15명 명단에는 포함되어 있지 않아 자리만 표시했습니다.
-          </div>
+          <div class="seat-note"><strong>자리표 안내:</strong> 현재 15명의 학생 자리만 표시하며, 빈 자리는 이름 없이 책상만 표시합니다.</div>
         </div>
       </div>
     </section>
