@@ -134,6 +134,22 @@
   .student-title h2{margin:0;font-size:27px}
   .subtitle{color:var(--muted);margin-top:7px;line-height:1.65}
   .topbar{display:none}
+
+  .ref-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .ref-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+  .ref-card h3{margin:0 0 6px;font-size:19px}
+  .ref-card .ref-desc{color:var(--muted);line-height:1.7;margin-bottom:16px;font-size:14px}
+  .ref-label{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin:17px 0 8px}
+  .param-table td:first-child{width:26%;font-weight:700;white-space:nowrap}
+  .param-table td:nth-child(2){width:24%;color:#475569;font-family:Consolas, Monaco, monospace;font-size:12px}
+  .mini-code{background:#f3f6fa;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-family:Consolas, Monaco, monospace;font-size:12px;line-height:1.6;overflow:auto;color:#263347}
+  .tip{font-size:13px;line-height:1.65;color:#4b5563;background:#f8fafc;border-radius:10px;padding:11px 12px;margin-top:10px}
+  .concept-link{cursor:pointer;text-decoration:none}
+  .concept-link:hover{filter:brightness(.97);transform:translateY(-1px)}
+  .reference-shortcut{margin-top:14px;font-size:13px;color:#4d5f79}
+  .reference-shortcut button{border:0;background:transparent;padding:0;color:var(--blue);font-weight:800;cursor:pointer}
+  @media(max-width:920px){.ref-grid{grid-template-columns:1fr}}
+
   @media(max-width:920px){
     .app{display:block}
     aside{position:fixed;left:-300px;z-index:20;width:280px;transition:.2s}
@@ -157,6 +173,7 @@
     <div class="menu-title">Overview</div>
     <button class="nav-btn active" data-target="overview">전체 개요</button>
     <button class="nav-btn" data-target="common">공통 핵심 코드</button>
+    <button class="nav-btn" data-target="reference">핵심 코드 레퍼런스</button>
 
     <div class="menu-title">학생별 가이드</div>
     <button class="nav-btn student-link" data-target="sunhong"><span>김선홍</span><span class="student-meta"><span class="menu-chip">확인 필요</span><span class="menu-chip level">미정</span></span></button>
@@ -220,18 +237,136 @@
         <table>
           <thead><tr><th>개념</th><th>주요 API</th><th>활용</th></tr></thead>
           <tbody>
-            <tr><td>플레이어 이동</td><td><code class="inline">Input.GetAxisRaw</code>, <code class="inline">Rigidbody2D</code></td><td>2D 이동 게임 전반</td></tr>
-            <tr><td>충돌/트리거</td><td><code class="inline">OnTriggerEnter2D</code>, <code class="inline">CompareTag()</code></td><td>아이템, 함정, 클리어</td></tr>
-            <tr><td>오브젝트 생성</td><td><code class="inline">Instantiate()</code></td><td>총알, 적, 상자, 아이템</td></tr>
-            <tr><td>오브젝트 제거</td><td><code class="inline">Destroy()</code></td><td>총알/적 제거</td></tr>
-            <tr><td>UI</td><td><code class="inline">TMP_Text</code>, <code class="inline">Slider</code>, <code class="inline">SetActive()</code></td><td>HP, 점수, 결과창</td></tr>
-            <tr><td>씬 전환</td><td><code class="inline">SceneManager.LoadScene()</code></td><td>타이틀/인게임/결과</td></tr>
-            <tr><td>데이터 관리</td><td><code class="inline">List&lt;T&gt;</code>, 배열, <code class="inline">enum</code></td><td>장비, 버프, 패, 블록</td></tr>
-            <tr><td>랜덤</td><td><code class="inline">Random.Range()</code></td><td>보상, 아이템, 로그라이크</td></tr>
-            <tr><td>시간</td><td><code class="inline">Time.deltaTime</code>, Coroutine</td><td>쿨타임, 함정, 타이머</td></tr>
-            <tr><td>Raycast</td><td><code class="inline">Physics.Raycast()</code></td><td>FPS 사격, 상호작용</td></tr>
+            <tr><td>플레이어 이동</td><td><span class="badge concept-link" onclick="openReference('movement')">Input.GetAxisRaw + Rigidbody2D</span></td><td>2D 이동 게임 전반</td></tr>
+            <tr><td>충돌/트리거</td><td><span class="badge concept-link" onclick="openReference('trigger')">OnTriggerEnter2D + CompareTag</span></td><td>아이템, 함정, 클리어</td></tr>
+            <tr><td>오브젝트 생성</td><td><span class="badge concept-link" onclick="openReference('instantiate')">Instantiate()</span></td><td>총알, 적, 상자, 아이템</td></tr>
+            <tr><td>오브젝트 제거</td><td><span class="badge concept-link" onclick="openReference('destroy')">Destroy()</span></td><td>총알/적 제거</td></tr>
+            <tr><td>UI</td><td><span class="badge concept-link" onclick="openReference('ui')">TMP_Text · Slider · SetActive</span></td><td>HP, 점수, 결과창</td></tr>
+            <tr><td>씬 전환</td><td><span class="badge concept-link" onclick="openReference('scene')">SceneManager.LoadScene()</span></td><td>타이틀/인게임/결과</td></tr>
+            <tr><td>데이터 관리</td><td><span class="badge concept-link" onclick="openReference('list')">List&lt;T&gt; · 배열 · enum</span></td><td>장비, 버프, 패, 블록</td></tr>
+            <tr><td>랜덤</td><td><span class="badge concept-link" onclick="openReference('random')">Random.Range()</span></td><td>보상, 아이템, 로그라이크</td></tr>
+            <tr><td>시간</td><td><span class="badge concept-link" onclick="openReference('coroutine')">Time.deltaTime · Coroutine</span></td><td>쿨타임, 함정, 타이머</td></tr>
+            <tr><td>Raycast</td><td><span class="badge concept-link" onclick="openReference('raycast')">Physics.Raycast()</span></td><td>FPS 사격, 상호작용</td></tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+
+    <section id="reference" class="content-section">
+      <div class="hero">
+        <div class="eyebrow">UNITY C# QUICK REFERENCE</div>
+        <h2>핵심 코드 레퍼런스</h2>
+        <p>학생 질문에 바로 답할 수 있도록 코드의 역할, 기본 작성법, 매개변수와 자주 하는 실수를 함께 정리했습니다.</p>
+      </div>
+      <div class="card full" style="margin-bottom:18px">
+        <h3>먼저 알아둘 용어</h3>
+        <table><thead><tr><th>용어</th><th>뜻</th><th>예시</th></tr></thead><tbody>
+          <tr><td>매개변수(Parameter)</td><td>함수를 실행할 때 전달하는 값</td><td><code class="inline">Destroy(gameObject, 2f)</code>의 두 값</td></tr>
+          <tr><td>반환값(Return)</td><td>함수가 실행된 뒤 돌려주는 결과</td><td><code class="inline">Random.Range(0, 10)</code>이 선택한 숫자</td></tr>
+          <tr><td>컴포넌트(Component)</td><td>GameObject에 붙여 기능을 추가하는 부품</td><td>Rigidbody2D, Collider2D, AudioSource</td></tr>
+          <tr><td>참조(Reference)</td><td>다른 오브젝트나 컴포넌트를 변수로 연결해 사용하는 것</td><td><code class="inline">public Rigidbody2D rb;</code></td></tr>
+          <tr><td>콜백 함수</td><td>특정 상황에 Unity가 자동 호출하는 함수</td><td>Start(), Update(), OnTriggerEnter2D()</td></tr>
+        </tbody></table>
+      </div>
+      <div class="ref-grid">
+
+        <article class="ref-card" id="ref-movement">
+          <h3>1. 2D 이동 · Rigidbody2D</h3><div class="ref-desc">키보드 입력을 받아 Rigidbody2D의 속도에 적용하는 기본 이동 방식입니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">float x = Input.GetAxisRaw("Horizontal");<br>float y = Input.GetAxisRaw("Vertical");<br><br>Vector2 move = new Vector2(x, y).normalized;<br>rb.linearVelocity = move * moveSpeed;</div>
+          <div class="ref-label">주요 값</div><table class="param-table"><tbody>
+            <tr><td>"Horizontal"</td><td>string</td><td>A/D 또는 ←/→ 입력 축</td></tr><tr><td>"Vertical"</td><td>string</td><td>W/S 또는 ↑/↓ 입력 축</td></tr><tr><td>moveSpeed</td><td>float</td><td>직접 만든 이동속도 변수</td></tr><tr><td>.normalized</td><td>Vector2</td><td>대각선 이동이 빨라지는 현상을 방지</td></tr>
+          </tbody></table><div class="tip"><b>포인트:</b> Rigidbody2D 기반 이동과 Transform 직접 이동을 무작정 섞지 않는 편이 좋습니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-trigger">
+          <h3>2. OnTriggerEnter2D · CompareTag</h3><div class="ref-desc">플레이어가 아이템·함정·도착지 같은 Trigger 영역에 들어왔을 때 실행됩니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">private void OnTriggerEnter2D(Collider2D other)<br>{<br>&nbsp;&nbsp;if (other.CompareTag("Item"))<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;score += 1;<br>&nbsp;&nbsp;&nbsp;&nbsp;Destroy(other.gameObject);<br>&nbsp;&nbsp;}<br>}</div>
+          <div class="ref-label">매개변수</div><table class="param-table"><tbody><tr><td>other</td><td>Collider2D</td><td>내 Trigger에 들어온 상대의 Collider</td></tr><tr><td>"Item"</td><td>string(Tag)</td><td>Inspector에서 설정한 태그 이름</td></tr></tbody></table>
+          <div class="tip"><b>조건:</b> Collider2D 중 하나는 Is Trigger가 켜져 있어야 하며, 충돌 쌍 중 적어도 하나에는 Rigidbody2D가 필요합니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-instantiate">
+          <h3>3. Instantiate()</h3><div class="ref-desc">총알, 적, 상자, 아이템처럼 게임 도중 새 오브젝트를 만들어낼 때 사용합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);</div>
+          <div class="ref-label">매개변수</div><table class="param-table"><tbody><tr><td>prefab</td><td>GameObject</td><td>복제할 원본 프리팹</td></tr><tr><td>position</td><td>Vector3</td><td>생성할 위치</td></tr><tr><td>rotation</td><td>Quaternion</td><td>생성할 회전값</td></tr></tbody></table>
+          <div class="tip"><b>자주 쓰는 값:</b> 회전이 필요 없으면 <code class="inline">Quaternion.identity</code>를 사용합니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-destroy">
+          <h3>4. Destroy()</h3><div class="ref-desc">총알, 적, 먹은 아이템 등 더 이상 필요 없는 오브젝트를 삭제합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">Destroy(gameObject);<br>Destroy(gameObject, 2f);</div>
+          <div class="ref-label">매개변수</div><table class="param-table"><tbody><tr><td>gameObject</td><td>Object</td><td>삭제할 대상</td></tr><tr><td>2f</td><td>float</td><td>선택 사항. 몇 초 뒤 삭제할지 지정</td></tr></tbody></table>
+          <div class="tip"><b>예:</b> 총알은 <code class="inline">Destroy(gameObject, 3f)</code>로 자동 정리하면 좋습니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-raycast">
+          <h3>5. Physics.Raycast()</h3><div class="ref-desc">보이지 않는 광선을 쏴 무엇에 맞았는지 검사합니다. FPS 총, 상호작용, 시야 판정에 자주 씁니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))<br>{<br>&nbsp;&nbsp;Debug.Log(hit.collider.name);<br>}</div>
+          <div class="ref-label">매개변수</div><table class="param-table"><tbody><tr><td>origin</td><td>Vector3</td><td>광선 시작 위치</td></tr><tr><td>direction</td><td>Vector3</td><td>광선 방향</td></tr><tr><td>hit</td><td>RaycastHit</td><td>맞은 대상 정보를 담는 변수</td></tr><tr><td>distance</td><td>float</td><td>최대 검사 거리</td></tr></tbody></table>
+          <div class="tip"><b>FPS:</b> 보통 카메라 위치와 <code class="inline">camera.transform.forward</code>를 사용합니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-scene">
+          <h3>6. SceneManager.LoadScene()</h3><div class="ref-desc">타이틀 → 게임 → 결과처럼 Scene을 이동할 때 사용합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">using UnityEngine.SceneManagement;<br><br>SceneManager.LoadScene("GameScene");</div>
+          <div class="ref-label">매개변수</div><table class="param-table"><tbody><tr><td>"GameScene"</td><td>string</td><td>불러올 Scene 이름</td></tr><tr><td>0, 1, 2...</td><td>int</td><td>Build Settings 순번을 사용할 수도 있음</td></tr></tbody></table>
+          <div class="tip"><b>주의:</b> Scene이 Build Settings에 등록되어 있어야 합니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-ui">
+          <h3>7. TMP_Text · Slider · SetActive()</h3><div class="ref-desc">점수, HP, 남은 시간, 게임오버 패널 같은 UI를 변경합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">scoreText.text = "Score : " + score;<br>hpSlider.value = currentHp;<br>gameOverPanel.SetActive(true);</div>
+          <div class="ref-label">주요 값</div><table class="param-table"><tbody><tr><td>.text</td><td>string</td><td>TextMeshPro에 표시할 글자</td></tr><tr><td>.value</td><td>float</td><td>Slider의 현재 값</td></tr><tr><td>true / false</td><td>bool</td><td>오브젝트 활성화 / 비활성화</td></tr></tbody></table>
+          <div class="tip"><b>TMP:</b> 스크립트 상단에 <code class="inline">using TMPro;</code>를 추가합니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-list">
+          <h3>8. List&lt;T&gt; · 배열 · enum</h3><div class="ref-desc">아이템, 버프, 마작패, 룬처럼 여러 데이터를 묶어서 관리할 때 사용합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">List&lt;GameObject&gt; items = new List&lt;GameObject&gt;();<br><br>items.Add(newItem);<br>items.Remove(oldItem);<br><br>public enum RoomType { Battle, Shop, Boss }</div>
+          <div class="ref-label">자주 쓰는 기능</div><table class="param-table"><tbody><tr><td>Add(value)</td><td>method</td><td>리스트 끝에 데이터 추가</td></tr><tr><td>Remove(value)</td><td>method</td><td>해당 데이터 제거</td></tr><tr><td>Count</td><td>int</td><td>리스트 데이터 개수</td></tr><tr><td>enum</td><td>type</td><td>정해진 상태 이름을 묶어 관리</td></tr></tbody></table>
+        </article>
+
+        <article class="ref-card" id="ref-random">
+          <h3>9. Random.Range()</h3><div class="ref-desc">랜덤 보상, 적 위치, 아이템 선택 등에 사용합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">int index = Random.Range(0, items.Count);<br>float x = Random.Range(-5f, 5f);</div>
+          <div class="ref-label">매개변수 차이</div><table class="param-table"><tbody><tr><td>int, int</td><td>0, 5</td><td>0 이상 5 미만 → 0~4</td></tr><tr><td>float, float</td><td>0f, 5f</td><td>0~5 범위의 실수</td></tr></tbody></table>
+          <div class="tip"><b>중요:</b> 정수형은 최대값이 포함되지 않습니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-coroutine">
+          <h3>10. Coroutine · WaitForSeconds</h3><div class="ref-desc">몇 초 기다렸다 실행, 공격 딜레이, 함정 지연, 웨이브 생성 등에 사용합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">IEnumerator ShowTrap()<br>{<br>&nbsp;&nbsp;yield return new WaitForSeconds(1f);<br>&nbsp;&nbsp;wall.SetActive(true);<br>}<br><br>StartCoroutine(ShowTrap());</div>
+          <div class="ref-label">주요 요소</div><table class="param-table"><tbody><tr><td>IEnumerator</td><td>return type</td><td>Coroutine 함수 선언</td></tr><tr><td>1f</td><td>float</td><td>기다릴 시간(초)</td></tr><tr><td>StartCoroutine()</td><td>method</td><td>Coroutine 실행</td></tr></tbody></table>
+        </article>
+
+        <article class="ref-card" id="ref-getcomponent">
+          <h3>11. GetComponent&lt;T&gt;()</h3><div class="ref-desc">GameObject에 붙어 있는 다른 컴포넌트나 스크립트를 가져와 사용할 때 씁니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">EnemyHealth hp = hit.collider.GetComponent&lt;EnemyHealth&gt;();<br><br>if (hp != null)<br>&nbsp;&nbsp;hp.TakeDamage(10);</div>
+          <div class="ref-label">형식</div><table class="param-table"><tbody><tr><td>&lt;T&gt;</td><td>Type</td><td>가져올 컴포넌트 타입</td></tr><tr><td>반환값</td><td>T 또는 null</td><td>있으면 컴포넌트, 없으면 null</td></tr></tbody></table>
+          <div class="tip"><b>팁:</b> Update에서 매 프레임 찾기보다는 Start에서 받아 변수에 저장하는 것이 일반적입니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-scriptable">
+          <h3>12. ScriptableObject</h3><div class="ref-desc">무기·아이템·직업·룬처럼 데이터 종류가 많아질 때 데이터를 Asset으로 분리해 관리합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">[CreateAssetMenu(menuName = "Game/WeaponData")]<br>public class WeaponData : ScriptableObject<br>{<br>&nbsp;&nbsp;public string weaponName;<br>&nbsp;&nbsp;public int damage;<br>&nbsp;&nbsp;public float attackSpeed;<br>}</div>
+          <div class="tip"><b>추천 대상:</b> 장비와 버프가 많은 전이준, 시스템이 복잡한 박윤수·조민교 프로젝트에 특히 유용합니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-array2d">
+          <h3>13. 2차원 배열 [,]</h3><div class="ref-desc">격자형 퍼즐이나 보드게임에서 x, y 위치별 상태를 저장합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">int[,] board = new int[8, 8];<br><br>board[2, 3] = 1;<br><br>if (board[x, y] == 0)<br>&nbsp;&nbsp;Debug.Log("빈칸");</div>
+          <div class="ref-label">인덱스</div><table class="param-table"><tbody><tr><td>첫 번째 값</td><td>x</td><td>가로 위치</td></tr><tr><td>두 번째 값</td><td>y</td><td>세로 위치</td></tr></tbody></table>
+          <div class="tip"><b>임인수 프로젝트:</b> 화면 블록과 board 배열 상태를 항상 같이 갱신해야 합니다.</div>
+        </article>
+
+        <article class="ref-card" id="ref-angle">
+          <h3>14. Quaternion.Euler · Time.deltaTime</h3><div class="ref-desc">오브젝트 회전과 프레임 독립적인 시간 기반 움직임에 사용합니다.</div>
+          <div class="ref-label">기본 작성법</div><div class="mini-code">angle += rotateSpeed * Time.deltaTime;<br>transform.rotation = Quaternion.Euler(0, 0, -angle);</div>
+          <div class="ref-label">Quaternion.Euler 매개변수</div><table class="param-table"><tbody><tr><td>x</td><td>float</td><td>X축 회전 각도</td></tr><tr><td>y</td><td>float</td><td>Y축 회전 각도</td></tr><tr><td>z</td><td>float</td><td>2D에서 주로 사용하는 Z축 각도</td></tr></tbody></table>
+          <div class="tip"><b>Time.deltaTime:</b> PC 성능이나 FPS가 달라도 초당 움직임을 비슷하게 유지하도록 도와줍니다.</div>
+        </article>
+
       </div>
     </section>
 
@@ -239,7 +374,7 @@
       <div class="hero student-title"><div><div class="eyebrow">김아윤</div><h2>2D 상자 설치 플랫포머</h2><div class="subtitle">상자를 설치하며 상황을 해결하고 목표 지점까지 도달하는 게임</div></div><div class="difficulty"><span class="stars">★★★☆☆</span></div></div>
       <div class="grid">
         <div class="card"><h3>예상 스크립트</h3><p>PlayerController.cs · BoxPlacer.cs · Box.cs · GroundCheck.cs · Goal.cs · GameManager.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">Rigidbody2D</span><span class="badge">Collider2D</span><span class="badge">Instantiate</span><span class="badge">GroundCheck</span></div></div>
+        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">Rigidbody2D</span><span class="badge">Collider2D</span><span class="badge">Instantiate</span><span class="badge">GroundCheck</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
         <div class="card full"><div class="code-title"><h3>상자 설치</h3><button class="copy-btn">복사</button></div><pre><code>if (Input.GetKeyDown(KeyCode.E))
 {
     Instantiate(boxPrefab, createPoint.position, Quaternion.identity);
@@ -251,7 +386,7 @@
       <div class="hero student-title"><div><div class="eyebrow">김태홍</div><h2>3D FPS · 탈출 게임</h2><div class="subtitle">적을 제거하고 장치를 작동시켜 탈출하는 FPS</div></div><div class="difficulty"><span class="stars">★★★★☆</span></div></div>
       <div class="grid">
         <div class="card"><h3>예상 스크립트</h3><p>FPSPlayerController.cs · MouseLook.cs · Gun.cs · MeleeWeapon.cs · EnemyHealth.cs · WeaponManager.cs · Interaction.cs · EscapeDoor.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">CharacterController</span><span class="badge">Raycast</span><span class="badge">GetComponent</span><span class="badge">TakeDamage</span></div></div>
+        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">CharacterController</span><span class="badge">Raycast</span><span class="badge">GetComponent</span><span class="badge">TakeDamage</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
         <div class="card full"><div class="code-title"><h3>Raycast 총 공격</h3><button class="copy-btn">복사</button></div><pre><code>if (Input.GetMouseButtonDown(0))
 {
     if (Physics.Raycast(camera.transform.position,
@@ -270,7 +405,7 @@
       <div class="hero student-title"><div><div class="eyebrow">박윤수</div><h2>마작 × 로그라이크</h2><div class="subtitle">마작 전투, 보상, 상점, 이벤트, 보스가 연결되는 시스템형 프로젝트</div></div><div class="difficulty"><span class="stars">★★★★★+</span></div></div>
       <div class="grid">
         <div class="card"><h3>핵심 구조</h3><p>GameManager · DungeonManager · BattleManager · MahjongSystem · HandManager · ScoreCalculator · UIManager</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">class</span><span class="badge">List&lt;T&gt;</span><span class="badge">enum</span><span class="badge">Random</span><span class="badge">Manager</span><span class="badge">ScriptableObject</span></div></div>
+        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">class</span><span class="badge">List&lt;T&gt;</span><span class="badge">enum</span><span class="badge">Random</span><span class="badge">Manager</span><span class="badge">ScriptableObject</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
         <div class="card full"><div class="code-title"><h3>방 타입 관리</h3><button class="copy-btn">복사</button></div><pre><code>public enum RoomType
 {
     Battle,
@@ -286,7 +421,7 @@
       <div class="hero student-title"><div><div class="eyebrow">임인수</div><h2>Block Blast형 격자 퍼즐</h2><div class="subtitle">블록을 전략적으로 배치하고 줄을 완성해 점수를 얻는 퍼즐 게임</div></div><div class="difficulty"><span class="stars">★★★★☆</span></div></div>
       <div class="grid">
         <div class="card"><h3>예상 스크립트</h3><p>BoardManager.cs · Block.cs · BlockDrag.cs · BlockSpawner.cs · ScoreManager.cs · GameManager.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">2차원 배열</span><span class="badge">Drag & Drop</span><span class="badge">행/열 검사</span></div></div>
+        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">2차원 배열</span><span class="badge">Drag & Drop</span><span class="badge">행/열 검사</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
         <div class="card full"><div class="code-title"><h3>보드 데이터</h3><button class="copy-btn">복사</button></div><pre><code>int[,] board = new int[8, 8];
 
 if (board[x, y] == 0)
@@ -300,7 +435,7 @@ if (board[x, y] == 0)
       <div class="hero student-title"><div><div class="eyebrow">전이준</div><h2>2D 탑다운 슈팅</h2><div class="subtitle">맵과 직업을 선택하고 장비·버프 조합으로 최단 시간 클리어를 노리는 게임</div></div><div class="difficulty"><span class="stars">★★★★☆</span></div></div>
       <div class="grid">
         <div class="card"><h3>예상 스크립트</h3><p>PlayerController.cs · PlayerAim.cs · Weapon.cs · Bullet.cs · Enemy.cs · EquipmentManager.cs · BuffManager.cs · StageTimer.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">Rigidbody2D</span><span class="badge">Instantiate</span><span class="badge">버프</span><span class="badge">ScriptableObject</span></div></div>
+        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">Rigidbody2D</span><span class="badge">Instantiate</span><span class="badge">버프</span><span class="badge">ScriptableObject</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
         <div class="card full"><div class="code-title"><h3>탑다운 이동</h3><button class="copy-btn">복사</button></div><pre><code>Vector2 move;
 
 move.x = Input.GetAxisRaw("Horizontal");
@@ -314,7 +449,7 @@ rb.linearVelocity = move.normalized * moveSpeed;</code></pre></div>
       <div class="hero student-title"><div><div class="eyebrow">조민교</div><h2>룬 휠</h2><div class="subtitle">행동 조각을 원형 판에 배치하고 초침의 흐름에 따라 전투 순환을 만드는 로그라이크 전략 RPG</div></div><div class="difficulty"><span class="stars">★★★★★+</span></div></div>
       <div class="grid">
         <div class="card"><h3>예상 스크립트</h3><p>WheelManager.cs · Rune.cs · RuneSlot.cs · RuneDrag.cs · BattleManager.cs · RewardManager.cs · PlayerStats.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">각도</span><span class="badge">Time.deltaTime</span><span class="badge">List</span><span class="badge">Drag & Drop</span><span class="badge">상태관리</span></div></div>
+        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">각도</span><span class="badge">Time.deltaTime</span><span class="badge">List</span><span class="badge">Drag & Drop</span><span class="badge">상태관리</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
         <div class="card full"><div class="code-title"><h3>룬휠 회전</h3><button class="copy-btn">복사</button></div><pre><code>float angle = currentAngle + rotateSpeed * Time.deltaTime;
 
 wheel.transform.rotation =
@@ -326,7 +461,7 @@ wheel.transform.rotation =
       <div class="hero student-title"><div><div class="eyebrow">최은겸</div><h2>2D 트롤링 미로</h2><div class="subtitle">예상하기 어려운 벽·속도 변화·시야 제한·출구 이동을 피하며 탈출하는 게임</div></div><div class="difficulty"><span class="stars">★★★☆☆</span></div></div>
       <div class="grid">
         <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">OnTriggerEnter2D</span><span class="badge">SetActive</span><span class="badge">Transform.position</span><span class="badge">Coroutine</span><span class="badge">Light2D</span></div></div>
-        <div class="card"><h3>구현 포인트</h3><p>트리거 구역마다 이벤트를 분리하면 함정을 추가하기 쉽고, Coroutine으로 지연 발동을 만들면 트롤 요소를 자연스럽게 구현할 수 있습니다.</p></div>
+        <div class="card"><h3>구현 포인트</h3><p>트리거 구역마다 이벤트를 분리하면 함정을 추가하기 쉽고, Coroutine으로 지연 발동을 만들면 트롤 요소를 자연스럽게 구현할 수 있습니다.</p><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
         <div class="card full"><div class="code-title"><h3>속도 감소 트리거</h3><button class="copy-btn">복사</button></div><pre><code>private void OnTriggerEnter2D(Collider2D other)
 {
     if (other.CompareTag("SlowZone"))
@@ -422,6 +557,20 @@ wheel.transform.rotation =
       setTimeout(()=>btn.innerText=old, 1200);
     });
   });
+
+
+  function openReference(concept){
+    buttons.forEach(b=>b.classList.remove('active'));
+    const refButton=document.querySelector('[data-target="reference"]');
+    if(refButton) refButton.classList.add('active');
+    sections.forEach(s=>s.classList.toggle('active', s.id==='reference'));
+    document.getElementById('sidebar').classList.remove('open');
+    const map={movement:'ref-movement',trigger:'ref-trigger',instantiate:'ref-instantiate',destroy:'ref-destroy',raycast:'ref-raycast',scene:'ref-scene',ui:'ref-ui',list:'ref-list',random:'ref-random',coroutine:'ref-coroutine',getcomponent:'ref-getcomponent',scriptable:'ref-scriptable',array2d:'ref-array2d',angle:'ref-angle'};
+    setTimeout(()=>{
+      const target=(concept && map[concept]) ? document.getElementById(map[concept]) : document.getElementById('reference');
+      if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+    },30);
+  }
 
   function toggleSidebar(){
     document.getElementById('sidebar').classList.toggle('open');
