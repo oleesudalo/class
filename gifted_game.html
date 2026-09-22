@@ -297,6 +297,58 @@
     .seat-name{font-size:19px}
   }
 
+
+  .team-banner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:15px 17px;
+    margin-top:16px;
+    border:1px solid #dbe4ef;
+    border-radius:14px;
+    background:#f8fbff;
+  }
+  .team-label{
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.08em;
+    color:#6f7f93;
+    text-transform:uppercase;
+    margin-bottom:3px;
+  }
+  .team-names{
+    font-size:15px;
+    font-weight:800;
+    color:#233247;
+  }
+  .team-link{
+    border:1px solid #d5dfeb;
+    background:#fff;
+    color:#2f6fbd;
+    padding:8px 10px;
+    border-radius:10px;
+    font-weight:800;
+    font-size:12px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .team-link:hover{
+    background:#f2f7fd;
+  }
+  .shared-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:6px 9px;
+    border-radius:999px;
+    background:#eef5ff;
+    color:#376eae;
+    font-size:11px;
+    font-weight:800;
+    margin-top:10px;
+  }
+
   @media(max-width:920px){.ref-grid{grid-template-columns:1fr}}
 
   @media(max-width:920px){
@@ -328,17 +380,17 @@
     <button class="nav-btn" data-target="reference">핵심 코드 레퍼런스</button>
 
     <div class="menu-title">학생별 가이드</div>
-    <button class="nav-btn student-link" data-target="sunhong"><span>김선홍</span><span class="student-meta"><span class="menu-chip">확인 필요</span><span class="menu-chip level">미정</span></span></button>
+    <button class="nav-btn student-link" data-target="sunhong"><span>김선홍</span><span class="student-meta"><span class="menu-chip">공동 · TD+3D파이트</span><span class="menu-chip level">★★★★</span></span></button>
     <button class="nav-btn student-link" data-target="ayun"><span>김아윤</span><span class="student-meta"><span class="menu-chip">2D 플랫포머</span><span class="menu-chip level">★★★</span></span></button>
     <button class="nav-btn student-link" data-target="taehong"><span>김태홍</span><span class="student-meta"><span class="menu-chip">3D FPS</span><span class="menu-chip level">★★★★</span></span></button>
-    <button class="nav-btn student-link" data-target="hanul"><span>김한울</span><span class="student-meta"><span class="menu-chip">확인 필요</span><span class="menu-chip level">미정</span></span></button>
+    <button class="nav-btn student-link" data-target="hanul"><span>김한울</span><span class="student-meta"><span class="menu-chip">공동 · TD+3D파이트</span><span class="menu-chip level">★★★★</span></span></button>
     <button class="nav-btn student-link" data-target="yunsu"><span>박윤수</span><span class="student-meta"><span class="menu-chip">마작 로그라이크</span><span class="menu-chip level">★★★★★</span></span></button>
     <button class="nav-btn student-link" data-target="jaehyeong"><span>박재형</span><span class="student-meta"><span class="menu-chip">확인 필요</span><span class="menu-chip level">미정</span></span></button>
     <button class="nav-btn student-link" data-target="doyun"><span>신도윤</span><span class="student-meta"><span class="menu-chip">확인 필요</span><span class="menu-chip level">미정</span></span></button>
     <button class="nav-btn student-link" data-target="yeonwoo"><span>이연우</span><span class="student-meta"><span class="menu-chip">확인 필요</span><span class="menu-chip level">미정</span></span></button>
     <button class="nav-btn student-link" data-target="insu"><span>임인수</span><span class="student-meta"><span class="menu-chip">블록 퍼즐</span><span class="menu-chip level">★★★★</span></span></button>
-    <button class="nav-btn student-link" data-target="minseok"><span>장민석</span><span class="student-meta"><span class="menu-chip">공동 프로젝트</span><span class="menu-chip level">미정</span></span></button>
-    <button class="nav-btn student-link" data-target="yeojun"><span>장여준</span><span class="student-meta"><span class="menu-chip">공동 프로젝트</span><span class="menu-chip level">미정</span></span></button>
+    <button class="nav-btn student-link" data-target="minseok"><span>장민석</span><span class="student-meta"><span class="menu-chip">공동 · A Blade</span><span class="menu-chip level">미정</span></span></button>
+    <button class="nav-btn student-link" data-target="yeojun"><span>장여준</span><span class="student-meta"><span class="menu-chip">공동 · A Blade</span><span class="menu-chip level">미정</span></span></button>
     <button class="nav-btn student-link" data-target="ijun"><span>전이준</span><span class="student-meta"><span class="menu-chip">탑다운 슈팅</span><span class="menu-chip level">★★★★</span></span></button>
     <button class="nav-btn student-link" data-target="mingyo"><span>조민교</span><span class="student-meta"><span class="menu-chip">룬휠 RPG</span><span class="menu-chip level">★★★★★</span></span></button>
     <button class="nav-btn student-link" data-target="eungyeom"><span>최은겸</span><span class="student-meta"><span class="menu-chip">2D 미로</span><span class="menu-chip level">★★★</span></span></button>
@@ -439,6 +491,7 @@
           <table>
             <thead><tr><th>학생</th><th>게임 유형</th><th>핵심</th><th>난이도</th></tr></thead>
             <tbody>
+              <tr><td>김선홍</td><td>타워디펜스 + 3D 파이트 (김한울 공동)</td><td>HP · 생성 · 씬 · 저장</td><td>★★★★☆</td></tr>
               <tr><td>김아윤</td><td>2D 플랫포머</td><td>이동 · 점프 · 상자 배치</td><td>★★★☆☆</td></tr>
               <tr><td>김태홍</td><td>3D FPS</td><td>Raycast · 무기 · 적 HP · 상호작용</td><td>★★★★☆</td></tr>
               <tr><td>박윤수</td><td>마작 로그라이크</td><td>List · enum · Manager · 데이터 구조</td><td>★★★★★+</td></tr>
@@ -792,27 +845,143 @@ wheel.transform.rotation =
       </div>
     </section>
 
-    <section id="minseok" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">장민석</div><h2>A Blade Gleaming in the Sun</h2><div class="subtitle">장여준과 공동 프로젝트로 보이며, 현재 자료는 발표자료 중심이라 세부 장르 확정이 필요합니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
+<section id="minseok" class="content-section student">
+      <div class="hero student-title">
+        <div>
+          <div class="eyebrow">장민석</div>
+          <h2>A Blade Gleaming in the Sun</h2>
+          <div class="subtitle">장여준과 함께 제작하는 공동 프로젝트</div>
+          <div class="shared-chip">👥 공동 프로젝트 · 장민석 + 장여준</div>
+          <div class="team-banner">
+            <div><div class="team-label">TEAM PROJECT</div><div class="team-names">장민석 ↔ 장여준</div></div>
+            <button class="team-link" onclick="openStudent('yeojun')">장여준 가이드 보기</button>
+          </div>
+        </div>
+        <div class="difficulty"><span class="stars">미정</span></div>
+      </div>
       <div class="grid">
-        <div class="card"><h3>전투 게임이라면 예상 코드</h3><p>PlayerMovement · Attack() · OnTriggerEnter · TakeDamage() · Animator.SetTrigger("Attack") · EnemyAI · HP</p><div class="badge-row"><span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span><span class="badge concept-link" onclick="openReference('animator')">Animator</span><span class="badge concept-link" onclick="openReference('trigger')">충돌 / Trigger</span><span class="badge concept-link" onclick="openReference('enemyai')">Enemy AI</span></div></div>
-        <div class="card"><h3>주의</h3><p>제목만으로 장르를 단정하지 않고, 발표자료 내용을 확인한 뒤 확정하는 것이 좋습니다.</p></div>
+
+        <div class="card"><h3>공동 프로젝트 상태</h3>
+          <p><b>장민석·장여준이 함께 제작하는 하나의 프로젝트</b>임. 프로젝트명은 <b>A Blade Gleaming in the Sun</b>이며, 두 학생의 페이지는 같은 프로젝트 정보를 공유하도록 구성함.</p>
+        </div>
+        <div class="card"><h3>현재 확인 가능한 예상 핵심</h3>
+          <p>발표자료 세부 내용이 아직 텍스트로 충분히 확인되지 않아 장르를 단정하지 않음. 전투 중심 프로젝트일 경우 아래 코드가 우선 후보임.</p>
+          <div class="badge-row">
+            <span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span>
+            <span class="badge concept-link" onclick="openReference('animator')">Animator</span>
+            <span class="badge concept-link" onclick="openReference('trigger')">Collision / Trigger</span>
+            <span class="badge concept-link" onclick="openReference('enemyai')">Enemy AI</span>
+            <span class="badge concept-link" onclick="openReference('time')">Cooldown</span>
+            <span class="badge concept-link" onclick="openReference('scene')">SceneManager</span>
+          </div>
+        </div>
+        <div class="card full"><h3>다음에 확인하면 좋은 것</h3>
+          <p>두 학생의 <b>역할 분담</b>을 확인하면 Player/Enemy/UI/Stage 중 누가 어떤 스크립트를 담당할지 나눠서 지도하기 좋음. 현재 단계에서는 두 학생에게 서로 다른 게임으로 안내하지 않도록 동일 프로젝트로 관리함.</p>
+        </div>
+
       </div>
     </section>
 
 
-    <section id="sunhong" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">김선홍</div><h2>기획 내용 추가 확인 필요</h2><div class="subtitle">현재 제공된 패들렛 마크다운에서 김선홍 학생의 기획 내용을 확인하기 어렵습니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
+<section id="sunhong" class="content-section student">
+      <div class="hero student-title">
+        <div>
+          <div class="eyebrow">김선홍</div>
+          <h2>CGW · 타워디펜스 &amp; 3D 파이트</h2>
+          <div class="subtitle">김한울과 함께 제작하는 공동 프로젝트</div>
+          <div class="shared-chip">👥 공동 프로젝트 · 김선홍 + 김한울</div>
+          <div class="team-banner">
+            <div><div class="team-label">TEAM PROJECT</div><div class="team-names">김선홍 ↔ 김한울</div></div>
+            <button class="team-link" onclick="openStudent('hanul')">김한울 가이드 보기</button>
+          </div>
+        </div>
+        <div class="difficulty"><span class="stars">★★★★☆</span></div>
+      </div>
       <div class="grid">
-        <div class="card"><h3>현재 상태</h3><p>학생 메뉴는 먼저 생성해두었으며, 게임 개요·조작 방식·승패 조건을 확인하면 예상 스크립트와 핵심 코드를 추가할 수 있습니다.</p></div>
-        <div class="card"><h3>확인할 내용</h3><div class="badge-row"><span class="badge">게임 장르</span><span class="badge">플레이어 조작</span><span class="badge">핵심 시스템</span><span class="badge">클리어 조건</span></div></div>
+
+        <div class="card"><h3>공동 프로젝트 개요</h3>
+          <p><b>CGW</b> · 타워디펜스 &amp; 3D 파이트 게임. 타워 방어 파트와 3D 전투 파트를 함께 구성하는 프로젝트임.</p>
+          <div class="badge-row">
+            <span class="badge concept-link" onclick="openReference('damage')">HP / TakeDamage</span>
+            <span class="badge concept-link" onclick="openReference('instantiate')">Instantiate</span>
+            <span class="badge concept-link" onclick="openReference('trigger')">Trigger / Collision</span>
+            <span class="badge concept-link" onclick="openReference('scene')">SceneManager</span>
+            <span class="badge concept-link" onclick="openReference('manager')">GameManager</span>
+            <span class="badge concept-link" onclick="openReference('time')">Time.deltaTime</span>
+            <span class="badge concept-link" onclick="openReference('animator')">Animator</span>
+            <span class="badge concept-link" onclick="openReference('ui')">UI / Slider / Button</span>
+          </div>
+        </div>
+        <div class="card"><h3>추가로 사용할 가능성이 높은 API</h3>
+          <p><code class="inline">Input.GetKeyDown()</code> · <code class="inline">Input.anyKeyDown</code> · <code class="inline">KeyCode.Escape</code> · <code class="inline">Button.interactable</code> · <code class="inline">Mathf.Clamp()</code> · <code class="inline">Mathf.Max()</code> · <code class="inline">PlayerPrefs</code></p>
+          <div class="note">타워 HP, 유닛 생성, 전투 HP/애니메이션, 씬 이동, 기록 저장이 각각 분리될 가능성이 높음.</div>
+        </div>
+        <div class="card full"><h3>권장 스크립트 구성</h3>
+          <table>
+            <thead><tr><th>스크립트</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>CastleHealth.cs</td><td>maxHp/currentHp, TakeDamage(), 성 파괴 처리</td></tr>
+              <tr><td>UnitSpawner.cs</td><td>Instantiate()로 유닛·적 생성</td></tr>
+              <tr><td>BattlePlayer.cs</td><td>3D 파이트 플레이어 상태·공격</td></tr>
+              <tr><td>BattleHealth.cs</td><td>플레이어 HP, Slider UI 갱신</td></tr>
+              <tr><td>SceneFlow.cs</td><td>타워디펜스 ↔ 3D 전투 ↔ 결과 화면 전환</td></tr>
+              <tr><td>GameManager.cs</td><td>단계 진행 및 필요한 데이터 유지</td></tr>
+              <tr><td>RecordManager.cs</td><td>PlayerPrefs를 이용한 기록 저장/불러오기</td></tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </section>
 
-    <section id="hanul" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">김한울</div><h2>기획 내용 추가 확인 필요</h2><div class="subtitle">현재 자료는 Canva 및 이미지 중심으로 올라와 있어 세부 기능을 확정하지 않았습니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
+<section id="hanul" class="content-section student">
+      <div class="hero student-title">
+        <div>
+          <div class="eyebrow">김한울</div>
+          <h2>CGW · 타워디펜스 &amp; 3D 파이트</h2>
+          <div class="subtitle">김선홍과 함께 제작하는 공동 프로젝트</div>
+          <div class="shared-chip">👥 공동 프로젝트 · 김선홍 + 김한울</div>
+          <div class="team-banner">
+            <div><div class="team-label">TEAM PROJECT</div><div class="team-names">김선홍 ↔ 김한울</div></div>
+            <button class="team-link" onclick="openStudent('sunhong')">김선홍 가이드 보기</button>
+          </div>
+        </div>
+        <div class="difficulty"><span class="stars">★★★★☆</span></div>
+      </div>
       <div class="grid">
-        <div class="card"><h3>확인 포인트</h3><p>게임 장르 · 핵심 조작 · 승패 조건 · 주요 오브젝트를 확인한 뒤 구현 가이드를 추가하는 것이 좋습니다.</p></div>
+
+        <div class="card"><h3>공동 프로젝트 개요</h3>
+          <p><b>CGW</b> · 타워디펜스 &amp; 3D 파이트 게임. 타워 방어 파트와 3D 전투 파트를 함께 구성하는 프로젝트임.</p>
+          <div class="badge-row">
+            <span class="badge concept-link" onclick="openReference('damage')">HP / TakeDamage</span>
+            <span class="badge concept-link" onclick="openReference('instantiate')">Instantiate</span>
+            <span class="badge concept-link" onclick="openReference('trigger')">Trigger / Collision</span>
+            <span class="badge concept-link" onclick="openReference('scene')">SceneManager</span>
+            <span class="badge concept-link" onclick="openReference('manager')">GameManager</span>
+            <span class="badge concept-link" onclick="openReference('time')">Time.deltaTime</span>
+            <span class="badge concept-link" onclick="openReference('animator')">Animator</span>
+            <span class="badge concept-link" onclick="openReference('ui')">UI / Slider / Button</span>
+          </div>
+        </div>
+        <div class="card"><h3>추가로 사용할 가능성이 높은 API</h3>
+          <p><code class="inline">Input.GetKeyDown()</code> · <code class="inline">Input.anyKeyDown</code> · <code class="inline">KeyCode.Escape</code> · <code class="inline">Button.interactable</code> · <code class="inline">Mathf.Clamp()</code> · <code class="inline">Mathf.Max()</code> · <code class="inline">PlayerPrefs</code></p>
+          <div class="note">타워 HP, 유닛 생성, 전투 HP/애니메이션, 씬 이동, 기록 저장이 각각 분리될 가능성이 높음.</div>
+        </div>
+        <div class="card full"><h3>권장 스크립트 구성</h3>
+          <table>
+            <thead><tr><th>스크립트</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>CastleHealth.cs</td><td>maxHp/currentHp, TakeDamage(), 성 파괴 처리</td></tr>
+              <tr><td>UnitSpawner.cs</td><td>Instantiate()로 유닛·적 생성</td></tr>
+              <tr><td>BattlePlayer.cs</td><td>3D 파이트 플레이어 상태·공격</td></tr>
+              <tr><td>BattleHealth.cs</td><td>플레이어 HP, Slider UI 갱신</td></tr>
+              <tr><td>SceneFlow.cs</td><td>타워디펜스 ↔ 3D 전투 ↔ 결과 화면 전환</td></tr>
+              <tr><td>GameManager.cs</td><td>단계 진행 및 필요한 데이터 유지</td></tr>
+              <tr><td>RecordManager.cs</td><td>PlayerPrefs를 이용한 기록 저장/불러오기</td></tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </section>
 
@@ -837,11 +1006,40 @@ wheel.transform.rotation =
       </div>
     </section>
 
-    <section id="yeojun" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">장여준</div><h2>A Blade Gleaming in the Sun</h2><div class="subtitle">장민석과 공동 프로젝트로 보입니다. 현재 발표자료 중심이라 세부 장르와 전투 구조를 추가 확인해야 합니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
+<section id="yeojun" class="content-section student">
+      <div class="hero student-title">
+        <div>
+          <div class="eyebrow">장여준</div>
+          <h2>A Blade Gleaming in the Sun</h2>
+          <div class="subtitle">장민석과 함께 제작하는 공동 프로젝트</div>
+          <div class="shared-chip">👥 공동 프로젝트 · 장민석 + 장여준</div>
+          <div class="team-banner">
+            <div><div class="team-label">TEAM PROJECT</div><div class="team-names">장민석 ↔ 장여준</div></div>
+            <button class="team-link" onclick="openStudent('minseok')">장민석 가이드 보기</button>
+          </div>
+        </div>
+        <div class="difficulty"><span class="stars">미정</span></div>
+      </div>
       <div class="grid">
-        <div class="card"><h3>전투 게임이라면 예상 코드</h3><p>PlayerMovement · Attack() · OnTriggerEnter · TakeDamage() · Animator.SetTrigger("Attack") · EnemyAI · HP</p><div class="badge-row"><span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span><span class="badge concept-link" onclick="openReference('animator')">Animator</span><span class="badge concept-link" onclick="openReference('trigger')">충돌 / Trigger</span><span class="badge concept-link" onclick="openReference('enemyai')">Enemy AI</span></div></div>
-        <div class="card"><h3>주의</h3><p>공동 프로젝트이므로 장민석 학생과 역할 분담까지 확인하면 각 학생이 담당할 스크립트를 나누기 좋습니다.</p></div>
+
+        <div class="card"><h3>공동 프로젝트 상태</h3>
+          <p><b>장민석·장여준이 함께 제작하는 하나의 프로젝트</b>임. 프로젝트명은 <b>A Blade Gleaming in the Sun</b>이며, 두 학생의 페이지는 같은 프로젝트 정보를 공유하도록 구성함.</p>
+        </div>
+        <div class="card"><h3>현재 확인 가능한 예상 핵심</h3>
+          <p>발표자료 세부 내용이 아직 텍스트로 충분히 확인되지 않아 장르를 단정하지 않음. 전투 중심 프로젝트일 경우 아래 코드가 우선 후보임.</p>
+          <div class="badge-row">
+            <span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span>
+            <span class="badge concept-link" onclick="openReference('animator')">Animator</span>
+            <span class="badge concept-link" onclick="openReference('trigger')">Collision / Trigger</span>
+            <span class="badge concept-link" onclick="openReference('enemyai')">Enemy AI</span>
+            <span class="badge concept-link" onclick="openReference('time')">Cooldown</span>
+            <span class="badge concept-link" onclick="openReference('scene')">SceneManager</span>
+          </div>
+        </div>
+        <div class="card full"><h3>다음에 확인하면 좋은 것</h3>
+          <p>두 학생의 <b>역할 분담</b>을 확인하면 Player/Enemy/UI/Stage 중 누가 어떤 스크립트를 담당할지 나눠서 지도하기 좋음. 현재 단계에서는 두 학생에게 서로 다른 게임으로 안내하지 않도록 동일 프로젝트로 관리함.</p>
+        </div>
+
       </div>
     </section>
 
