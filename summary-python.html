@@ -1072,143 +1072,9 @@ html.fallback-fullscreen .main{
   }
 }
 
-/* 사이트 비밀번호 잠금 화면 */
-body.site-locked{
-  overflow:hidden;
-}
-body.site-locked > *:not(#passwordGate){
-  visibility:hidden !important;
-}
-.password-gate{
-  position:fixed;
-  inset:0;
-  z-index:999999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(109,87,255,.14), transparent 35%),
-    linear-gradient(180deg,#f8f9ff 0%,#eef1f8 100%);
-}
-.password-card{
-  width:min(440px, 100%);
-  padding:34px;
-  border:1px solid #e2e5ee;
-  border-radius:22px;
-  background:#fff;
-  box-shadow:0 24px 70px rgba(25,35,60,.15);
-}
-.password-badge{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:32px;
-  padding:0 12px;
-  border-radius:999px;
-  background:#eeeaff;
-  color:#6652ff;
-  font-size:13px;
-  font-weight:900;
-}
-.password-card h1{
-  margin:18px 0 8px;
-  font-size:28px;
-  line-height:1.25;
-}
-.password-card > p{
-  margin:0 0 24px;
-  color:#667085;
-  line-height:1.6;
-}
-.password-card label{
-  display:block;
-  margin-bottom:8px;
-  font-weight:800;
-}
-.password-input-row{
-  display:flex;
-  gap:8px;
-}
-.password-input-row input{
-  flex:1;
-  min-width:0;
-  height:50px;
-  padding:0 14px;
-  border:1px solid #ccd2df;
-  border-radius:12px;
-  font:inherit;
-  outline:none;
-}
-.password-input-row input:focus{
-  border-color:#6d57ff;
-  box-shadow:0 0 0 3px rgba(109,87,255,.12);
-}
-.password-toggle{
-  flex:0 0 auto;
-  min-width:68px;
-  border:1px solid #d7dbe5;
-  border-radius:12px;
-  background:#f7f8fb;
-  font-weight:800;
-  cursor:pointer;
-}
-.password-error{
-  min-height:24px;
-  margin:8px 0 4px;
-  color:#d13b34;
-  font-size:14px;
-  font-weight:700;
-}
-.password-submit{
-  width:100%;
-  height:52px;
-  margin-top:4px;
-  border:0;
-  border-radius:12px;
-  background:#6d57ff;
-  color:#fff;
-  font:inherit;
-  font-weight:900;
-  cursor:pointer;
-}
-.password-submit:hover{
-  filter:brightness(.96);
-}
-.password-gate.is-shaking .password-card{
-  animation:passwordShake .24s linear 1;
-}
-@keyframes passwordShake{
-  0%,100%{transform:translateX(0)}
-  25%{transform:translateX(-6px)}
-  75%{transform:translateX(6px)}
-}
-@media(max-width:600px){
-  .password-card{
-    padding:26px 20px;
-  }
-  .password-card h1{
-    font-size:24px;
-  }
-}
 </style>
 </head>
-<body class="site-locked"><div aria-labelledby="passwordGateTitle" aria-modal="true" class="password-gate" id="passwordGate" role="dialog">
-<div class="password-card">
-<div class="password-badge">SW·AI 2급</div>
-<h1 id="passwordGateTitle">비밀번호를 입력해 주세요</h1>
-<p>비밀번호가 확인되면 Python 학습 웹앱을 볼 수 있습니다.</p>
-<form autocomplete="off" id="passwordForm">
-<label for="sitePassword">비밀번호</label>
-<div class="password-input-row">
-<input aria-describedby="passwordError" autocomplete="current-password" id="sitePassword" inputmode="text" placeholder="비밀번호 입력" type="password"/>
-<button aria-label="비밀번호 표시 전환" class="password-toggle" id="togglePassword" type="button">보기</button>
-</div>
-<div aria-live="polite" class="password-error" id="passwordError"></div>
-<button class="password-submit" type="submit">확인</button>
-</form>
-</div>
-</div>
+<body>
 <div class="layout">
 <aside class="sidebar">
 <div class="brand">SW·AI 교육강사 자격 실기 대비</div>
@@ -6607,7 +6473,6 @@ print(result)</div>
 <p class="subtitle">실제 시험과 유사한 환경에서 연습하기 전 아래 사용방법을 먼저 확인해 주세요.</p>
 </div>
 </div>
-
 <div class="cbt-guide-list">
 <article class="cbt-step-card">
 <div class="cbt-step-num">1</div>
@@ -6932,73 +6797,7 @@ for i in range(floor):
 </main>
 </div>
 <script>
-// 사이트 비밀번호 잠금
-(function(){
-  const EXPECTED_HASH = "c7cae7c31ccfcef9021201a3c05b2d0c3962bbadd22857fb89d095cb3799def2";
-  const gate = document.getElementById("passwordGate");
-  const form = document.getElementById("passwordForm");
-  const input = document.getElementById("sitePassword");
-  const error = document.getElementById("passwordError");
-  const toggle = document.getElementById("togglePassword");
 
-  function unlock(){
-    document.body.classList.remove("site-locked");
-    if(gate) gate.remove();
-    try{ sessionStorage.setItem("python_reference_unlocked","1"); }catch(e){}
-  }
-
-  async function sha256(text){
-    const data = new TextEncoder().encode(text);
-    const digest = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(digest))
-      .map(b => b.toString(16).padStart(2,"0"))
-      .join("");
-  }
-
-  try{
-    if(sessionStorage.getItem("python_reference_unlocked")==="1"){
-      unlock();
-      return;
-    }
-  }catch(e){}
-
-  toggle?.addEventListener("click", ()=>{
-    const showing = input.type === "text";
-    input.type = showing ? "password" : "text";
-    toggle.textContent = showing ? "보기" : "숨기기";
-    input.focus();
-  });
-
-  form?.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const value = input.value;
-
-    if(!value){
-      error.textContent = "비밀번호를 입력해 주세요.";
-      input.focus();
-      return;
-    }
-
-    try{
-      const hash = await sha256(value);
-      if(hash === EXPECTED_HASH){
-        error.textContent = "";
-        unlock();
-        return;
-      }
-    }catch(err){
-      // Web Crypto를 사용할 수 없는 환경에서는 입력값을 직접 비교하는 fallback은 사용하지 않음
-    }
-
-    error.textContent = "비밀번호가 맞지 않습니다.";
-    gate.classList.remove("is-shaking");
-    void gate.offsetWidth;
-    gate.classList.add("is-shaking");
-    input.select();
-  });
-
-  setTimeout(()=>input?.focus(), 60);
-})();
 
 const ANSWER_ENGINE_VERSION = '2026-09-19-v23';
 
