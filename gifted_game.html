@@ -349,6 +349,89 @@
     margin-top:10px;
   }
 
+
+  .edit-toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    margin:-10px 0 20px;
+    padding:10px 12px;
+    border:1px solid #e1e7ef;
+    border-radius:14px;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(10px);
+    box-shadow:0 8px 20px rgba(31,45,61,.06);
+  }
+  .edit-toolbar .edit-status{
+    margin-right:auto;
+    font-size:12px;
+    font-weight:700;
+    color:#7a8798;
+  }
+  .edit-toolbar button{
+    border:1px solid #dbe3ed;
+    background:#fff;
+    color:#344256;
+    border-radius:10px;
+    padding:8px 11px;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .edit-toolbar button:hover{background:#f7f9fc}
+  .edit-toolbar button.primary{
+    background:#2f80ed;
+    color:#fff;
+    border-color:#2f80ed;
+  }
+  .edit-toolbar button.active{
+    background:#eaf3ff;
+    color:#1f64bd;
+    border-color:#bfd8fb;
+  }
+  .editable-note{
+    position:relative;
+  }
+  body.edit-mode .editable{
+    outline:2px dashed #9fc6f8;
+    outline-offset:4px;
+    border-radius:6px;
+    cursor:text;
+  }
+  body.edit-mode .editable:hover{
+    outline-color:#2f80ed;
+    background:#fbfdff;
+  }
+  .presentation-card{
+    grid-column:1/-1;
+    border-left:4px solid #2f80ed;
+  }
+  .presentation-card .date-tag{
+    display:inline-flex;
+    padding:5px 8px;
+    border-radius:999px;
+    background:#eaf3ff;
+    color:#1f64bd;
+    font-size:11px;
+    font-weight:800;
+    margin-bottom:10px;
+  }
+  .presentation-card ul{
+    margin:6px 0 0;
+    padding-left:20px;
+    color:#556274;
+    line-height:1.75;
+  }
+  .presentation-card li+li{margin-top:4px}
+  .save-hint{
+    font-size:11px;
+    color:#8b96a5;
+  }
+
   @media(max-width:920px){.ref-grid{grid-template-columns:1fr}}
 
   @media(max-width:920px){
@@ -398,6 +481,17 @@
   </aside>
 
   <main>
+
+    <div class="edit-toolbar">
+      <div class="edit-status" id="editStatus">보기 모드 · 수정 내용은 브라우저에 저장할 수 있어요</div>
+      <button id="editToggle" class="primary" onclick="toggleEditMode()">✎ 편집 모드</button>
+      <button onclick="saveEdits()">저장</button>
+      <button onclick="downloadEditedHtml()">수정본 HTML 저장</button>
+      <button onclick="exportEdits()">백업 JSON</button>
+      <button onclick="document.getElementById('importEditsInput').click()">백업 불러오기</button>
+      <input id="importEditsInput" type="file" accept=".json,application/json" style="display:none" onchange="importEdits(event)">
+    </div>
+
 
     <section id="seating" class="content-section active">
       <div class="hero">
@@ -745,11 +839,21 @@
     </section>
 
     <section id="ayun" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">김아윤</div><h2>2D 상자 설치 플랫포머</h2><div class="subtitle">상자를 설치하며 상황을 해결하고 목표 지점까지 도달하는 게임</div></div><div class="difficulty"><span class="stars">★★★☆☆</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">김아윤</div><h2 class="editable">2D 상자 설치 플랫포머</h2><div class="subtitle editable">상자를 설치하며 상황을 해결하고 목표 지점까지 도달하는 게임</div></div><div class="difficulty"><span class="stars">★★★☆☆</span></div></div>
       <div class="grid">
-        <div class="card"><h3>예상 스크립트</h3><p>PlayerController.cs · BoxPlacer.cs · Box.cs · GroundCheck.cs · Goal.cs · GameManager.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('movement')">2D 이동</span><span class="badge concept-link" onclick="openReference('jump')">점프 / Ground Check</span><span class="badge concept-link" onclick="openReference('trigger')">충돌 / Trigger</span><span class="badge concept-link" onclick="openReference('instantiate')">상자 생성</span><span class="badge concept-link" onclick="openReference('manager')">GameManager</span><span class="badge concept-link" onclick="openReference('scene')">씬 전환</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
-        <div class="card full"><div class="code-title"><h3>상자 설치</h3><button class="copy-btn">복사</button></div><pre><code>if (Input.GetKeyDown(KeyCode.E))
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>상자를 쌓아가며 진행하는 게임.</li><li>기획 방향과 구현 범위가 명확하고 좋음.</li><li>현재 핵심 구조를 유지하면서 완성도를 높이는 방향 권장.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">예상 스크립트</h3><p class="editable">PlayerController.cs · BoxPlacer.cs · Box.cs · GroundCheck.cs · Goal.cs · GameManager.cs</p></div>
+        <div class="card"><h3 class="editable">핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('movement')">2D 이동</span><span class="badge concept-link" onclick="openReference('jump')">점프 / Ground Check</span><span class="badge concept-link" onclick="openReference('trigger')">충돌 / Trigger</span><span class="badge concept-link" onclick="openReference('instantiate')">상자 생성</span><span class="badge concept-link" onclick="openReference('manager')">GameManager</span><span class="badge concept-link" onclick="openReference('scene')">씬 전환</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
+        <div class="card full"><div class="code-title"><h3 class="editable">상자 설치</h3><button class="copy-btn">복사</button></div><p class="editable"re><code>if (Input.GetKeyDown(KeyCode.E))
 {
     Instantiate(boxPrefab, createPoint.position, Quaternion.identity);
 }</code></pre><div class="note">상자 개수 제한을 두면 퍼즐성이 살아납니다.</div></div>
@@ -757,11 +861,21 @@
     </section>
 
     <section id="taehong" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">김태홍</div><h2>3D FPS · 탈출 게임</h2><div class="subtitle">적을 제거하고 장치를 작동시켜 탈출하는 FPS</div></div><div class="difficulty"><span class="stars">★★★★☆</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">김태홍</div><h2 class="editable">3D FPS · 탈출 게임</h2><div class="subtitle editable">적을 제거하고 장치를 작동시켜 탈출하는 FPS</div></div><div class="difficulty"><span class="stars">★★★★☆</span></div></div>
       <div class="grid">
-        <div class="card"><h3>예상 스크립트</h3><p>FPSPlayerController.cs · MouseLook.cs · Gun.cs · MeleeWeapon.cs · EnemyHealth.cs · WeaponManager.cs · Interaction.cs · EscapeDoor.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('character')">3D 이동</span><span class="badge concept-link" onclick="openReference('raycast')">Raycast / LayerMask</span><span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span><span class="badge concept-link" onclick="openReference('animator')">Animator</span><span class="badge concept-link" onclick="openReference('audio')">AudioSource</span><span class="badge concept-link" onclick="openReference('enemyai')">Enemy AI</span><span class="badge concept-link" onclick="openReference('time')">쿨다운</span><span class="badge concept-link" onclick="openReference('getcomponent')">GetComponent</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
-        <div class="card full"><div class="code-title"><h3>Raycast 총 공격</h3><button class="copy-btn">복사</button></div><pre><code>if (Input.GetMouseButtonDown(0))
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>적을 처치하는 게임.</li><li>현재 게임의 차별화된 콘셉트가 부족함.</li><li>전투 방식이나 목표, 배경 설정 중 하나를 정해 게임의 방향성을 더 명확히 할 필요가 있음.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">예상 스크립트</h3><p class="editable">FPSPlayerController.cs · MouseLook.cs · Gun.cs · MeleeWeapon.cs · EnemyHealth.cs · WeaponManager.cs · Interaction.cs · EscapeDoor.cs</p></div>
+        <div class="card"><h3 class="editable">핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('character')">3D 이동</span><span class="badge concept-link" onclick="openReference('raycast')">Raycast / LayerMask</span><span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span><span class="badge concept-link" onclick="openReference('animator')">Animator</span><span class="badge concept-link" onclick="openReference('audio')">AudioSource</span><span class="badge concept-link" onclick="openReference('enemyai')">Enemy AI</span><span class="badge concept-link" onclick="openReference('time')">쿨다운</span><span class="badge concept-link" onclick="openReference('getcomponent')">GetComponent</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
+        <div class="card full"><div class="code-title"><h3 class="editable">Raycast 총 공격</h3><button class="copy-btn">복사</button></div><p class="editable"re><code>if (Input.GetMouseButtonDown(0))
 {
     if (Physics.Raycast(camera.transform.position,
                         camera.transform.forward,
@@ -776,11 +890,21 @@
     </section>
 
     <section id="yunsu" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">박윤수</div><h2>마작 × 로그라이크</h2><div class="subtitle">마작 전투, 보상, 상점, 이벤트, 보스가 연결되는 시스템형 프로젝트</div></div><div class="difficulty"><span class="stars">★★★★★+</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">박윤수</div><h2 class="editable">마작 × 로그라이크</h2><div class="subtitle editable">마작 전투, 보상, 상점, 이벤트, 보스가 연결되는 시스템형 프로젝트</div></div><div class="difficulty"><span class="stars">★★★★★+</span></div></div>
       <div class="grid">
-        <div class="card"><h3>핵심 구조</h3><p>GameManager · DungeonManager · BattleManager · MahjongSystem · HandManager · ScoreCalculator · UIManager</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('list')">List / enum</span><span class="badge concept-link" onclick="openReference('random')">Random</span><span class="badge concept-link" onclick="openReference('array2d')">반복문 / 판정</span><span class="badge concept-link" onclick="openReference('manager')">GameManager / 상태</span><span class="badge concept-link" onclick="openReference('event')">이벤트 통신</span><span class="badge concept-link" onclick="openReference('scriptable')">ScriptableObject</span><span class="badge concept-link" onclick="openReference('ui')">UI</span><span class="badge concept-link" onclick="openReference('scene')">씬 전환</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
-        <div class="card full"><div class="code-title"><h3>방 타입 관리</h3><button class="copy-btn">복사</button></div><pre><code>public enum RoomType
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>로그라이크 마작.</li><li>방을 방문하고 각 방을 클리어하며 진행.</li><li>기획 전체를 그대로 구현하기보다 구현 가능한 범위로 최대한 축소해서 완성하는 것이 중요.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">핵심 구조</h3><p class="editable">GameManager · DungeonManager · BattleManager · MahjongSystem · HandManager · ScoreCalculator · UIManager</p></div>
+        <div class="card"><h3 class="editable">핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('list')">List / enum</span><span class="badge concept-link" onclick="openReference('random')">Random</span><span class="badge concept-link" onclick="openReference('array2d')">반복문 / 판정</span><span class="badge concept-link" onclick="openReference('manager')">GameManager / 상태</span><span class="badge concept-link" onclick="openReference('event')">이벤트 통신</span><span class="badge concept-link" onclick="openReference('scriptable')">ScriptableObject</span><span class="badge concept-link" onclick="openReference('ui')">UI</span><span class="badge concept-link" onclick="openReference('scene')">씬 전환</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
+        <div class="card full"><div class="code-title"><h3 class="editable">방 타입 관리</h3><button class="copy-btn">복사</button></div><p class="editable"re><code>public enum RoomType
 {
     Battle,
     Reward,
@@ -792,11 +916,21 @@
     </section>
 
     <section id="insu" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">임인수</div><h2>Block Blast형 격자 퍼즐</h2><div class="subtitle">블록을 전략적으로 배치하고 줄을 완성해 점수를 얻는 퍼즐 게임</div></div><div class="difficulty"><span class="stars">★★★★☆</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">임인수</div><h2 class="editable">Block Blast형 격자 퍼즐</h2><div class="subtitle editable">블록을 전략적으로 배치하고 줄을 완성해 점수를 얻는 퍼즐 게임</div></div><div class="difficulty"><span class="stars">★★★★☆</span></div></div>
       <div class="grid">
-        <div class="card"><h3>예상 스크립트</h3><p>BoardManager.cs · Block.cs · BlockDrag.cs · BlockSpawner.cs · ScoreManager.cs · GameManager.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('array2d')">2차원 배열 / 반복문</span><span class="badge concept-link" onclick="openReference('drag')">Drag & Drop</span><span class="badge concept-link" onclick="openReference('ui')">UI</span><span class="badge concept-link" onclick="openReference('random')">Random</span><span class="badge concept-link" onclick="openReference('manager')">GameManager</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
-        <div class="card full"><div class="code-title"><h3>보드 데이터</h3><button class="copy-btn">복사</button></div><pre><code>int[,] board = new int[8, 8];
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>퍼즐팝.</li><li>핵심 퍼즐 기능을 먼저 완성.</li><li>시간이 남으면 점수 저장 기능을 추가해보기.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">예상 스크립트</h3><p class="editable">BoardManager.cs · Block.cs · BlockDrag.cs · BlockSpawner.cs · ScoreManager.cs · GameManager.cs</p></div>
+        <div class="card"><h3 class="editable">핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('array2d')">2차원 배열 / 반복문</span><span class="badge concept-link" onclick="openReference('drag')">Drag & Drop</span><span class="badge concept-link" onclick="openReference('ui')">UI</span><span class="badge concept-link" onclick="openReference('random')">Random</span><span class="badge concept-link" onclick="openReference('manager')">GameManager</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
+        <div class="card full"><div class="code-title"><h3 class="editable">보드 데이터</h3><button class="copy-btn">복사</button></div><p class="editable"re><code>int[,] board = new int[8, 8];
 
 if (board[x, y] == 0)
 {
@@ -806,11 +940,21 @@ if (board[x, y] == 0)
     </section>
 
     <section id="ijun" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">전이준</div><h2>2D 탑다운 슈팅</h2><div class="subtitle">맵과 직업을 선택하고 장비·버프 조합으로 최단 시간 클리어를 노리는 게임</div></div><div class="difficulty"><span class="stars">★★★★☆</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">전이준</div><h2 class="editable">2D 탑다운 슈팅</h2><div class="subtitle editable">맵과 직업을 선택하고 장비·버프 조합으로 최단 시간 클리어를 노리는 게임</div></div><div class="difficulty"><span class="stars">★★★★☆</span></div></div>
       <div class="grid">
-        <div class="card"><h3>예상 스크립트</h3><p>PlayerController.cs · PlayerAim.cs · Weapon.cs · Bullet.cs · Enemy.cs · EquipmentManager.cs · BuffManager.cs · StageTimer.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('movement')">2D 이동</span><span class="badge concept-link" onclick="openReference('mouseaim')">마우스 조준</span><span class="badge concept-link" onclick="openReference('instantiate')">총알 생성</span><span class="badge concept-link" onclick="openReference('destroy')">총알 제거</span><span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span><span class="badge concept-link" onclick="openReference('time')">쿨다운 / 타이머</span><span class="badge concept-link" onclick="openReference('enemyai')">Enemy AI</span><span class="badge concept-link" onclick="openReference('scriptable')">ScriptableObject</span><span class="badge concept-link" onclick="openReference('pool')">Object Pooling</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
-        <div class="card full"><div class="code-title"><h3>탑다운 이동</h3><button class="copy-btn">복사</button></div><pre><code>Vector2 move;
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>던전 스피드런.</li><li>아이작(The Binding of Isaac)을 모티브로 한 구조.</li><li>던전을 최단 시간에 클리어하는 것이 핵심 목표.</li><li>맵과 직업 선택 기능 포함.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">예상 스크립트</h3><p class="editable">PlayerController.cs · PlayerAim.cs · Weapon.cs · Bullet.cs · Enemy.cs · EquipmentManager.cs · BuffManager.cs · StageTimer.cs</p></div>
+        <div class="card"><h3 class="editable">핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('movement')">2D 이동</span><span class="badge concept-link" onclick="openReference('mouseaim')">마우스 조준</span><span class="badge concept-link" onclick="openReference('instantiate')">총알 생성</span><span class="badge concept-link" onclick="openReference('destroy')">총알 제거</span><span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span><span class="badge concept-link" onclick="openReference('time')">쿨다운 / 타이머</span><span class="badge concept-link" onclick="openReference('enemyai')">Enemy AI</span><span class="badge concept-link" onclick="openReference('scriptable')">ScriptableObject</span><span class="badge concept-link" onclick="openReference('pool')">Object Pooling</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
+        <div class="card full"><div class="code-title"><h3 class="editable">탑다운 이동</h3><button class="copy-btn">복사</button></div><p class="editable"re><code>Vector2 move;
 
 move.x = Input.GetAxisRaw("Horizontal");
 move.y = Input.GetAxisRaw("Vertical");
@@ -820,11 +964,21 @@ rb.linearVelocity = move.normalized * moveSpeed;</code></pre></div>
     </section>
 
     <section id="mingyo" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">조민교</div><h2>룬 휠</h2><div class="subtitle">행동 조각을 원형 판에 배치하고 초침의 흐름에 따라 전투 순환을 만드는 로그라이크 전략 RPG</div></div><div class="difficulty"><span class="stars">★★★★★+</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">조민교</div><h2 class="editable">룬 휠</h2><div class="subtitle editable">행동 조각을 원형 판에 배치하고 초침의 흐름에 따라 전투 순환을 만드는 로그라이크 전략 RPG</div></div><div class="difficulty"><span class="stars">★★★★★+</span></div></div>
       <div class="grid">
-        <div class="card"><h3>예상 스크립트</h3><p>WheelManager.cs · Rune.cs · RuneSlot.cs · RuneDrag.cs · BattleManager.cs · RewardManager.cs · PlayerStats.cs</p></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('drag')">Drag & Drop</span><span class="badge concept-link" onclick="openReference('angle')">각도 / 룬휠 회전</span><span class="badge concept-link" onclick="openReference('time')">Time / 쿨다운</span><span class="badge concept-link" onclick="openReference('list')">List / enum</span><span class="badge concept-link" onclick="openReference('manager')">상태관리</span><span class="badge concept-link" onclick="openReference('event')">이벤트 통신</span><span class="badge concept-link" onclick="openReference('ui')">UI fillAmount</span><span class="badge concept-link" onclick="openReference('random')">Random</span><span class="badge concept-link" onclick="openReference('scriptable')">ScriptableObject</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
-        <div class="card full"><div class="code-title"><h3>룬휠 회전</h3><button class="copy-btn">복사</button></div><pre><code>float angle = currentAngle + rotateSpeed * Time.deltaTime;
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>시간 안에 끝내는 것이 구현의 관건.</li><li>기획이 매우 촘촘하고 분량이 방대함.</li><li>원판 조각을 끼워 넣고 초침을 돌려 미션을 선택하는 구조.</li><li>캐릭터 선택 기능이 실제로 필요한지 범위 검토 필요.</li><li>본인이 자신감이 있고 준비가 많이 되어 있어 핵심 기능부터 순차 구현 권장.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">예상 스크립트</h3><p class="editable">WheelManager.cs · Rune.cs · RuneSlot.cs · RuneDrag.cs · BattleManager.cs · RewardManager.cs · PlayerStats.cs</p></div>
+        <div class="card"><h3 class="editable">핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('drag')">Drag & Drop</span><span class="badge concept-link" onclick="openReference('angle')">각도 / 룬휠 회전</span><span class="badge concept-link" onclick="openReference('time')">Time / 쿨다운</span><span class="badge concept-link" onclick="openReference('list')">List / enum</span><span class="badge concept-link" onclick="openReference('manager')">상태관리</span><span class="badge concept-link" onclick="openReference('event')">이벤트 통신</span><span class="badge concept-link" onclick="openReference('ui')">UI fillAmount</span><span class="badge concept-link" onclick="openReference('random')">Random</span><span class="badge concept-link" onclick="openReference('scriptable')">ScriptableObject</span></div><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
+        <div class="card full"><div class="code-title"><h3 class="editable">룬휠 회전</h3><button class="copy-btn">복사</button></div><p class="editable"re><code>float angle = currentAngle + rotateSpeed * Time.deltaTime;
 
 wheel.transform.rotation =
     Quaternion.Euler(0, 0, -angle);</code></pre><div class="note warn">처음에는 룬 3종 → 원판 배치 → 초침 회전 → 해당 룬 실행까지만 구현하는 것이 적절합니다.</div></div>
@@ -832,12 +986,22 @@ wheel.transform.rotation =
     </section>
 
     <section id="eungyeom" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">최은겸</div><h2>2D 트롤링 미로</h2><div class="subtitle">예상하기 어려운 벽·속도 변화·시야 제한·출구 이동을 피하며 탈출하는 게임</div></div><div class="difficulty"><span class="stars">★★★☆☆</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">최은겸</div><h2 class="editable">2D 트롤링 미로</h2><div class="subtitle editable">예상하기 어려운 벽·속도 변화·시야 제한·출구 이동을 피하며 탈출하는 게임</div></div><div class="difficulty"><span class="stars">★★★☆☆</span></div></div>
       <div class="grid">
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('movement')">2D 이동</span><span class="badge concept-link" onclick="openReference('trigger')">Trigger Enter / Exit</span><span class="badge concept-link" onclick="openReference('angle')">Transform 위치 이동</span><span class="badge concept-link" onclick="openReference('coroutine')">Coroutine</span><span class="badge concept-link" onclick="openReference('light')">Light2D / enabled</span><span class="badge concept-link" onclick="openReference('scene')">씬 전환</span></div><div class="reference-shortcut">배지를 누르면 작성법과 매개변수로 이동합니다.</div></div>
-        <div class="card"><h3>핵심 개념</h3><div class="badge-row"><span class="badge">OnTriggerEnter2D</span><span class="badge">SetActive</span><span class="badge">Transform.position</span><span class="badge">Coroutine</span><span class="badge">Light2D</span></div></div>
-        <div class="card"><h3>구현 포인트</h3><p>트리거 구역마다 이벤트를 분리하면 함정을 추가하기 쉽고, Coroutine으로 지연 발동을 만들면 트롤 요소를 자연스럽게 구현할 수 있습니다.</p><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
-        <div class="card full"><div class="code-title"><h3>속도 감소 트리거</h3><button class="copy-btn">복사</button></div><pre><code>private void OnTriggerEnter2D(Collider2D other)
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>햄스터가 미로를 탈출하는 트롤링 미로게임.</li><li>난이도는 트릭을 추가하며 3단계로 구성.</li><li>트릭 수를 늘리기보다 미로 구조를 효율적으로 구성하는 것이 중요.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">핵심 개념</h3><div class="badge-row"><span class="badge concept-link" onclick="openReference('movement')">2D 이동</span><span class="badge concept-link" onclick="openReference('trigger')">Trigger Enter / Exit</span><span class="badge concept-link" onclick="openReference('angle')">Transform 위치 이동</span><span class="badge concept-link" onclick="openReference('coroutine')">Coroutine</span><span class="badge concept-link" onclick="openReference('light')">Light2D / enabled</span><span class="badge concept-link" onclick="openReference('scene')">씬 전환</span></div><div class="reference-shortcut">배지를 누르면 작성법과 매개변수로 이동합니다.</div></div>
+        <div class="card"><h3 class="editable">핵심 개념</h3><div class="badge-row"><span class="badge">OnTriggerEnter2D</span><span class="badge">SetActive</span><span class="badge">Transform.position</span><span class="badge">Coroutine</span><span class="badge">Light2D</span></div></div>
+        <div class="card"><h3 class="editable">구현 포인트</h3><p class="editable">트리거 구역마다 이벤트를 분리하면 함정을 추가하기 쉽고, Coroutine으로 지연 발동을 만들면 트롤 요소를 자연스럽게 구현할 수 있습니다.</p><div class="reference-shortcut">작성법과 매개변수는 <button onclick="openReference()">핵심 코드 레퍼런스</button>에서 확인</div></div>
+        <div class="card full"><div class="code-title"><h3 class="editable">속도 감소 트리거</h3><button class="copy-btn">복사</button></div><p class="editable"re><code>private void OnTriggerEnter2D(Collider2D other)
 {
     if (other.CompareTag("SlowZone"))
         moveSpeed = 2f;
@@ -849,8 +1013,8 @@ wheel.transform.rotation =
       <div class="hero student-title">
         <div>
           <div class="eyebrow">장민석</div>
-          <h2>A Blade Gleaming in the Sun</h2>
-          <div class="subtitle">장여준과 함께 제작하는 공동 프로젝트</div>
+          <h2 class="editable">A Blade Gleaming in the Sun</h2>
+          <div class="subtitle editable">장여준과 함께 제작하는 공동 프로젝트</div>
           <div class="shared-chip">👥 공동 프로젝트 · 장민석 + 장여준</div>
           <div class="team-banner">
             <div><div class="team-label">TEAM PROJECT</div><div class="team-names">장민석 ↔ 장여준</div></div>
@@ -861,14 +1025,24 @@ wheel.transform.rotation =
       </div>
       <div class="grid">
 
-        <div class="card"><h3>예상 난이도</h3>
-          <p><b>★★★★☆</b> · 전투 시스템, HP/공격 판정, 애니메이션, 적 AI, 씬 전환 등이 포함될 가능성을 기준으로 한 예상치임. 세부 PPT 내용을 확인하면 조정 가능함.</p>
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>고대 로마 시대 배경의 어드벤처 게임.</li><li>이번 구현 범위는 콜로세움 전투와 성장까지로 제한.</li><li>주요 기능은 검술이며 검 종류에 따라 전투 방식이 달라질 수 있음.</li><li>고대 로마 계급 시스템을 선택지 형태로 구현 검토.</li><li>음식을 먹고 훈련해야 레벨업하는 건강관리 시스템.</li><li>전투로 돈을 얻고 상점에서 음식을 구매하는 흐름.</li><li>3D 모델링은 직접 제작하기보다 Asset Store 활용 권장.</li><li>장여준과 공동 프로젝트.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
         </div>
-        <div class="card"><h3>공동 프로젝트 상태</h3>
-          <p><b>장민석·장여준이 함께 제작하는 하나의 프로젝트</b>임. 프로젝트명은 <b>A Blade Gleaming in the Sun</b>이며, 두 학생의 페이지는 같은 프로젝트 정보를 공유하도록 구성함.</p>
+
+
+        <div class="card"><h3 class="editable">예상 난이도</h3>
+          <p class="editable"><b>★★★★☆</b> · 전투 시스템, HP/공격 판정, 애니메이션, 적 AI, 씬 전환 등이 포함될 가능성을 기준으로 한 예상치임. 세부 PPT 내용을 확인하면 조정 가능함.</p>
         </div>
-        <div class="card"><h3>현재 확인 가능한 예상 핵심</h3>
-          <p>발표자료 세부 내용이 아직 텍스트로 충분히 확인되지 않아 장르를 단정하지 않음. 전투 중심 프로젝트일 경우 아래 코드가 우선 후보임.</p>
+        <div class="card"><h3 class="editable">공동 프로젝트 상태</h3>
+          <p class="editable"><b>장민석·장여준이 함께 제작하는 하나의 프로젝트</b>임. 프로젝트명은 <b>A Blade Gleaming in the Sun</b>이며, 두 학생의 페이지는 같은 프로젝트 정보를 공유하도록 구성함.</p>
+        </div>
+        <div class="card"><h3 class="editable">현재 확인 가능한 예상 핵심</h3>
+          <p class="editable">발표자료 세부 내용이 아직 텍스트로 충분히 확인되지 않아 장르를 단정하지 않음. 전투 중심 프로젝트일 경우 아래 코드가 우선 후보임.</p>
           <div class="badge-row">
             <span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span>
             <span class="badge concept-link" onclick="openReference('animator')">Animator</span>
@@ -878,8 +1052,8 @@ wheel.transform.rotation =
             <span class="badge concept-link" onclick="openReference('scene')">SceneManager</span>
           </div>
         </div>
-        <div class="card full"><h3>다음에 확인하면 좋은 것</h3>
-          <p>두 학생의 <b>역할 분담</b>을 확인하면 Player/Enemy/UI/Stage 중 누가 어떤 스크립트를 담당할지 나눠서 지도하기 좋음. 현재 단계에서는 두 학생에게 서로 다른 게임으로 안내하지 않도록 동일 프로젝트로 관리함.</p>
+        <div class="card full"><h3 class="editable">다음에 확인하면 좋은 것</h3>
+          <p class="editable">두 학생의 <b>역할 분담</b>을 확인하면 Player/Enemy/UI/Stage 중 누가 어떤 스크립트를 담당할지 나눠서 지도하기 좋음. 현재 단계에서는 두 학생에게 서로 다른 게임으로 안내하지 않도록 동일 프로젝트로 관리함.</p>
         </div>
 
       </div>
@@ -890,8 +1064,8 @@ wheel.transform.rotation =
       <div class="hero student-title">
         <div>
           <div class="eyebrow">김선홍</div>
-          <h2>CGW · 타워디펜스 &amp; 3D 파이트</h2>
-          <div class="subtitle">김한울과 함께 제작하는 공동 프로젝트</div>
+          <h2 class="editable">CGW · 타워디펜스 &amp; 3D 파이트</h2>
+          <div class="subtitle editable">김한울과 함께 제작하는 공동 프로젝트</div>
           <div class="shared-chip">👥 공동 프로젝트 · 김선홍 + 김한울</div>
           <div class="team-banner">
             <div><div class="team-label">TEAM PROJECT</div><div class="team-names">김선홍 ↔ 김한울</div></div>
@@ -902,8 +1076,8 @@ wheel.transform.rotation =
       </div>
       <div class="grid">
 
-        <div class="card"><h3>공동 프로젝트 개요</h3>
-          <p><b>CGW</b> · 타워디펜스 &amp; 3D 파이트 게임. 타워 방어 파트와 3D 전투 파트를 함께 구성하는 프로젝트임.</p>
+        <div class="card"><h3 class="editable">공동 프로젝트 개요</h3>
+          <p class="editable"><b>CGW</b> · 타워디펜스 &amp; 3D 파이트 게임. 타워 방어 파트와 3D 전투 파트를 함께 구성하는 프로젝트임.</p>
           <div class="badge-row">
             <span class="badge concept-link" onclick="openReference('damage')">HP / TakeDamage</span>
             <span class="badge concept-link" onclick="openReference('instantiate')">Instantiate</span>
@@ -915,11 +1089,11 @@ wheel.transform.rotation =
             <span class="badge concept-link" onclick="openReference('ui')">UI / Slider / Button</span>
           </div>
         </div>
-        <div class="card"><h3>추가로 사용할 가능성이 높은 API</h3>
-          <p><code class="inline">Input.GetKeyDown()</code> · <code class="inline">Input.anyKeyDown</code> · <code class="inline">KeyCode.Escape</code> · <code class="inline">Button.interactable</code> · <code class="inline">Mathf.Clamp()</code> · <code class="inline">Mathf.Max()</code> · <code class="inline">PlayerPrefs</code></p>
+        <div class="card"><h3 class="editable">추가로 사용할 가능성이 높은 API</h3>
+          <p class="editable"><code class="inline">Input.GetKeyDown()</code> · <code class="inline">Input.anyKeyDown</code> · <code class="inline">KeyCode.Escape</code> · <code class="inline">Button.interactable</code> · <code class="inline">Mathf.Clamp()</code> · <code class="inline">Mathf.Max()</code> · <code class="inline">PlayerPrefs</code></p>
           <div class="note">타워 HP, 유닛 생성, 전투 HP/애니메이션, 씬 이동, 기록 저장이 각각 분리될 가능성이 높음.</div>
         </div>
-        <div class="card full"><h3>권장 스크립트 구성</h3>
+        <div class="card full"><h3 class="editable">권장 스크립트 구성</h3>
           <table>
             <thead><tr><th>스크립트</th><th>역할</th></tr></thead>
             <tbody>
@@ -941,8 +1115,8 @@ wheel.transform.rotation =
       <div class="hero student-title">
         <div>
           <div class="eyebrow">김한울</div>
-          <h2>CGW · 타워디펜스 &amp; 3D 파이트</h2>
-          <div class="subtitle">김선홍과 함께 제작하는 공동 프로젝트</div>
+          <h2 class="editable">CGW · 타워디펜스 &amp; 3D 파이트</h2>
+          <div class="subtitle editable">김선홍과 함께 제작하는 공동 프로젝트</div>
           <div class="shared-chip">👥 공동 프로젝트 · 김선홍 + 김한울</div>
           <div class="team-banner">
             <div><div class="team-label">TEAM PROJECT</div><div class="team-names">김선홍 ↔ 김한울</div></div>
@@ -953,8 +1127,18 @@ wheel.transform.rotation =
       </div>
       <div class="grid">
 
-        <div class="card"><h3>공동 프로젝트 개요</h3>
-          <p><b>CGW</b> · 타워디펜스 &amp; 3D 파이트 게임. 타워 방어 파트와 3D 전투 파트를 함께 구성하는 프로젝트임.</p>
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>타워디펜스 + 3D 전투게임.</li><li>전투는 철권처럼 대전하는 느낌.</li><li>3D 구현 부담이 크다면 전체를 2D로 구현하는 방향도 권장.</li><li>김선홍과 공동 프로젝트.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+
+        <div class="card"><h3 class="editable">공동 프로젝트 개요</h3>
+          <p class="editable"><b>CGW</b> · 타워디펜스 &amp; 3D 파이트 게임. 타워 방어 파트와 3D 전투 파트를 함께 구성하는 프로젝트임.</p>
           <div class="badge-row">
             <span class="badge concept-link" onclick="openReference('damage')">HP / TakeDamage</span>
             <span class="badge concept-link" onclick="openReference('instantiate')">Instantiate</span>
@@ -966,11 +1150,11 @@ wheel.transform.rotation =
             <span class="badge concept-link" onclick="openReference('ui')">UI / Slider / Button</span>
           </div>
         </div>
-        <div class="card"><h3>추가로 사용할 가능성이 높은 API</h3>
-          <p><code class="inline">Input.GetKeyDown()</code> · <code class="inline">Input.anyKeyDown</code> · <code class="inline">KeyCode.Escape</code> · <code class="inline">Button.interactable</code> · <code class="inline">Mathf.Clamp()</code> · <code class="inline">Mathf.Max()</code> · <code class="inline">PlayerPrefs</code></p>
+        <div class="card"><h3 class="editable">추가로 사용할 가능성이 높은 API</h3>
+          <p class="editable"><code class="inline">Input.GetKeyDown()</code> · <code class="inline">Input.anyKeyDown</code> · <code class="inline">KeyCode.Escape</code> · <code class="inline">Button.interactable</code> · <code class="inline">Mathf.Clamp()</code> · <code class="inline">Mathf.Max()</code> · <code class="inline">PlayerPrefs</code></p>
           <div class="note">타워 HP, 유닛 생성, 전투 HP/애니메이션, 씬 이동, 기록 저장이 각각 분리될 가능성이 높음.</div>
         </div>
-        <div class="card full"><h3>권장 스크립트 구성</h3>
+        <div class="card full"><h3 class="editable">권장 스크립트 구성</h3>
           <table>
             <thead><tr><th>스크립트</th><th>역할</th></tr></thead>
             <tbody>
@@ -989,23 +1173,53 @@ wheel.transform.rotation =
     </section>
 
     <section id="jaehyeong" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">박재형</div><h2>기획 내용 추가 확인 필요</h2><div class="subtitle">씬 플로우와 와이어프레임 자료는 있으나 텍스트로 세부 게임 구조가 충분히 추출되지 않았습니다.</div></div><div class="difficulty"><span class="stars">★★★★☆ <small style="font-size:11px;color:#7b8798;font-weight:700">예상</small></span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">박재형</div><h2 class="editable">기획 내용 추가 확인 필요</h2><div class="subtitle editable">씬 플로우와 와이어프레임 자료는 있으나 텍스트로 세부 게임 구조가 충분히 추출되지 않았습니다.</div></div><div class="difficulty"><span class="stars">★★★★☆ <small style="font-size:11px;color:#7b8798;font-weight:700">예상</small></span></div></div>
       <div class="grid">
-        <div class="card"><h3>확인 포인트</h3><p>플레이어 조작 방식 · 전투/퍼즐 여부 · 게임오버/클리어 조건을 확인하면 필요한 C# 스크립트를 확정할 수 있습니다.</p></div>
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>화석 발굴 장소에서 화석을 발굴하는 게임.</li><li>발굴한 화석을 팔거나 전시하는 구조.</li><li>기획서 3페이지의 질문/기능이 너무 많아 범위 축소 필요.</li><li>상점·관리·박물관까지 모두 구현하는 것은 어려울 가능성이 높아 핵심 루프 우선 권장.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">확인 포인트</h3><p class="editable">플레이어 조작 방식 · 전투/퍼즐 여부 · 게임오버/클리어 조건을 확인하면 필요한 C# 스크립트를 확정할 수 있습니다.</p></div>
       </div>
     </section>
 
     <section id="doyun" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">신도윤</div><h2>Tech Spec 추가 확인 필요</h2><div class="subtitle">Tech Spec 이미지가 존재하지만 현재 마크다운에는 이미지 내부 텍스트가 포함되지 않았습니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">신도윤</div><h2 class="editable">Tech Spec 추가 확인 필요</h2><div class="subtitle editable">Tech Spec 이미지가 존재하지만 현재 마크다운에는 이미지 내부 텍스트가 포함되지 않았습니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
       <div class="grid">
-        <div class="card"><h3>다음 분석 포인트</h3><p>Tech Spec 이미지 내용을 확인하면 학생이 이미 정리한 Unity 컴포넌트와 함수 중심으로 구현 가이드를 구성할 수 있습니다.</p></div>
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>낮에는 파밍, 밤에는 사냥하는 낮/밤 순환 구조.</li><li>정신력이 0%가 되거나 모닥불이 꺼지면 사망.</li><li>하루 길이는 약 4분.</li><li>구현 난이도는 중간 정도로 판단.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">다음 분석 포인트</h3><p class="editable">Tech Spec 이미지 내용을 확인하면 학생이 이미 정리한 Unity 컴포넌트와 함수 중심으로 구현 가이드를 구성할 수 있습니다.</p></div>
       </div>
     </section>
 
     <section id="yeonwoo" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">이연우</div><h2>기획 내용 추가 확인 필요</h2><div class="subtitle">현재 자료가 이미지 중심이라 핵심 게임 루프를 추가로 확인해야 합니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">이연우</div><h2 class="editable">기획 내용 추가 확인 필요</h2><div class="subtitle editable">현재 자료가 이미지 중심이라 핵심 게임 루프를 추가로 확인해야 합니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
       <div class="grid">
-        <div class="card"><h3>확인 포인트</h3><p>장르 · 이동 방식 · 공격/퍼즐 여부 · 점수/클리어 규칙을 확인한 뒤 코드 구조를 추가할 예정입니다.</p></div>
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>타워디펜스 게임.</li><li>적을 물리치면서 자원을 얻는 구조.</li><li>배경을 &#x27;타워 안&#x27;으로 설정하는 방향 검토.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">확인 포인트</h3><p class="editable">장르 · 이동 방식 · 공격/퍼즐 여부 · 점수/클리어 규칙을 확인한 뒤 코드 구조를 추가할 예정입니다.</p></div>
       </div>
     </section>
 
@@ -1013,8 +1227,8 @@ wheel.transform.rotation =
       <div class="hero student-title">
         <div>
           <div class="eyebrow">장여준</div>
-          <h2>A Blade Gleaming in the Sun</h2>
-          <div class="subtitle">장민석과 함께 제작하는 공동 프로젝트</div>
+          <h2 class="editable">A Blade Gleaming in the Sun</h2>
+          <div class="subtitle editable">장민석과 함께 제작하는 공동 프로젝트</div>
           <div class="shared-chip">👥 공동 프로젝트 · 장민석 + 장여준</div>
           <div class="team-banner">
             <div><div class="team-label">TEAM PROJECT</div><div class="team-names">장민석 ↔ 장여준</div></div>
@@ -1025,14 +1239,24 @@ wheel.transform.rotation =
       </div>
       <div class="grid">
 
-        <div class="card"><h3>예상 난이도</h3>
-          <p><b>★★★★☆</b> · 전투 시스템, HP/공격 판정, 애니메이션, 적 AI, 씬 전환 등이 포함될 가능성을 기준으로 한 예상치임. 세부 PPT 내용을 확인하면 조정 가능함.</p>
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>고대 로마 시대 배경의 어드벤처 게임.</li><li>이번 구현 범위는 콜로세움 전투와 성장까지로 제한.</li><li>주요 기능은 검술이며 검 종류에 따라 전투 방식이 달라질 수 있음.</li><li>고대 로마 계급 시스템을 선택지 형태로 구현 검토.</li><li>음식을 먹고 훈련해야 레벨업하는 건강관리 시스템.</li><li>전투로 돈을 얻고 상점에서 음식을 구매하는 흐름.</li><li>3D 모델링은 직접 제작하기보다 Asset Store 활용 권장.</li><li>장민석과 공동 프로젝트.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
         </div>
-        <div class="card"><h3>공동 프로젝트 상태</h3>
-          <p><b>장민석·장여준이 함께 제작하는 하나의 프로젝트</b>임. 프로젝트명은 <b>A Blade Gleaming in the Sun</b>이며, 두 학생의 페이지는 같은 프로젝트 정보를 공유하도록 구성함.</p>
+
+
+        <div class="card"><h3 class="editable">예상 난이도</h3>
+          <p class="editable"><b>★★★★☆</b> · 전투 시스템, HP/공격 판정, 애니메이션, 적 AI, 씬 전환 등이 포함될 가능성을 기준으로 한 예상치임. 세부 PPT 내용을 확인하면 조정 가능함.</p>
         </div>
-        <div class="card"><h3>현재 확인 가능한 예상 핵심</h3>
-          <p>발표자료 세부 내용이 아직 텍스트로 충분히 확인되지 않아 장르를 단정하지 않음. 전투 중심 프로젝트일 경우 아래 코드가 우선 후보임.</p>
+        <div class="card"><h3 class="editable">공동 프로젝트 상태</h3>
+          <p class="editable"><b>장민석·장여준이 함께 제작하는 하나의 프로젝트</b>임. 프로젝트명은 <b>A Blade Gleaming in the Sun</b>이며, 두 학생의 페이지는 같은 프로젝트 정보를 공유하도록 구성함.</p>
+        </div>
+        <div class="card"><h3 class="editable">현재 확인 가능한 예상 핵심</h3>
+          <p class="editable">발표자료 세부 내용이 아직 텍스트로 충분히 확인되지 않아 장르를 단정하지 않음. 전투 중심 프로젝트일 경우 아래 코드가 우선 후보임.</p>
           <div class="badge-row">
             <span class="badge concept-link" onclick="openReference('damage')">HP / Damage</span>
             <span class="badge concept-link" onclick="openReference('animator')">Animator</span>
@@ -1042,17 +1266,27 @@ wheel.transform.rotation =
             <span class="badge concept-link" onclick="openReference('scene')">SceneManager</span>
           </div>
         </div>
-        <div class="card full"><h3>다음에 확인하면 좋은 것</h3>
-          <p>두 학생의 <b>역할 분담</b>을 확인하면 Player/Enemy/UI/Stage 중 누가 어떤 스크립트를 담당할지 나눠서 지도하기 좋음. 현재 단계에서는 두 학생에게 서로 다른 게임으로 안내하지 않도록 동일 프로젝트로 관리함.</p>
+        <div class="card full"><h3 class="editable">다음에 확인하면 좋은 것</h3>
+          <p class="editable">두 학생의 <b>역할 분담</b>을 확인하면 Player/Enemy/UI/Stage 중 누가 어떤 스크립트를 담당할지 나눠서 지도하기 좋음. 현재 단계에서는 두 학생에게 서로 다른 게임으로 안내하지 않도록 동일 프로젝트로 관리함.</p>
         </div>
 
       </div>
     </section>
 
     <section id="jion" class="content-section student">
-      <div class="hero student-title"><div><div class="eyebrow">최지온</div><h2>기획 내용 추가 확인 필요</h2><div class="subtitle">씬 플로우·와이어프레임과 PDF 발표자료가 있으나 현재 텍스트만으로 핵심 기능을 확정하기 어렵습니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
+      <div class="hero student-title"><div><div class="eyebrow">최지온</div><h2 class="editable">기획 내용 추가 확인 필요</h2><div class="subtitle editable">씬 플로우·와이어프레임과 PDF 발표자료가 있으나 현재 텍스트만으로 핵심 기능을 확정하기 어렵습니다.</div></div><div class="difficulty"><span class="stars">미정</span></div></div>
       <div class="grid">
-        <div class="card"><h3>확인 포인트</h3><p>PDF 발표자료의 게임 개요와 기술 명세를 확인하면 예상 스크립트 및 핵심 코드를 추가할 수 있습니다.</p></div>
+
+        <div class="card presentation-card editable-note">
+          <span class="date-tag">9월 22일 발표</span>
+          <h3 class="editable" data-edit-key="title">발표 메모 · 피드백</h3>
+          <div class="editable" data-edit-key="content">
+            <ul><li>과학실 테마의 3D 러닝게임.</li><li>입체 공간에서 멈추지 않고 달리는 구조.</li><li>손가락으로 좌우로 밀어 이동.</li><li>플레이 시간에 따라 속도 증가.</li><li>아이템 획득 기능 및 인벤토리 칸 수 제한.</li><li>구현 가능성이 높은 편으로 판단.</li></ul>
+          </div>
+          <div class="save-hint">편집 모드를 켜면 이 내용을 직접 수정할 수 있습니다.</div>
+        </div>
+
+        <div class="card"><h3 class="editable">확인 포인트</h3><p class="editable">PDF 발표자료의 게임 개요와 기술 명세를 확인하면 예상 스크립트 및 핵심 코드를 추가할 수 있습니다.</p></div>
       </div>
     </section>
 
@@ -1162,6 +1396,144 @@ wheel.transform.rotation =
     document.getElementById('sidebar').classList.remove('open');
     window.scrollTo({top:0, behavior:'smooth'});
   }
+
+
+  let isEditMode = false;
+  const EDIT_STORAGE_KEY = 'unity_student_guide_user_edits_v1';
+
+  function assignEditIds(){
+    document.querySelectorAll('.editable').forEach((el, idx)=>{
+      if(!el.dataset.editId){
+        const section = el.closest('section');
+        const sid = section ? section.id : 'global';
+        el.dataset.editId = sid + '__' + idx;
+      }
+    });
+  }
+
+  function toggleEditMode(){
+    isEditMode = !isEditMode;
+    document.body.classList.toggle('edit-mode', isEditMode);
+
+    const btn = document.getElementById('editToggle');
+    const status = document.getElementById('editStatus');
+
+    document.querySelectorAll('.editable').forEach(el=>{
+      el.contentEditable = isEditMode ? 'true' : 'false';
+      el.spellcheck = false;
+    });
+
+    if(isEditMode){
+      btn.classList.add('active');
+      btn.textContent = '✓ 편집 종료';
+      status.textContent = '편집 모드 · 파란 점선 영역을 클릭해 바로 수정하세요';
+    }else{
+      btn.classList.remove('active');
+      btn.textContent = '✎ 편집 모드';
+      status.textContent = '보기 모드 · 수정 내용은 브라우저에 저장할 수 있어요';
+      saveEdits();
+    }
+  }
+
+  function collectEdits(){
+    assignEditIds();
+    const data = {};
+    document.querySelectorAll('.editable').forEach(el=>{
+      data[el.dataset.editId] = el.innerHTML;
+    });
+    return data;
+  }
+
+  function saveEdits(){
+    try{
+      localStorage.setItem(EDIT_STORAGE_KEY, JSON.stringify(collectEdits()));
+      const status = document.getElementById('editStatus');
+      if(status){
+        const old = status.textContent;
+        status.textContent = '저장됨 ✓';
+        setTimeout(()=> status.textContent = isEditMode
+          ? '편집 모드 · 파란 점선 영역을 클릭해 바로 수정하세요'
+          : '보기 모드 · 수정 내용은 브라우저에 저장할 수 있어요', 1200);
+      }
+    }catch(e){
+      alert('브라우저 저장에 실패했습니다. 수정본 HTML 저장 버튼을 사용해주세요.');
+    }
+  }
+
+  function loadEdits(){
+    assignEditIds();
+    try{
+      const raw = localStorage.getItem(EDIT_STORAGE_KEY);
+      if(!raw) return;
+      const data = JSON.parse(raw);
+      document.querySelectorAll('.editable').forEach(el=>{
+        if(Object.prototype.hasOwnProperty.call(data, el.dataset.editId)){
+          el.innerHTML = data[el.dataset.editId];
+        }
+      });
+    }catch(e){}
+  }
+
+  function downloadEditedHtml(){
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelectorAll('.editable').forEach((el, idx)=>{
+      const live = document.querySelectorAll('.editable')[idx];
+      if(live) el.innerHTML = live.innerHTML;
+      el.removeAttribute('contenteditable');
+    });
+    clone.querySelector('body')?.classList.remove('edit-mode');
+
+    const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], {type:'text/html;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'unity_student_guide_edited.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function exportEdits(){
+    const blob = new Blob([JSON.stringify(collectEdits(), null, 2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'unity_student_guide_edits_backup.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function importEdits(event){
+    const file = event.target.files && event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      try{
+        const data = JSON.parse(reader.result);
+        assignEditIds();
+        document.querySelectorAll('.editable').forEach(el=>{
+          if(Object.prototype.hasOwnProperty.call(data, el.dataset.editId)){
+            el.innerHTML = data[el.dataset.editId];
+          }
+        });
+        localStorage.setItem(EDIT_STORAGE_KEY, JSON.stringify(data));
+        alert('백업 내용을 불러왔습니다.');
+      }catch(e){
+        alert('올바른 백업 JSON 파일이 아닙니다.');
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  document.addEventListener('input', (e)=>{
+    if(isEditMode && e.target.closest('.editable')){
+      clearTimeout(window.__editSaveTimer);
+      window.__editSaveTimer = setTimeout(saveEdits, 700);
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', ()=>{
+    assignEditIds();
+    loadEdits();
+  });
 
   function toggleSidebar(){
     document.getElementById('sidebar').classList.toggle('open');
