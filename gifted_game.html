@@ -366,6 +366,30 @@
     backdrop-filter:blur(10px);
     box-shadow:0 8px 20px rgba(31,45,61,.06);
   }
+
+  .cloud-status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 9px;
+    border-radius:999px;
+    background:#f3f6fa;
+    color:#6b7788;
+    font-size:11px;
+    font-weight:800;
+    border:1px solid #e1e7ef;
+  }
+  .cloud-status.ok{
+    background:#eef9f3;
+    color:#287b4d;
+    border-color:#ccebd9;
+  }
+  .cloud-status.error{
+    background:#fff2f2;
+    color:#b74444;
+    border-color:#f1cccc;
+  }
+
   .edit-toolbar .edit-status{
     margin-right:auto;
     font-size:12px;
@@ -483,9 +507,9 @@
   <main>
 
     <div class="edit-toolbar">
-      <div class="edit-status" id="editStatus">보기 모드 · 수정 내용은 브라우저에 저장할 수 있어요</div>
+      <div class="edit-status" id="editStatus">Firebase 연결 중...</div><span id="cloudStatus" class="cloud-status">● 연결 중</span>
       <button id="editToggle" class="primary" onclick="toggleEditMode()">✎ 편집 모드</button>
-      <button onclick="saveEdits()">저장</button>
+      <button onclick="saveEdits()">☁ Firebase 저장</button>
       <button onclick="downloadEditedHtml()">수정본 HTML 저장</button>
       <button onclick="exportEdits()">백업 JSON</button>
       <button onclick="document.getElementById('importEditsInput').click()">백업 불러오기</button>
@@ -1398,8 +1422,11 @@ wheel.transform.rotation =
   }
 
 
+
   let isEditMode = false;
-  const EDIT_STORAGE_KEY = 'unity_student_guide_user_edits_v1';
+  const LEGACY_LOCAL_STORAGE_KEY = 'unity_student_guide_user_edits_v1';
+  let firebaseReady = false;
+  let firebaseLastError = null;
 
   function assignEditIds(){
     document.querySelectorAll('.editable').forEach((el, idx)=>{
@@ -1411,12 +1438,25 @@ wheel.transform.rotation =
     });
   }
 
+  function setCloudStatus(message, mode='normal'){
+    const cloud = document.getElementById('cloudStatus');
+    if(!cloud) return;
+    cloud.textContent = message;
+    cloud.classList.remove('ok','error');
+    if(mode === 'ok') cloud.classList.add('ok');
+    if(mode === 'error') cloud.classList.add('error');
+  }
+
+  function setEditStatus(message){
+    const status = document.getElementById('editStatus');
+    if(status) status.textContent = message;
+  }
+
   function toggleEditMode(){
     isEditMode = !isEditMode;
     document.body.classList.toggle('edit-mode', isEditMode);
 
     const btn = document.getElementById('editToggle');
-    const status = document.getElementById('editStatus');
 
     document.querySelectorAll('.editable').forEach(el=>{
       el.contentEditable = isEditMode ? 'true' : 'false';
@@ -1426,11 +1466,13 @@ wheel.transform.rotation =
     if(isEditMode){
       btn.classList.add('active');
       btn.textContent = '✓ 편집 종료';
-      status.textContent = '편집 모드 · 파란 점선 영역을 클릭해 바로 수정하세요';
+      setEditStatus('편집 모드 · 파란 점선 영역을 클릭해 바로 수정하세요');
     }else{
       btn.classList.remove('active');
       btn.textContent = '✎ 편집 모드';
-      status.textContent = '보기 모드 · 수정 내용은 브라우저에 저장할 수 있어요';
+      setEditStatus(firebaseReady
+        ? '보기 모드 · 수정 내용은 Firebase에 저장됩니다'
+        : '보기 모드 · Firebase 연결을 확인해주세요');
       saveEdits();
     }
   }
@@ -1444,34 +1486,105 @@ wheel.transform.rotation =
     return data;
   }
 
-  function saveEdits(){
-    try{
-      localStorage.setItem(EDIT_STORAGE_KEY, JSON.stringify(collectEdits()));
-      const status = document.getElementById('editStatus');
-      if(status){
-        const old = status.textContent;
-        status.textContent = '저장됨 ✓';
-        setTimeout(()=> status.textContent = isEditMode
-          ? '편집 모드 · 파란 점선 영역을 클릭해 바로 수정하세요'
-          : '보기 모드 · 수정 내용은 브라우저에 저장할 수 있어요', 1200);
+  function sanitizeStoredHtml(value){
+    const template = document.createElement('template');
+    template.innerHTML = String(value ?? '');
+
+    template.content.querySelectorAll('script,style,iframe,object,embed,link,meta').forEach(el=>el.remove());
+
+    template.content.querySelectorAll('*').forEach(el=>{
+      [...el.attributes].forEach(attr=>{
+        const name = attr.name.toLowerCase();
+        const val = String(attr.value || '').trim().toLowerCase();
+        if(name.startsWith('on')) el.removeAttribute(attr.name);
+        if((name === 'href' || name === 'src') && val.startsWith('javascript:')){
+          el.removeAttribute(attr.name);
+        }
+      });
+    });
+
+    return template.innerHTML;
+  }
+
+  function applyEditData(data){
+    if(!data || typeof data !== 'object') return;
+    assignEditIds();
+
+    document.querySelectorAll('.editable').forEach(el=>{
+      if(Object.prototype.hasOwnProperty.call(data, el.dataset.editId)){
+        el.innerHTML = sanitizeStoredHtml(data[el.dataset.editId]);
       }
+    });
+  }
+
+  async function saveEdits(){
+    if(!firebaseReady || typeof window.firebaseSaveEdits !== 'function'){
+      setCloudStatus('● 연결 안 됨', 'error');
+      setEditStatus(firebaseLastError
+        ? 'Firebase 저장 실패 · 설정 또는 보안 규칙을 확인해주세요'
+        : 'Firebase 연결 중입니다. 잠시 후 다시 저장해주세요.');
+      return;
+    }
+
+    try{
+      setCloudStatus('● 저장 중');
+      setEditStatus('Firebase에 저장 중...');
+      await window.firebaseSaveEdits(collectEdits());
+      setCloudStatus('● 연결됨', 'ok');
+      setEditStatus('Firebase 저장됨 ✓');
+      setTimeout(()=>{
+        setEditStatus(isEditMode
+          ? '편집 모드 · 파란 점선 영역을 클릭해 바로 수정하세요'
+          : '보기 모드 · 수정 내용은 Firebase에 저장됩니다');
+      }, 1200);
     }catch(e){
-      alert('브라우저 저장에 실패했습니다. 수정본 HTML 저장 버튼을 사용해주세요.');
+      console.error(e);
+      firebaseLastError = e;
+      setCloudStatus('● 저장 오류', 'error');
+      setEditStatus('Firebase 저장 실패 · 콘솔/Firestore 설정을 확인해주세요');
     }
   }
 
-  function loadEdits(){
+  async function loadEdits(){
     assignEditIds();
+
+    if(!firebaseReady || typeof window.firebaseLoadEdits !== 'function') return;
+
     try{
-      const raw = localStorage.getItem(EDIT_STORAGE_KEY);
-      if(!raw) return;
-      const data = JSON.parse(raw);
-      document.querySelectorAll('.editable').forEach(el=>{
-        if(Object.prototype.hasOwnProperty.call(data, el.dataset.editId)){
-          el.innerHTML = data[el.dataset.editId];
-        }
-      });
-    }catch(e){}
+      setCloudStatus('● 불러오는 중');
+      const cloudData = await window.firebaseLoadEdits();
+
+      if(cloudData && Object.keys(cloudData).length){
+        applyEditData(cloudData);
+        setCloudStatus('● 연결됨', 'ok');
+        setEditStatus('Firebase 메모를 불러왔습니다 ✓');
+        setTimeout(()=>setEditStatus('보기 모드 · 수정 내용은 Firebase에 저장됩니다'), 1200);
+        return;
+      }
+
+      // One-time migration from the old browser-only version.
+      const legacy = localStorage.getItem(LEGACY_LOCAL_STORAGE_KEY);
+      if(legacy){
+        try{
+          const oldData = JSON.parse(legacy);
+          if(oldData && Object.keys(oldData).length){
+            applyEditData(oldData);
+            await window.firebaseSaveEdits(oldData);
+            setCloudStatus('● 연결됨', 'ok');
+            setEditStatus('기존 브라우저 메모를 Firebase로 이전했습니다 ✓');
+            return;
+          }
+        }catch(e){}
+      }
+
+      setCloudStatus('● 연결됨', 'ok');
+      setEditStatus('Firebase 연결됨 · 아직 저장된 메모가 없습니다');
+    }catch(e){
+      console.error(e);
+      firebaseLastError = e;
+      setCloudStatus('● 불러오기 오류', 'error');
+      setEditStatus('Firebase 불러오기 실패 · 설정 또는 보안 규칙을 확인해주세요');
+    }
   }
 
   function downloadEditedHtml(){
@@ -1486,7 +1599,7 @@ wheel.transform.rotation =
     const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], {type:'text/html;charset=utf-8'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'unity_student_guide_edited.html';
+    a.download = 'unity_student_guide_firebase_edited.html';
     a.click();
     URL.revokeObjectURL(a.href);
   }
@@ -1503,20 +1616,16 @@ wheel.transform.rotation =
   function importEdits(event){
     const file = event.target.files && event.target.files[0];
     if(!file) return;
+
     const reader = new FileReader();
-    reader.onload = ()=>{
+    reader.onload = async ()=>{
       try{
         const data = JSON.parse(reader.result);
-        assignEditIds();
-        document.querySelectorAll('.editable').forEach(el=>{
-          if(Object.prototype.hasOwnProperty.call(data, el.dataset.editId)){
-            el.innerHTML = data[el.dataset.editId];
-          }
-        });
-        localStorage.setItem(EDIT_STORAGE_KEY, JSON.stringify(data));
-        alert('백업 내용을 불러왔습니다.');
+        applyEditData(data);
+        await saveEdits();
+        alert('백업 내용을 불러와 Firebase에 저장했습니다.');
       }catch(e){
-        alert('올바른 백업 JSON 파일이 아닙니다.');
+        alert('올바른 백업 JSON 파일이 아니거나 Firebase 저장에 실패했습니다.');
       }
     };
     reader.readAsText(file);
@@ -1526,18 +1635,110 @@ wheel.transform.rotation =
   document.addEventListener('input', (e)=>{
     if(isEditMode && e.target.closest('.editable')){
       clearTimeout(window.__editSaveTimer);
-      window.__editSaveTimer = setTimeout(saveEdits, 700);
+      window.__editSaveTimer = setTimeout(saveEdits, 1200);
     }
   });
 
   window.addEventListener('DOMContentLoaded', ()=>{
     assignEditIds();
-    loadEdits();
+    setEditStatus('Firebase 연결 중...');
+    setCloudStatus('● 연결 중');
+  });
+
+  window.addEventListener('firebase-ready', async ()=>{
+    firebaseReady = true;
+    firebaseLastError = null;
+    await loadEdits();
+  });
+
+  window.addEventListener('firebase-error', (event)=>{
+    firebaseReady = false;
+    firebaseLastError = event.detail || new Error('Firebase 연결 오류');
+    setCloudStatus('● 연결 오류', 'error');
+    setEditStatus('Firebase 연결 실패 · Firestore/익명 로그인을 확인해주세요');
   });
 
   function toggleSidebar(){
     document.getElementById('sidebar').classList.toggle('open');
   }
 </script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+  import {
+    getAuth,
+    signInAnonymously,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEkkE2kfg5Nuk1ADemjzSQoF5Uel-7NWg",
+    authDomain: "giftedgame.firebaseapp.com",
+    projectId: "giftedgame",
+    storageBucket: "giftedgame.firebasestorage.app",
+    messagingSenderId: "828543837320",
+    appId: "1:828543837320:web:34600f48456668057e6b3d"
+  };
+
+  const CLOUD_COLLECTION = "unityGuide";
+  const CLOUD_DOCUMENT = "appState";
+
+  try {
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const stateRef = doc(db, CLOUD_COLLECTION, CLOUD_DOCUMENT);
+
+    window.firebaseSaveEdits = async (edits) => {
+      await setDoc(stateRef, {
+        edits,
+        schemaVersion: 1,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    };
+
+    window.firebaseLoadEdits = async () => {
+      const snap = await getDoc(stateRef);
+      if (!snap.exists()) return {};
+      const data = snap.data();
+      return (data && data.edits && typeof data.edits === "object") ? data.edits : {};
+    };
+
+    let readyDispatched = false;
+
+    onAuthStateChanged(auth, async (user) => {
+      try {
+        if (!user) {
+          await signInAnonymously(auth);
+          return;
+        }
+
+        if (!readyDispatched) {
+          readyDispatched = true;
+          window.dispatchEvent(new CustomEvent("firebase-ready"));
+        }
+      } catch (error) {
+        console.error("Firebase auth error:", error);
+        window.dispatchEvent(new CustomEvent("firebase-error", { detail: error }));
+      }
+    });
+
+    if (!auth.currentUser) {
+      await signInAnonymously(auth);
+    }
+
+  } catch (error) {
+    console.error("Firebase init error:", error);
+    window.dispatchEvent(new CustomEvent("firebase-error", { detail: error }));
+  }
+</script>
+
 </body>
 </html>
