@@ -456,6 +456,57 @@
     color:#8b96a5;
   }
 
+
+  .custom-note-card{
+    position:relative;
+    grid-column:1/-1;
+    border-left:4px solid #65a2ef;
+    background:#fff;
+  }
+  .custom-note-card .custom-card-actions{
+    position:absolute;
+    top:14px;
+    right:14px;
+    display:flex;
+    gap:6px;
+  }
+  .custom-card-actions button{
+    border:1px solid #dfe5ed;
+    background:#fff;
+    color:#718096;
+    border-radius:9px;
+    padding:5px 8px;
+    font-size:11px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .custom-card-actions button:hover{
+    background:#f8fafc;
+    color:#334155;
+  }
+  .custom-card-actions .danger:hover{
+    background:#fff1f1;
+    color:#b64343;
+    border-color:#efcaca;
+  }
+  .custom-note-card .custom-note-title{
+    margin-right:70px;
+  }
+  .custom-note-card .custom-note-body{
+    color:#556274;
+    line-height:1.75;
+  }
+  .custom-note-card .custom-note-body ul{
+    margin:8px 0 0;
+    padding-left:20px;
+  }
+  .custom-note-card .custom-note-body li+li{
+    margin-top:4px;
+  }
+  body:not(.edit-mode) .custom-card-actions{
+    display:none;
+  }
+
   @media(max-width:920px){.ref-grid{grid-template-columns:1fr}}
 
   @media(max-width:920px){
@@ -509,6 +560,7 @@
     <div class="edit-toolbar">
       <div class="edit-status" id="editStatus">Firebase 연결 중...</div><span id="cloudStatus" class="cloud-status">● 연결 중</span>
       <button id="editToggle" class="primary" onclick="toggleEditMode()">✎ 편집 모드</button>
+      <button id="addCardBtn" onclick="addNoteCard()" disabled>＋ 글상자 추가</button>
       <button onclick="saveEdits()">☁ Firebase 저장</button>
       <button onclick="downloadEditedHtml()">수정본 HTML 저장</button>
       <button onclick="exportEdits()">백업 JSON</button>
@@ -1463,13 +1515,17 @@ wheel.transform.rotation =
       el.spellcheck = false;
     });
 
+    const addBtn = document.getElementById('addCardBtn');
+
     if(isEditMode){
       btn.classList.add('active');
       btn.textContent = '✓ 편집 종료';
-      setEditStatus('편집 모드 · 파란 점선 영역을 클릭해 바로 수정하세요');
+      if(addBtn) addBtn.disabled = false;
+      setEditStatus('편집 모드 · 글 수정 또는 새 글상자를 추가할 수 있어요');
     }else{
       btn.classList.remove('active');
       btn.textContent = '✎ 편집 모드';
+      if(addBtn) addBtn.disabled = true;
       setEditStatus(firebaseReady
         ? '보기 모드 · 수정 내용은 Firebase에 저장됩니다'
         : '보기 모드 · Firebase 연결을 확인해주세요');
@@ -1479,10 +1535,27 @@ wheel.transform.rotation =
 
   function collectEdits(){
     assignEditIds();
+
     const data = {};
     document.querySelectorAll('.editable').forEach(el=>{
       data[el.dataset.editId] = el.innerHTML;
     });
+
+    const customCards = {};
+    document.querySelectorAll('section.content-section.student').forEach(section=>{
+      const cards = [...section.querySelectorAll('.custom-note-card')];
+      if(cards.length){
+        customCards[section.id] = cards.map(card=>{
+          return {
+            id: card.dataset.cardId,
+            title: card.querySelector('.custom-note-title')?.innerHTML || '',
+            body: card.querySelector('.custom-note-body')?.innerHTML || ''
+          };
+        });
+      }
+    });
+
+    data.__customCards = customCards;
     return data;
   }
 
@@ -1506,8 +1579,92 @@ wheel.transform.rotation =
     return template.innerHTML;
   }
 
+  function createCustomCard(sectionId, cardData={}){
+    const section = document.getElementById(sectionId);
+    if(!section || !section.classList.contains('student')) return null;
+
+    const grid = section.querySelector('.grid');
+    if(!grid) return null;
+
+    const cardId = cardData.id || ('card_' + Date.now() + '_' + Math.random().toString(36).slice(2,8));
+    const card = document.createElement('div');
+    card.className = 'card custom-note-card';
+    card.dataset.cardId = cardId;
+
+    const titleHtml = sanitizeStoredHtml(cardData.title || '새 메모');
+    const bodyHtml = sanitizeStoredHtml(cardData.body || '<ul><li>내용을 입력하세요.</li></ul>');
+
+    card.innerHTML = `
+      <div class="custom-card-actions">
+        <button type="button" class="danger" onclick="deleteCustomCard(this)">삭제</button>
+      </div>
+      <h3 class="editable custom-note-title" data-edit-id="custom_${sectionId}_${cardId}_title">${titleHtml}</h3>
+      <div class="editable custom-note-body" data-edit-id="custom_${sectionId}_${cardId}_body">${bodyHtml}</div>
+      <div class="save-hint">편집 모드에서 자유롭게 수정할 수 있습니다.</div>
+    `;
+
+    // 새 글상자는 해당 학생 페이지의 기존 카드들 뒤에 추가
+    grid.appendChild(card);
+
+    if(isEditMode){
+      card.querySelectorAll('.editable').forEach(el=>{
+        el.contentEditable = 'true';
+        el.spellcheck = false;
+      });
+    }
+
+    return card;
+  }
+
+  function addNoteCard(){
+    if(!isEditMode){
+      alert('먼저 편집 모드를 켜주세요.');
+      return;
+    }
+
+    const active = document.querySelector('section.content-section.active');
+    if(!active || !active.classList.contains('student')){
+      alert('학생 페이지에서만 글상자를 추가할 수 있습니다.');
+      return;
+    }
+
+    const card = createCustomCard(active.id);
+    if(card){
+      const title = card.querySelector('.custom-note-title');
+      title?.focus();
+
+      clearTimeout(window.__editSaveTimer);
+      window.__editSaveTimer = setTimeout(saveEdits, 400);
+    }
+  }
+
+  function deleteCustomCard(button){
+    if(!isEditMode) return;
+
+    const card = button.closest('.custom-note-card');
+    if(!card) return;
+
+    if(confirm('이 글상자를 삭제할까요?')){
+      card.remove();
+      saveEdits();
+    }
+  }
+
   function applyEditData(data){
     if(!data || typeof data !== 'object') return;
+
+    // 저장된 사용자 추가 글상자 복원
+    document.querySelectorAll('.custom-note-card').forEach(card=>card.remove());
+
+    const customCards = data.__customCards;
+    if(customCards && typeof customCards === 'object'){
+      Object.entries(customCards).forEach(([sectionId, cards])=>{
+        if(Array.isArray(cards)){
+          cards.forEach(cardData=>createCustomCard(sectionId, cardData));
+        }
+      });
+    }
+
     assignEditIds();
 
     document.querySelectorAll('.editable').forEach(el=>{
@@ -1534,7 +1691,7 @@ wheel.transform.rotation =
       setEditStatus('Firebase 저장됨 ✓');
       setTimeout(()=>{
         setEditStatus(isEditMode
-          ? '편집 모드 · 파란 점선 영역을 클릭해 바로 수정하세요'
+          ? '편집 모드 · 글 수정 또는 새 글상자를 추가할 수 있어요'
           : '보기 모드 · 수정 내용은 Firebase에 저장됩니다');
       }, 1200);
     }catch(e){
