@@ -89,32 +89,52 @@
                         <h2 class="text-3xl font-bold text-gray-800">1단계: 필수 준비물 챙기기</h2>
                     </div>
                     <p class="text-xl text-gray-600 mb-10 shrink-0">
-                        유니티가 깃허브에서 연동 패키지를 스스로 다운로드하려면 <strong>Git(깃)</strong>이 꼭 필요해요!
+                        본격적인 연동을 위해 <strong>안티그래비티 IDE</strong>와 <strong>Git(깃)</strong> 두 가지 프로그램이 꼭 필요해요!
                     </p>
 
-                    <div class="grid grid-cols-2 gap-8 items-stretch">
-                        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-center">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                                <i class="fa-brands fa-git-alt text-[#F1502F] text-3xl"></i> Git 설치 확인 및 다운로드
-                            </h3>
-                            <ul class="list-disc pl-6 text-gray-600 text-lg space-y-4 mb-8">
-                                <li>이미 깔려있다면 패스! 없다면 다운로드 후 <strong>계속 'Next'만 눌러서 설치</strong>하세요.</li>
-                                <li>어려운 설정은 건드릴 필요 없이 기본값으로 넘기면 됩니다.</li>
-                            </ul>
+                    <div class="grid grid-cols-3 gap-6 items-stretch">
+                        <!-- 1. 안티그래비티 다운로드 -->
+                        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-between">
                             <div>
-                                <a href="https://git-scm.com/downloads" target="_blank" class="inline-flex items-center justify-center bg-[#F1502F] hover:bg-[#d44528] text-white text-lg font-bold py-4 px-8 rounded-2xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
-                                    <i class="fa-solid fa-download mr-2"></i> Git 다운로드 페이지 열기
-                                </a>
+                                <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                                    <i class="fa-solid fa-code text-blue-500 text-3xl"></i> 안티그래비티 IDE
+                                </h3>
+                                <ul class="list-disc pl-6 text-gray-600 text-lg space-y-4 mb-8">
+                                    <li>AI 에이전트가 내장된 똑똑한 코드 에디터예요.</li>
+                                    <li>운영체제에 맞는 버전을 다운로드하고 설치해 주세요.</li>
+                                </ul>
                             </div>
+                            <a href="https://antigravity.google.com" target="_blank" class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-4 px-6 rounded-2xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 w-full text-center">
+                                <i class="fa-solid fa-download mr-2"></i> IDE 다운로드
+                            </a>
                         </div>
 
+                        <!-- 2. Git 다운로드 -->
+                        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                                    <i class="fa-brands fa-git-alt text-[#F1502F] text-3xl"></i> Git (깃)
+                                </h3>
+                                <ul class="list-disc pl-6 text-gray-600 text-lg space-y-4 mb-8">
+                                    <li>유니티가 연동 패키지를 가져올 때 꼭 필요해요.</li>
+                                    <li>이미 있다면 패스! 없다면 다운로드 후 <strong>계속 'Next'만 눌러서</strong> 설치하세요.</li>
+                                </ul>
+                            </div>
+                            <a href="https://git-scm.com/downloads" target="_blank" class="inline-flex items-center justify-center bg-[#F1502F] hover:bg-[#d44528] text-white text-lg font-bold py-4 px-6 rounded-2xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 w-full text-center">
+                                <i class="fa-solid fa-download mr-2"></i> Git 다운로드
+                            </a>
+                        </div>
+
+                        <!-- 3. 경고창 -->
                         <div class="bg-yellow-50 border-l-[10px] border-yellow-400 p-8 rounded-r-3xl rounded-l-xl shadow-sm h-full flex flex-col justify-center">
                             <div class="flex items-center gap-4 mb-6">
                                 <i class="fa-solid fa-triangle-exclamation text-4xl text-yellow-500"></i>
                                 <h3 class="text-2xl font-extrabold text-yellow-800">잠깐! 가장 중요해요</h3>
                             </div>
                             <p class="text-xl text-yellow-800 font-medium leading-relaxed">
-                                방금 Git을 새로 설치했다면, 컴퓨터가 Git을 제대로 인식할 수 있도록 <strong class="text-red-600 bg-red-100 px-4 py-3 rounded-xl text-center block mt-4 mb-2">유니티 에디터와 유니티 허브를<br>완전히 껐다가 다시 켜주세요!</strong> <span class="text-lg block text-center mt-4">(창 닫기 버튼을 누른 뒤, 허브까지 재실행해야 합니다.)</span>
+                                방금 프로그램을 새로 설치했다면, 컴퓨터가 제대로 인식할 수 있도록
+                                <strong class="text-red-600 bg-red-100 px-4 py-3 rounded-xl text-center block mt-4 mb-2">유니티 에디터와 유니티 허브를<br>완전히 껐다가 다시 켜주세요!</strong>
+                                <span class="text-lg block text-center mt-4">(창 닫기 버튼을 누른 뒤, 허브까지 재실행해야 합니다.)</span>
                             </p>
                         </div>
                     </div>
