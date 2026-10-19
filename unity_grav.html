@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유니티 x 안티그래비티 연동 마스터 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f3f4f6;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .step-container {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .step-container.active {
+            display: flex; 
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom scrollbar for code blocks */
+        .code-block::-webkit-scrollbar {
+            height: 8px;
+        }
+        .code-block::-webkit-scrollbar-thumb {
+            background-color: #4b5563;
+            border-radius: 4px;
+        }
+
+        /* 16:9 Presentation Container */
+        .presentation-box {
+            width: 96vw;
+            height: 54vw; /* 16:9 Aspect Ratio (96 * 9/16) */
+            max-width: 170.66vh; /* Max width based on 96vh * 16/9 */
+            max-height: 96vh;
+            background-color: white;
+            border-radius: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="w-screen h-screen flex items-center justify-center overflow-hidden m-0 p-0 bg-[#f3f4f6]">
+
+    <div class="presentation-box relative">
+        
+        <!-- Header (Compact) -->
+        <div class="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-6 py-3 flex items-center justify-between shrink-0 z-10">
+            <div>
+                <h1 class="text-2xl font-extrabold flex items-center gap-2">
+                    <i class="fa-brands fa-unity text-2xl"></i> x <i class="fa-solid fa-rocket text-xl"></i>
+                    <span>안티그래비티 연동 마스터 가이드</span>
+                </h1>
+                <p class="text-sm text-purple-100 mt-1">중학생을 위한 완벽 세팅 튜토리얼 (프레젠테이션 모드)</p>
+            </div>
+            <div class="text-center bg-white/20 px-4 py-1.5 rounded-lg backdrop-blur-sm">
+                <span class="text-[10px] font-bold block uppercase tracking-wider mb-0.5">Step</span>
+                <span class="text-xl font-extrabold" id="step-indicator">1 / 5</span>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-gray-200 h-1.5 shrink-0">
+            <div id="progress-bar" class="bg-blue-500 h-1.5 transition-all duration-500 ease-out w-1/5 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+        </div>
+
+        <!-- Content Area (Scroll removed, flex-1) -->
+        <div class="flex-1 min-h-0 flex flex-col p-6 lg:p-8 bg-gray-50/50 relative w-full overflow-y-auto" id="content-area">
+            
+            <!-- Step 1: 준비물 -->
+            <div class="step-container h-full flex-col justify-center w-full" id="step-1">
+                <div class="w-full max-w-6xl mx-auto flex flex-col justify-center h-full">
+                    <div class="flex items-center gap-4 mb-5 text-blue-600 shrink-0">
+                        <i class="fa-solid fa-box-open text-4xl"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">1단계: 필수 준비물 챙기기</h2>
+                    </div>
+                    <p class="text-xl text-gray-600 mb-10 shrink-0">
+                        유니티가 깃허브에서 연동 패키지를 스스로 다운로드하려면 <strong>Git(깃)</strong>이 꼭 필요해요!
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-8 items-stretch">
+                        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-center">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                                <i class="fa-brands fa-git-alt text-[#F1502F] text-3xl"></i> Git 설치 확인 및 다운로드
+                            </h3>
+                            <ul class="list-disc pl-6 text-gray-600 text-lg space-y-4 mb-8">
+                                <li>이미 깔려있다면 패스! 없다면 다운로드 후 <strong>계속 'Next'만 눌러서 설치</strong>하세요.</li>
+                                <li>어려운 설정은 건드릴 필요 없이 기본값으로 넘기면 됩니다.</li>
+                            </ul>
+                            <div>
+                                <a href="https://git-scm.com/downloads" target="_blank" class="inline-flex items-center justify-center bg-[#F1502F] hover:bg-[#d44528] text-white text-lg font-bold py-4 px-8 rounded-2xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                                    <i class="fa-solid fa-download mr-2"></i> Git 다운로드 페이지 열기
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 border-l-[10px] border-yellow-400 p-8 rounded-r-3xl rounded-l-xl shadow-sm h-full flex flex-col justify-center">
+                            <div class="flex items-center gap-4 mb-6">
+                                <i class="fa-solid fa-triangle-exclamation text-4xl text-yellow-500"></i>
+                                <h3 class="text-2xl font-extrabold text-yellow-800">잠깐! 가장 중요해요</h3>
+                            </div>
+                            <p class="text-xl text-yellow-800 font-medium leading-relaxed">
+                                방금 Git을 새로 설치했다면, 컴퓨터가 Git을 제대로 인식할 수 있도록 <strong class="text-red-600 bg-red-100 px-4 py-3 rounded-xl text-center block mt-4 mb-2">유니티 에디터와 유니티 허브를<br>완전히 껐다가 다시 켜주세요!</strong> <span class="text-lg block text-center mt-4">(창 닫기 버튼을 누른 뒤, 허브까지 재실행해야 합니다.)</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: 유니티 패키지 설치 -->
+            <div class="step-container h-full flex-col justify-center w-full" id="step-2">
+                <div class="w-full max-w-6xl mx-auto flex flex-col justify-center h-full">
+                    <div class="flex items-center gap-4 mb-5 text-purple-600 shrink-0">
+                        <i class="fa-solid fa-puzzle-piece text-4xl"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">2단계: 유니티에 패키지 설치하기</h2>
+                    </div>
+                    <p class="text-xl text-gray-600 mb-10 shrink-0">
+                        유니티 에디터가 안티그래비티를 인식할 수 있게 특수 패키지를 설치할 거예요.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-8 items-stretch">
+                        <!-- 1 -->
+                        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-center relative overflow-hidden">
+                            <div class="bg-purple-100 text-purple-700 font-black w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-6">1</div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Package Manager 열기</h3>
+                            <p class="text-gray-600 text-lg leading-relaxed">유니티 상단 메뉴에서<br><span class="inline-block bg-gray-100 border border-gray-200 px-3 py-1.5 rounded-lg text-gray-800 font-bold mt-4">Window > Package Manager</span><br>를 클릭하세요.</p>
+                        </div>
+                        <!-- 2 -->
+                        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-center relative overflow-hidden">
+                            <div class="bg-purple-100 text-purple-700 font-black w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-6">2</div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Git URL로 추가하기</h3>
+                            <p class="text-gray-600 text-lg leading-relaxed">창 왼쪽 위 <span class="bg-gray-100 border px-3 py-1 rounded-lg font-bold mx-1 shadow-sm">+</span> 버튼을 누르고<br><strong class="text-purple-700 mt-4 inline-block bg-purple-50 border border-purple-100 px-3 py-1.5 rounded-lg text-base">Add package from git URL...</strong><br>을 선택하세요.</p>
+                        </div>
+                        <!-- 3 -->
+                        <div class="bg-purple-50 p-8 rounded-3xl border-2 border-purple-300 shadow-sm h-full flex flex-col justify-center relative overflow-hidden">
+                            <div class="bg-purple-600 text-white font-black w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-6">3</div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">주소 복사해서 붙여넣기</h3>
+                            <p class="text-gray-700 text-lg mb-6">아래 주소를 복사해서 붙여넣고 Add를 누르세요.</p>
+                            <div>
+                                <div class="flex items-center gap-3 bg-gray-900 p-3.5 rounded-2xl w-full">
+                                    <code class="text-green-400 text-sm overflow-x-auto whitespace-nowrap flex-1 code-block" id="git-url">https://github.com/TermWay/unity-ide-antigravity.git</code>
+                                    <button onclick="copyToClipboard('git-url')" class="text-white bg-gray-700 hover:bg-gray-600 p-3 rounded-xl transition-all shrink-0"><i class="fa-regular fa-copy text-lg"></i></button>
+                                </div>
+                                <p class="text-sm text-purple-700 mt-3 font-bold h-5 transition-opacity duration-300 opacity-0" id="copy-msg-1"><i class="fa-solid fa-check-circle"></i> 복사 완료!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: 에디터 설정 -->
+            <div class="step-container h-full flex-col justify-center w-full" id="step-3">
+                <div class="w-full max-w-6xl mx-auto flex flex-col justify-center h-full">
+                    <div class="flex items-center gap-4 mb-4 text-emerald-600 shrink-0">
+                        <i class="fa-solid fa-gears text-4xl"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">3단계: 기본 에디터로 설정하기</h2>
+                    </div>
+                    <p class="text-xl text-gray-600 mb-6 shrink-0">
+                        코드를 더블클릭했을 때 안티그래비티가 열리도록 연결합니다. <strong class="text-red-500">가장 중요한 핵심 단계예요!</strong>
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-6 items-stretch">
+                        <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-center">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-3"><span class="bg-gray-800 text-white w-10 h-10 rounded-xl flex items-center justify-center text-lg">1</span> 설정 창 열기</h3>
+                            <p class="text-gray-600 text-lg leading-relaxed">메뉴에서 <span class="bg-gray-100 border px-3 py-1.5 rounded-lg font-bold mt-2 mb-2 inline-block text-gray-800">Edit > Preferences</span><br><span class="text-base text-gray-400 mb-2 inline-block">(맥은 Unity > Settings)</span>를 열고<br>왼쪽 탭에서 <strong>External Tools</strong>를 클릭하세요.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-center">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-3"><span class="bg-gray-800 text-white w-10 h-10 rounded-xl flex items-center justify-center text-lg">2</span> 에디터 선택</h3>
+                            <p class="text-gray-600 text-lg leading-relaxed mb-4">External Script Editor 항목을 클릭하고 <strong class="text-blue-600 text-xl">Antigravity</strong>를 선택하세요.</p>
+                            <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100 text-blue-800 text-sm leading-relaxed font-medium">
+                                <i class="fa-solid fa-circle-info text-blue-500 mr-2 text-lg"></i> 목록에 없다면 Browse를 눌러 실행 파일을 직접 찾아주세요.
+                            </div>
+                        </div>
+                        <div class="bg-emerald-50 p-6 rounded-3xl border-2 border-emerald-400 shadow-sm h-full flex flex-col justify-center relative transform -translate-y-2">
+                            <h3 class="text-2xl font-extrabold text-emerald-800 mb-4 flex items-center gap-3 z-10"><span class="bg-emerald-600 text-white w-10 h-10 rounded-xl flex items-center justify-center text-lg shadow-sm">3</span> 파일 갱신!</h3>
+                            <p class="text-emerald-900 text-lg leading-relaxed mb-4 z-10 font-medium">아래 체크박스를 <strong>모두 체크</strong>하고,<br><strong class="bg-white px-4 py-2 rounded-xl shadow-sm text-emerald-700 inline-block mt-3 border border-emerald-200 text-xl">Regenerate project files</strong> 버튼을 반드시 클릭하세요!</p>
+                            <div class="z-10 bg-white/80 p-3 rounded-2xl backdrop-blur-sm border border-emerald-100 text-sm text-emerald-800 font-bold">
+                                <i class="fa-solid fa-lightbulb text-yellow-500 text-lg mr-1"></i> 이 버튼을 눌러야 에이전트가 코드를 읽을 수 있습니다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: 안티그래비티 확장 설치 -->
+            <div class="step-container h-full flex-col justify-center w-full" id="step-4">
+                <div class="w-full max-w-6xl mx-auto flex flex-col justify-center h-full">
+                    <div class="flex items-center gap-4 mb-4 text-orange-600 shrink-0">
+                        <i class="fa-solid fa-plug text-4xl"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">4단계: C# 언어 자동완성 달아주기</h2>
+                    </div>
+                    <p class="text-xl text-gray-600 mb-6 shrink-0">
+                        코드에 예쁘게 색칠해주고 명령어를 자동으로 추천해주는 확장을 안티그래비티에 설치합니다.
+                    </p>
+
+                    <div class="grid grid-cols-5 gap-6 items-stretch">
+                        <div class="col-span-3 bg-white p-6 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-center">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-5 flex items-center gap-3"><i class="fa-solid fa-magnifying-glass text-blue-500"></i> 가장 쉬운 설치 순서</h3>
+                            <ul class="space-y-3 text-lg text-gray-700">
+                                <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-2xl"><span class="bg-blue-100 text-blue-700 font-black w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xl">1</span> 안티그래비티 왼쪽 메뉴에서 <strong>확장(Extensions) 아이콘</strong> 클릭</li>
+                                <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-2xl"><span class="bg-blue-100 text-blue-700 font-black w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xl">2</span> 검색창에 <code class="bg-white border text-red-600 px-3 py-1 rounded-lg font-bold shadow-sm">omnisharp</code> 이라고 검색</li>
+                                <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-2xl"><span class="bg-blue-100 text-blue-700 font-black w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xl">3</span> 결과에서 <strong>C# (OmniSharp)</strong> 이라는 오픈소스 확장을 설치</li>
+                                <li class="flex items-center gap-3 bg-blue-50 p-3 rounded-2xl border border-blue-100"><span class="bg-blue-600 text-white font-black w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm text-xl">4</span> 설치 완료 후 <strong class="text-blue-700">안티그래비티를 완전히 껐다가 다시 켜기!</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-span-2 bg-orange-50 border border-orange-200 p-6 rounded-3xl h-full flex flex-col justify-center shadow-sm text-center">
+                            <div class="inline-block bg-white p-4 rounded-full shadow-sm mx-auto mb-4">
+                                <i class="fa-solid fa-ban text-4xl text-orange-500"></i>
+                            </div>
+                            <h3 class="text-2xl font-extrabold text-orange-800 mb-3">마소 공식 확장은 NO!</h3>
+                            <p class="text-lg text-orange-900 leading-relaxed bg-white/70 p-4 rounded-2xl backdrop-blur-sm font-medium">
+                                라이선스 문제로 마이크로소프트의 공식 'Unity'나 'C#' 확장을 쓰면 <strong>오류가 나고 색칠이 되지 않아요.</strong> <br><br>반드시 검색어 <code class="bg-orange-100 px-2 py-1 rounded-lg text-orange-800 font-bold">omnisharp</code>을 사용하세요!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: 연동 확인 및 테스트 -->
+            <div class="step-container h-full flex-col justify-center w-full" id="step-5">
+                <div class="w-full max-w-6xl mx-auto flex flex-col justify-center h-full">
+                    <div class="flex items-center gap-4 mb-5 text-green-600 shrink-0">
+                        <i class="fa-solid fa-check-double text-4xl"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">5단계: 성공 확인 및 바이브 코딩 시작!</h2>
+                    </div>
+                    <p class="text-xl text-gray-600 mb-10 shrink-0">
+                        드디어 세팅 완료! 코드를 열어서 잘 연결되었는지 두 가지만 확인해 볼까요?
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-8 mb-8 items-stretch">
+                        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-center items-center text-center hover:-translate-y-1 transition-transform">
+                            <i class="fa-solid fa-palette text-6xl text-blue-500 mb-6 drop-shadow-sm"></i>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">1. 알록달록한 코드</h3>
+                            <p class="text-lg text-gray-600 px-6">코드가 하얀 단색이 아니라 파란색, 초록색 등 예쁘게 색칠(하이라이팅) 된다면 1차 합격!</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm h-full flex flex-col justify-center items-center text-center hover:-translate-y-1 transition-transform">
+                            <i class="fa-solid fa-wand-magic-sparkles text-6xl text-purple-500 mb-6 drop-shadow-sm"></i>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">2. 스마트한 자동완성</h3>
+                            <p class="text-lg text-gray-600 px-6">빈 줄에 <code class="bg-gray-100 border border-gray-200 px-2 py-1 rounded-lg font-bold text-purple-600">GameObject.</code>을 쳤을 때 유니티 전용 명령어들이 촤르륵 뜨면 완벽 성공!</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-600 text-white p-8 rounded-3xl text-center shadow-lg shrink-0">
+                        <h3 class="text-2xl font-black mb-3 tracking-tight"><i class="fa-solid fa-rocket mr-2"></i> 이제 너만의 게임을 만들 시간이야!</h3>
+                        <p class="text-lg text-indigo-100 font-medium">우측 <span class="bg-white/20 px-3 py-1 rounded-lg">Agent</span> 탭을 열고, <strong>"플레이어가 좌우로 움직이는 C# 스크립트 짜줘!"</strong> 라고 첫 명령을 내려보세요.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Navigation (Compact) -->
+        <div class="bg-white border-t border-gray-200 px-6 py-3 flex justify-between items-center shrink-0 z-10">
+            <button id="prev-btn" onclick="changeStep(-1)" class="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                <i class="fa-solid fa-chevron-left"></i> 이전 단계
+            </button>
+            <button id="next-btn" onclick="changeStep(1)" class="px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all flex items-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                다음 단계 <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const totalSteps = 5;
+        let currentStep = 1;
+
+        function updateUI() {
+            // Update step indicator
+            document.getElementById('step-indicator').innerText = `${currentStep} / ${totalSteps}`;
+            
+            // Update progress bar
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            // Hide all steps
+            for (let i = 1; i <= totalSteps; i++) {
+                document.getElementById(`step-${i}`).classList.remove('active');
+            }
+            
+            // Show current step
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+            
+            // Scroll to top of content area on step change
+            document.getElementById('content-area').scrollTop = 0;
+
+            // Update buttons
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            prevBtn.disabled = currentStep === 1;
+            
+            if (currentStep === totalSteps) {
+                nextBtn.innerHTML = '가이드 완료! <i class="fa-solid fa-flag-checkered text-2xl"></i>';
+                nextBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                nextBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+                nextBtn.onclick = () => showCompletionMessage();
+            } else {
+                nextBtn.innerHTML = '다음 단계 <i class="fa-solid fa-chevron-right"></i>';
+                nextBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                nextBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                nextBtn.onclick = () => changeStep(1);
+            }
+        }
+
+        function changeStep(direction) {
+            currentStep += direction;
+            if (currentStep < 1) currentStep = 1;
+            if (currentStep > totalSteps) currentStep = totalSteps;
+            updateUI();
+        }
+
+        function showCompletionMessage() {
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = `
+                <div class="flex flex-col items-center justify-center h-full text-center animate-[fadeIn_0.5s_ease-out] w-full">
+                    <div class="text-[5rem] text-yellow-400 mb-4 animate-bounce drop-shadow-md"><i class="fa-solid fa-trophy"></i></div>
+                    <h2 class="text-4xl font-extrabold text-gray-800 mb-4">수고했어요! 완료!</h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">축하합니다! 완벽하게 세팅을 마쳤어요.<br>이제 안티그래비티 AI 에이전트와 대화하며 멋진 게임을 만들어보세요.</p>
+                    <button onclick="location.reload()" class="px-6 py-3 bg-gray-800 text-white text-lg rounded-xl font-bold hover:bg-gray-900 transition-all shadow-md hover:-translate-y-0.5"><i class="fa-solid fa-rotate-right mr-2"></i> 처음부터 다시 보기</button>
+                </div>
+            `;
+            document.querySelector('.bg-white.border-t').style.display = 'none';
+        }
+
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextArea);
+
+            const msgElement = document.getElementById('copy-msg-1');
+            msgElement.style.opacity = '1';
+            setTimeout(() => {
+                msgElement.style.opacity = '0';
+            }, 2500);
+        }
+
+        // Initialize UI on load
+        updateUI();
+    </script>
+</body>
+</html>
