@@ -196,7 +196,7 @@
                         <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm flex flex-col items-center text-center justify-center">
                             <div class="w-16 h-16 bg-gray-800 text-white rounded-full flex items-center justify-center text-3xl mb-6 font-black shadow-md">2</div>
                             <h3 class="text-2xl font-bold text-gray-800 mb-4">에디터 선택</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed mb-3">External Script Editor에서<br><strong class="text-blue-600 text-2xl inline-block mt-2">Antigravity</strong>를 선택하세요.</p>
+                            <p class="text-gray-600 text-lg leading-relaxed mb-3">External Script Editor에서<br><strong class="text-blue-600 text-2xl inline-block mt-2">Antigravity IDE</strong>를 선택하세요.</p>
                             <p class="text-sm text-gray-400 bg-gray-50 px-3 py-1.5 rounded-lg">(목록에 없으면 Browse로 직접 찾기)</p>
                         </div>
                         <div class="bg-emerald-50 p-8 rounded-3xl border-2 border-emerald-400 shadow-sm flex flex-col items-center text-center justify-center relative overflow-hidden">
@@ -229,13 +229,22 @@
                         <div class="col-span-3 bg-white p-8 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-center">
                             <div class="flex items-center gap-4 mb-6">
                                 <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm"><i class="fa-solid fa-list-ol"></i></div>
-                                <h3 class="text-2xl font-bold text-gray-800">가장 쉬운 설치 순서</h3>
+                                <h3 class="text-2xl font-bold text-gray-800">가장 확실한 수동 설치 순서</h3>
                             </div>
                             <ul class="space-y-4 text-lg text-gray-700 flex-1 flex flex-col justify-center">
-                                <li class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl shadow-sm"><span class="bg-blue-100 text-blue-700 font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xl">1</span> 안티그래비티 왼쪽 메뉴 <strong>확장(Extensions)</strong> 클릭</li>
-                                <li class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl shadow-sm"><span class="bg-blue-100 text-blue-700 font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xl">2</span> 검색창에 <code class="bg-white border text-red-600 px-3 py-1 rounded-lg font-bold shadow-sm text-xl tracking-wider">omnisharp</code> 검색</li>
-                                <li class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl shadow-sm"><span class="bg-blue-100 text-blue-700 font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xl">3</span> 결과에서 <strong>C# (OmniSharp)</strong> 이라는 오픈소스 확장을 설치</li>
-                                <li class="flex items-center gap-4 bg-blue-50 p-4 rounded-2xl border border-blue-200 shadow-sm"><span class="bg-blue-600 text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm text-xl">4</span> 설치 후 <strong class="text-blue-700">안티그래비티 완전히 껐다가 켜기!</strong></li>
+                                <li class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl shadow-sm">
+                                    <span class="bg-blue-100 text-blue-700 font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xl">1</span> 
+                                    <div class="flex-1 flex flex-col">
+                                        <div class="flex items-center justify-between">
+                                            <span class="font-medium">확장 파일(.vsix) 다운로드</span>
+                                            <a href="https://open-vsx.org/extension/muhammad-sammy/csharp" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-3 rounded-xl transition-all shadow-md shrink-0 flex items-center gap-1"><i class="fa-solid fa-download"></i> 사이트 열기</a>
+                                        </div>
+                                        <span class="text-sm text-gray-500 mt-1"><i class="fa-solid fa-circle-info"></i> 사이트 우측 상단의 <strong>Download</strong> 버튼을 누르세요.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl shadow-sm"><span class="bg-blue-100 text-blue-700 font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xl">2</span> 안티그래비티 왼쪽 메뉴 <strong>확장(Extensions)</strong> 탭 열기</li>
+                                <li class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl shadow-sm"><span class="bg-blue-100 text-blue-700 font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xl">3</span> 검색창 우측 <strong><code>...</code> (더 보기)</strong> 클릭 후 <strong>VSIX에서 설치...</strong> 선택</li>
+                                <li class="flex items-center gap-4 bg-blue-50 p-4 rounded-2xl border border-blue-200 shadow-sm"><span class="bg-blue-600 text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm text-xl">4</span> 파일 열어 설치 후, <strong class="text-blue-700 ml-1">IDE 완전히 껐다 켜기!</strong></li>
                             </ul>
                         </div>
 
@@ -249,7 +258,7 @@
                                 </div>
                                 <h3 class="text-2xl font-extrabold text-orange-800 mb-4">마소 공식 확장은 NO!</h3>
                                 <p class="text-lg text-orange-900 leading-relaxed bg-white/80 p-5 rounded-2xl backdrop-blur-sm font-medium shadow-sm">
-                                    마이크로소프트의 공식 'Unity'나 'C#' 확장을 쓰면 <strong>오류가 나고 색칠이 안 돼요.</strong><br><br>반드시 <code class="bg-orange-100 px-2 py-1 rounded-lg text-orange-800 font-bold text-xl shadow-inner tracking-wider">omnisharp</code>으로 검색하세요.
+                                    마이크로소프트의 공식 'Unity'나 'C#' 확장을 쓰면 <strong>오류가 나고 색칠이 안 돼요.</strong><br><br>반드시 옆의 순서대로 <strong>수동 설치</strong>를 진행하세요!
                                 </p>
                             </div>
                         </div>
