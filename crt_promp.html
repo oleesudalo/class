@@ -51,4 +51,341 @@
         <!-- 왼쪽: 마법사(Wizard) 패널 -->
         <section id="wizard-panel" class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-xl flex flex-col h-[600px]">
             <!-- 진행 상태 바 -->
-            <div class="flex
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-sm font-semibold text-indigo-400" id="step-indicator">단계 1 / 4</span>
+                <div class="flex gap-1" id="progress-dots">
+                    <!-- JS로 채워짐 -->
+                </div>
+            </div>
+
+            <!-- 스텝 내용 영역 -->
+            <div id="step-content" class="flex-1 overflow-y-auto pr-2 mb-4">
+                <!-- JS로 내용 렌더링 -->
+            </div>
+
+            <!-- 네비게이션 버튼 -->
+            <div class="flex justify-between mt-auto pt-4 border-t border-zinc-800">
+                <button id="prev-btn" class="px-5 py-2.5 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition-colors hidden font-medium">
+                    이전
+                </button>
+                <button id="next-btn" class="px-5 py-2.5 rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-colors ml-auto font-medium shadow-lg shadow-indigo-500/20">
+                    다음
+                </button>
+            </div>
+        </section>
+
+        <!-- 오른쪽: 미리보기 패널 (1~4단계에서 표시) -->
+        <section id="preview-panel" class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-xl flex flex-col h-[600px]">
+            <div class="flex justify-between items-center mb-4 pb-4 border-b border-zinc-800">
+                <h2 class="text-lg font-bold">📝 시스템 프롬프트 미리보기</h2>
+                <button onclick="copyPrompt('preview-text', this)" class="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded text-sm transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    복사하기
+                </button>
+            </div>
+            <div class="flex-1 bg-zinc-950 rounded-xl p-5 overflow-y-auto border border-zinc-800">
+                <pre id="preview-text" class="whitespace-pre-wrap text-sm leading-relaxed text-zinc-300 font-mono"></pre>
+            </div>
+        </section>
+    </main>
+
+    <!-- 5단계: 제미나이 실습 가이드 (초기 숨김, 1단 레이아웃 전체 너비) -->
+    <section id="guide-panel" class="w-full max-w-4xl mx-auto hidden fade-in">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold mb-3 text-indigo-400">🚀 제미나이에서 챗봇 만들기 실습 가이드</h2>
+            <p class="text-zinc-400">오른쪽 창의 '시스템 프롬프트'를 복사해 두었나요? 이제 아래 순서대로 제미나이에 붙여넣기만 하세요!</p>
+        </div>
+
+        <div class="space-y-6">
+            <!-- 가이드 1 -->
+            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold">1. 제미나이에게 기획자 역할 부여하기</h3>
+                    <button onclick="copyPrompt('guide-1-text', this)" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 rounded text-sm transition-colors">복사</button>
+                </div>
+                <p class="text-sm text-zinc-400 mb-3">제미나이에게 질문할 때 객관식으로 물어보도록 지시합니다. 숫자로만 편하게 대답하세요.</p>
+                <div class="bg-zinc-950 rounded-xl p-4 border border-zinc-800">
+<pre id="guide-1-text" class="whitespace-pre-wrap text-sm text-zinc-300">너는 나와 함께 웹 서비스를 만드는 개발 파트너야.
+나는 코딩이 처음인 중학생이야. 어려운 용어는 풀어서 설명해 줘.
+
+우리는 '청소년 금융 도우미 챗봇'의 화면(UI)을 먼저 기획할 거야. 
+화면을 더 구체적으로 정하기 위해 나에게 필요한 질문을 하나씩 해 줘.
+
+[중요 규칙]
+1. 나에게 질문할 때는 주관식이 아니라, 항상 1~5번까지 객관식 보기를 함께 제시해 줘.
+2. 나는 숫자만 타이핑해서 대답할게.
+3. 내가 숫자로 대답하면 다음 기획 질문으로 넘어가 줘.</pre>
+                </div>
+            </div>
+
+            <!-- 가이드 2 -->
+            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold">2. 챗봇 화면 만들기 (프롬프트 적용)</h3>
+                    <button onclick="copyPrompt('guide-2-text', this)" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 rounded text-sm transition-colors">복사</button>
+                </div>
+                <p class="text-sm text-zinc-400 mb-3">문답 기획이 끝나면, 앞서 우리가 만든 '시스템 프롬프트'를 붙여넣어 화면을 완성합니다.</p>
+                <div class="bg-zinc-950 rounded-xl p-4 border border-zinc-800">
+<pre id="guide-2-text" class="whitespace-pre-wrap text-sm text-zinc-300">우리가 나눈 기획 대화를 바탕으로 '청소년 금융 도우미 챗봇' 웹 앱을 만들어 줘.
+
+- 디자인: 다크 모드, 깔끔한 카드형 UI, 따뜻한 파스텔 톤 포인트 색상 적용
+- 동작: 사용자가 메시지를 보내면 화면 안에서 AI가 아래 [시스템 프롬프트] 규칙에 맞춰 바로 답변하도록 구현해 줘.
+
+[시스템 프롬프트]
+(※ 여기에 아까 복사해둔 시스템 프롬프트를 붙여넣으세요! ※)</pre>
+                </div>
+            </div>
+
+            <!-- 가이드 3 -->
+            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold">3. 편의 기능(버튼) 추가하기</h3>
+                    <button onclick="copyPrompt('guide-3-text', this)" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 rounded text-sm transition-colors">복사</button>
+                </div>
+                <p class="text-sm text-zinc-400 mb-3">화면이 만들어졌다면, 클릭하기 쉽게 자주 묻는 질문 버튼을 추가해 봅니다.</p>
+                <div class="bg-zinc-950 rounded-xl p-4 border border-zinc-800">
+<pre id="guide-3-text" class="whitespace-pre-wrap text-sm text-zinc-300">방금 만든 챗봇 대화창 위쪽에 자주 묻는 질문 버튼 3개를 추가해 줘.
+- 버튼 1: 적금이 뭐야?
+- 버튼 2: 체크카드 어떻게 써?
+- 버튼 3: 이 문자 스미싱이야?
+
+버튼을 누르면 해당 질문이 자동으로 입력창에 들어가고 바로 전송되도록 해 줘.</pre>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button onclick="resetApp()" class="px-6 py-3 border border-zinc-700 text-zinc-300 rounded-xl hover:bg-zinc-800 transition-colors">
+                    처음부터 다시 만들기
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 스크립트 로직 (이 부분이 반드시 포함되어야 작동합니다!) -->
+    <script>
+        // 데이터 정의
+        const stepsData = [
+            {
+                id: 1,
+                title: "챗봇의 역할을 선택해주세요",
+                desc: "챗봇이 어떤 성격을 가질지 1가지만 골라주세요.",
+                type: "single",
+                stateKey: "role",
+                options: [
+                    "친절한 은행원 (전문적이고 신뢰감 있는 멘토)",
+                    "동네 친한 형/누나 (편안하고 친근한 멘토)",
+                    "잔소리꾼 요정 (엄격하지만 뼈가 있는 조언)",
+                    "초보 투자자 동지 (함께 배워가는 친구)"
+                ]
+            },
+            {
+                id: 2,
+                title: "어떤 말투를 사용할까요?",
+                desc: "챗봇의 대화 스타일을 1가지만 골라주세요.",
+                type: "single",
+                stateKey: "tone",
+                options: [
+                    "친절하고 다정한 반말 🗣️",
+                    "격식 있는 존댓말 (해요체) 👔",
+                    "이모지를 적극적으로 사용하는 발랄한 말투 ✨",
+                    "요점만 딱딱 짚어주는 단호한 말투 🎯"
+                ]
+            },
+            {
+                id: 3,
+                title: "챗봇의 핵심 기능 (여러 개 선택 가능)",
+                desc: "이 챗봇이 할 수 있는 주요 역할을 모두 골라주세요.",
+                type: "multiple",
+                stateKey: "functions",
+                options: [
+                    "어려운 금융 용어(금리, 주식, 펀드 등) 쉽게 풀이하기",
+                    "용돈 기입장 및 소비 습관 분석 조언",
+                    "스미싱/보이스피싱 등 금융 사기 예방 가이드",
+                    "목돈 모으기(적금) 시뮬레이션 및 계획 세우기"
+                ]
+            },
+            {
+                id: 4,
+                title: "챗봇의 필수 규칙 (여러 개 선택 가능)",
+                desc: "AI가 반드시 지켜야 할 주의사항을 골라주세요.",
+                type: "multiple",
+                stateKey: "rules",
+                options: [
+                    "설명할 때 반드시 중학생이 알만한 일상생활 비유를 들어 설명할 것",
+                    "한 번에 너무 긴 글을 주지 말고, 3~4문장 단위로 짧게 끊어서 말할 것",
+                    "전문적인 투자 권유나 특정 종목 추천은 절대 하지 말 것",
+                    "답변 끝에는 항상 학생이 생각해볼 수 있는 퀴즈나 질문을 하나 던질 것"
+                ]
+            }
+        ];
+
+        // 상태 관리
+        let currentStep = 1;
+        let selections = {
+            role: "",
+            tone: "",
+            functions: [],
+            rules: []
+        };
+
+        // DOM 요소
+        const stepContentEl = document.getElementById('step-content');
+        const stepIndicatorEl = document.getElementById('step-indicator');
+        const progressDotsEl = document.getElementById('progress-dots');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const previewTextEl = document.getElementById('preview-text');
+        
+        const mainContainer = document.getElementById('main-container');
+        const previewPanel = document.getElementById('preview-panel');
+        const guidePanel = document.getElementById('guide-panel');
+
+        // 초기화
+        function init() {
+            renderStep();
+            updatePreview();
+        }
+
+        // 화면 렌더링
+        function renderStep() {
+            const stepData = stepsData[currentStep - 1];
+            
+            // 상단 인디케이터
+            stepIndicatorEl.innerText = `단계 ${currentStep} / 4`;
+            
+            // 프로그레스 닷 렌더링
+            progressDotsEl.innerHTML = stepsData.map(s => 
+                `<div class="w-2 h-2 rounded-full ${s.id === currentStep ? 'bg-indigo-500' : (s.id < currentStep ? 'bg-indigo-900' : 'bg-zinc-700')} transition-colors"></div>`
+            ).join('');
+
+            // 컨텐츠 렌더링
+            let html = `
+                <div class="fade-in">
+                    <h2 class="text-2xl font-bold mb-2">${stepData.title}</h2>
+                    <p class="text-sm text-zinc-400 mb-6">${stepData.desc}</p>
+                    <div class="flex flex-col gap-3">
+            `;
+
+            stepData.options.forEach(option => {
+                const isSelected = stepData.type === 'single' 
+                    ? selections[stepData.stateKey] === option 
+                    : selections[stepData.stateKey].includes(option);
+                
+                const baseClass = "chip w-full text-left p-4 rounded-xl border text-sm font-medium transition-all duration-200 ";
+                const activeClass = isSelected 
+                    ? "bg-indigo-500/10 border-indigo-500 text-indigo-300 shadow-[0_0_15px_rgba(99,102,241,0.1)]" 
+                    : "bg-zinc-800/50 border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:border-zinc-600";
+
+                html += `<button onclick="toggleSelection('${stepData.stateKey}', '${option}', '${stepData.type}')" class="${baseClass} ${activeClass}">${option}</button>`;
+            });
+
+            html += `</div></div>`;
+            stepContentEl.innerHTML = html;
+
+            // 버튼 상태
+            prevBtn.style.display = currentStep === 1 ? 'none' : 'block';
+            
+            if (currentStep === 4) {
+                nextBtn.innerText = "제미나이에서 챗봇 만들기 🚀";
+                nextBtn.classList.remove('bg-indigo-500');
+                nextBtn.classList.add('bg-gradient-to-r', 'from-indigo-500', 'to-purple-500');
+            } else {
+                nextBtn.innerText = "다음 단계";
+                nextBtn.classList.add('bg-indigo-500');
+                nextBtn.classList.remove('bg-gradient-to-r', 'from-indigo-500', 'to-purple-500');
+            }
+        }
+
+        // 옵션 선택 로직
+        function toggleSelection(key, value, type) {
+            if (type === 'single') {
+                selections[key] = value;
+            } else {
+                if (selections[key].includes(value)) {
+                    selections[key] = selections[key].filter(item => item !== value);
+                } else {
+                    selections[key].push(value);
+                }
+            }
+            renderStep();
+            updatePreview();
+        }
+
+        // 프롬프트 텍스트 업데이트
+        function updatePreview() {
+            let promptText = `당신은 청소년들을 위한 훌륭한 금융 도우미입니다. 아래의 설정과 규칙을 엄격하게 지켜서 답변해주세요.\n\n`;
+            
+            promptText += `[역할]\n`;
+            promptText += `- ${selections.role || "(역할을 선택해주세요)"}\n\n`;
+            
+            promptText += `[말투/어조]\n`;
+            promptText += `- ${selections.tone || "(말투를 선택해주세요)"}\n\n`;
+            
+            promptText += `[주요 기능]\n`;
+            if (selections.functions.length > 0) {
+                selections.functions.forEach(f => promptText += `- ${f}\n`);
+            } else {
+                promptText += `- (기능을 선택해주세요)\n`;
+            }
+            promptText += `\n`;
+            
+            promptText += `[필수 규칙]\n`;
+            if (selections.rules.length > 0) {
+                selections.rules.forEach(r => promptText += `- ${r}\n`);
+            } else {
+                promptText += `- (규칙을 선택해주세요)\n`;
+            }
+
+            previewTextEl.innerText = promptText;
+        }
+
+        // 네비게이션 이벤트
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < 4) {
+                currentStep++;
+                renderStep();
+            } else if (currentStep === 4) {
+                // 5단계 가이드 진입 시 레이아웃 변경
+                mainContainer.classList.add('hidden'); // 기존 2단 뷰어 숨김
+                guidePanel.classList.remove('hidden'); // 가이드 표시
+                window.scrollTo(0,0);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                renderStep();
+            }
+        });
+
+        // 복사 기능
+        function copyPrompt(elementId, btnElement) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = "✅ 복사완료!";
+                btnElement.classList.add('text-green-400');
+                
+                setTimeout(() => {
+                    btnElement.innerHTML = originalText;
+                    btnElement.classList.remove('text-green-400');
+                }, 2000);
+            });
+        }
+
+        // 초기화 후 다시 시작
+        function resetApp() {
+            currentStep = 1;
+            selections = { role: "", tone: "", functions: [], rules: [] };
+            mainContainer.classList.remove('hidden');
+            guidePanel.classList.add('hidden');
+            init();
+            window.scrollTo(0,0);
+        }
+
+        // 앱 실행
+        init();
+    </script>
+</body>
+</html>
