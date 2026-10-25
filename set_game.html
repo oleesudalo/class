@@ -1,0 +1,510 @@
+import React, { useState, useEffect } from 'react';
+
+// --- 데이터 및 유틸리티 함수 ---
+const SHAPES = ['oval', 'diamond', 'squiggle'];
+const COLORS = ['red', 'green', 'purple'];
+const NUMBERS = [1, 2, 3];
+const SHADINGS = ['solid', 'striped', 'open'];
+
+// 한국어 매핑
+const KOR_ATTRS = {
+  shape: '모양',
+  color: '색깔',
+  number: '개수',
+  shading: '색칠 방법'
+};
+
+// 81장의 카드 덱 생성
+const generateDeck = () => {
+  const deck = [];
+  let id = 0;
+  for (let s of SHAPES) {
+    for (let c of COLORS) {
+      for (let n of NUMBERS) {
+        for (let sh of SHADINGS) {
+          deck.push({ id: id++, shape: s, color: c, number: n, shading: sh });
+        }
+      }
+    }
+  }
+  return deck;
+};
+
+// 3장이 세트인지 확인하는 함수
+const isSet = (c1, c2, c3) => {
+  const attrs = ['shape', 'color', 'number', 'shading'];
+  for (let attr of attrs) {
+    const uniqueVals = new Set([c1[attr], c2[attr], c3[attr]]).size;
+    // 2개만 같고 1개가 다르면 셋이 아님
+    if (uniqueVals === 2) return false;
+  }
+  return true;
+};
+
+// 세트가 아닌 이유 찾기
+const getReasonNotSet = (c1, c2, c3) => {
+  const attrs = ['shape', 'color', 'number', 'shading'];
+  const failedAttrs = [];
+  for (let attr of attrs) {
+    const uniqueVals = new Set([c1[attr], c2[attr], c3[attr]]).size;
+    if (uniqueVals === 2) {
+      failedAttrs.push(KOR_ATTRS[attr]);
+    }
+  }
+  return failedAttrs;
+};
+
+// 배열 섞기
+const shuffle = (array) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
+// 12장 중에 세트가 있는지 확인
+const findAnySetInGrid = (grid) => {
+  for (let i = 0; i < grid.length - 2; i++) {
+    for (let j = i + 1; j < grid.length - 1; j++) {
+      for (let k = j + 1; k < grid.length; k++) {
+        if (isSet(grid[i], grid[j], grid[k])) {
+          return [grid[i], grid[j], grid[k]];
+        }
+      }
+    }
+  }
+  return null;
+};
+
+// 12장 뽑기 (반드시 세트가 1개 이상 포함되도록)
+const get12CardsWithSet = (deck) => {
+  let grid = [];
+  let hasSet = false;
+  while (!hasSet) {
+    grid = shuffle(deck).slice(0, 12);
+    if (findAnySetInGrid(grid)) hasSet = true;
+  }
+  return grid;
+};
+
+// --- 컴포넌트 ---
+
+// 1. 카드 렌더링 컴포넌트
+const Card = ({ card, selected, onClick, small = false }) => {
+  const getColorHex = (color) => {
+    switch (color) {
+      case 'red': return '#ef4444';
+      case 'green': return '#22c55e';
+      case 'purple': return '#a855f7';
+      default: return '#000';
+    }
+  };
+
+  const colorHex = getColorHex(card.color);
+
+  // 개별 도형 그리기
+  const renderShape = (idx) => {
+    let fill = 'transparent';
+    if (card.shading === 'solid') fill = colorHex;
+    if (card.shading === 'striped') fill = `url(#striped-${card.color})`;
+
+    const stroke = colorHex;
+    const strokeWidth = 8;
+
+    let shapeElement = null;
+    if (card.shape === 'oval') {
+      shapeElement = <rect x="15" y="10" width="70" height="80" rx="35" fill={fill} stroke={stroke} strokeWidth={strokeWidth} />;
+    } else if (card.shape === 'diamond') {
+      shapeElement = <polygon points="50,10 90,50 50,90 10,50" fill={fill} stroke={stroke} strokeWidth={strokeWidth} strokeLinejoin="round" />;
+    } else if (card.shape === 'squiggle') {
+      // 물결 모양 (단순화된 형태)
+      shapeElement = (
+        <path 
+          d="M 25 30 C 40 10, 80 20, 85 40 C 90 60, 60 70, 75 90 C 60 110, 20 100, 15 80 C 10 60, 40 50, 25 30 Z" 
+          fill={fill} stroke={stroke} strokeWidth={strokeWidth} strokeLinejoin="round" 
+        />
+      );
+    }
+
+    return (
+      <svg key={idx} width="100%" height="100%" viewBox="0 0 100 100" className="flex-1 drop-shadow-sm">
+        <defs>
+          <pattern id={`striped-${card.color}`} width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="8" stroke={colorHex} strokeWidth="3" />
+          </pattern>
+        </defs>
+        {shapeElement}
+      </svg>
+    );
+  };
+
+  return (
+    <div 
+      onClick={() => onClick && onClick(card)}
+      className={`
+        bg-white rounded-2xl shadow-md border-4 cursor-pointer transition-transform
+        flex flex-col justify-center items-center gap-2 p-2 
+        ${selected ? 'border-blue-500 scale-105 bg-blue-50' : 'border-gray-200 hover:border-blue-300 hover:-translate-y-1'}
+        ${small ? 'w-24 h-32' : 'w-32 h-48 sm:w-40 sm:h-56'}
+      `}
+    >
+      {Array.from({ length: card.number }).map((_, idx) => renderShape(idx))}
+    </div>
+  );
+};
+
+// 2. 규칙 설명 컴포넌트
+const Learn = ({ onBack }) => {
+  return (
+    <div className="flex flex-col items-center max-w-2xl mx-auto p-4 animate-fade-in">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6 font-cookie">📖 SET 규칙 배우기</h2>
+      
+      <div className="bg-white p-6 rounded-2xl shadow-lg mb-6 w-full space-y-4 text-lg">
+        <p><strong>SET(셋)</strong>은 3장의 카드를 찾는 게임이에요.</p>
+        <p>카드에는 4가지 특징이 있어요.</p>
+        <ul className="list-disc pl-6 space-y-2 bg-blue-50 p-4 rounded-xl">
+          <li><strong>모양:</strong> 타원, 다이아몬드, 물결</li>
+          <li><strong>색깔:</strong> 빨강, 초록, 보라</li>
+          <li><strong>개수:</strong> 1개, 2개, 3개</li>
+          <li><strong>색칠:</strong> 꽉 참, 빗금, 비어있음</li>
+        </ul>
+        
+        <div className="bg-yellow-100 p-4 rounded-xl mt-4 border-2 border-yellow-400">
+          <h3 className="font-bold text-xl text-yellow-800 mb-2">✨ 세트(SET)가 되려면?</h3>
+          <p>3장의 카드가 가진 4가지 특징이 각각 <strong>"모두 같거나"</strong> 혹은 <strong>"모두 달라야"</strong> 해요!</p>
+          <p className="text-red-500 font-bold mt-2">주의! 2개는 같고 1개가 다르면 세트가 아니에요!</p>
+        </div>
+      </div>
+
+      <button onClick={onBack} className="bg-blue-500 text-white px-8 py-3 rounded-full text-xl font-bold shadow-lg hover:bg-blue-600 transition">
+        이해했어요! 돌아가기
+      </button>
+    </div>
+  );
+};
+
+// 체크리스트 공통 컴포넌트
+const RuleChecklist = () => {
+  const [checks, setChecks] = useState([false, false, false, false]);
+
+  const toggleCheck = (index) => {
+    const newChecks = [...checks];
+    newChecks[index] = !newChecks[index];
+    setChecks(newChecks);
+  };
+
+  const resetChecks = () => setChecks([false, false, false, false]);
+
+  return (
+    <div className="bg-white p-5 rounded-2xl shadow-md border-4 border-indigo-200 w-full md:w-72 flex-shrink-0 mb-6 md:mb-0">
+      <h3 className="text-xl font-bold text-indigo-800 mb-4 text-center">✅ 확인 체크리스트</h3>
+      <ul className="space-y-4 text-base text-gray-700">
+        {[
+          { label: '색', color: 'text-red-500' },
+          { label: '모양', color: 'text-green-600' },
+          { label: '무늬(색칠)', color: 'text-purple-500' },
+          { label: '개수', color: 'text-blue-500' },
+        ].map((item, i) => (
+          <li key={i} className="flex items-start gap-3 cursor-pointer" onClick={() => toggleCheck(i)}>
+            <div className={`w-6 h-6 rounded flex items-center justify-center flex-shrink-0 border-2 transition-colors ${checks[i] ? 'bg-indigo-500 border-indigo-500' : 'border-gray-300'}`}>
+              {checks[i] && <span className="text-white font-bold">✓</span>}
+            </div>
+            <span className="leading-tight select-none">
+              <strong className={item.color}>{item.label}</strong>이(가)<br/>모두 같거나 모두 다른가요?
+            </span>
+          </li>
+        ))}
+      </ul>
+      <button onClick={resetChecks} className="mt-5 w-full bg-gray-100 text-gray-600 py-2 rounded-lg font-bold hover:bg-gray-200 transition">
+        체크 초기화
+      </button>
+    </div>
+  );
+};
+
+// 3. O/X 퀴즈 컴포넌트
+const OXQuiz = ({ deck, onBack }) => {
+  const [cards, setCards] = useState([]);
+  const [isTrueSet, setIsTrueSet] = useState(false);
+  const [feedback, setFeedback] = useState(null);
+  const [score, setScore] = useState(0);
+  const [resetKey, setResetKey] = useState(0);
+
+  const generateQuestion = () => {
+    setFeedback(null);
+    setResetKey(prev => prev + 1);
+    const shuffled = shuffle(deck);
+    
+    // 50% 확률로 진짜 세트를, 50% 확률로 가짜 세트를 만듦
+    if (Math.random() > 0.5) {
+      // 진짜 세트 찾기
+      const grid = get12CardsWithSet(deck);
+      const foundSet = findAnySetInGrid(grid);
+      setCards(foundSet);
+      setIsTrueSet(true);
+    } else {
+      // 가짜 세트 만들기 (아무거나 3장 뽑고 세트면 다시 뽑기)
+      let fakeSet = [];
+      let valid = false;
+      while (!valid) {
+        fakeSet = shuffle(deck).slice(0, 3);
+        if (!isSet(fakeSet[0], fakeSet[1], fakeSet[2])) {
+          valid = true;
+        }
+      }
+      setCards(fakeSet);
+      setIsTrueSet(false);
+    }
+  };
+
+  useEffect(() => {
+    generateQuestion();
+  }, []);
+
+  const handleAnswer = (answer) => {
+    if (feedback) return; // 이미 대답한 경우
+    
+    if (answer === isTrueSet) {
+      setScore(s => s + 1);
+      setFeedback({ type: 'success', msg: '우와! 정답이에요! 🎉' });
+    } else {
+      let explanation = "";
+      if (!isTrueSet) {
+        const reasons = getReasonNotSet(cards[0], cards[1], cards[2]);
+        explanation = `${reasons.join(', ')}이(가) 2장만 같고 1장은 달라서 SET가 아니에요! 😢`;
+      } else {
+        explanation = '이 3장은 모든 특징이 전부 같거나 전부 달라서 SET가 맞아요! 😢';
+      }
+      setFeedback({ type: 'error', msg: explanation });
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center w-full max-w-6xl mx-auto p-4 animate-fade-in">
+      <div className="flex justify-between items-center w-full mb-6">
+        <button onClick={onBack} className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-bold hover:bg-gray-300">
+          돌아가기
+        </button>
+        <div className="text-2xl font-bold text-blue-600 bg-white px-6 py-2 rounded-full shadow">
+          점수: {score}점
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row w-full gap-8 justify-center items-start">
+        {/* 왼쪽: 체크리스트 */}
+        <RuleChecklist key={resetKey} />
+
+        {/* 오른쪽: 게임 영역 */}
+        <div className="flex flex-col items-center flex-1">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">이 3장의 카드는 SET일까요?</h2>
+          
+          <div className="flex justify-center gap-4 mb-8 my-6 flex-wrap">
+            {cards.map(card => <Card key={card.id} card={card} />)}
+          </div>
+
+          {!feedback ? (
+            <div className="flex gap-6">
+              <button onClick={() => handleAnswer(true)} className="bg-green-500 text-white w-32 h-32 rounded-3xl text-5xl font-bold shadow-xl hover:bg-green-600 hover:scale-105 transition">
+                O
+              </button>
+              <button onClick={() => handleAnswer(false)} className="bg-red-500 text-white w-32 h-32 rounded-3xl text-5xl font-bold shadow-xl hover:bg-red-600 hover:scale-105 transition">
+                X
+              </button>
+            </div>
+          ) : (
+            <div className={`p-6 rounded-2xl text-center w-full max-w-lg shadow-lg ${feedback.type === 'success' ? 'bg-green-100 border-2 border-green-400' : 'bg-red-100 border-2 border-red-400'}`}>
+              <p className="text-xl font-bold mb-4">{feedback.msg}</p>
+              <button onClick={generateQuestion} className="bg-blue-500 text-white px-8 py-3 rounded-full font-bold shadow hover:bg-blue-600">
+                다음 문제
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 4. 12장 찾기 연습 컴포넌트
+const FindSet = ({ deck, onBack }) => {
+  const [grid, setGrid] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [feedback, setFeedback] = useState(null);
+  const [score, setScore] = useState(0);
+  const [resetKey, setResetKey] = useState(0);
+
+  const startNewGame = () => {
+    setGrid(get12CardsWithSet(deck));
+    setSelectedIds([]);
+    setFeedback(null);
+    setResetKey(prev => prev + 1);
+  };
+
+  useEffect(() => {
+    startNewGame();
+  }, []);
+
+  const handleCardClick = (card) => {
+    if (feedback && feedback.type === 'success') return;
+
+    if (selectedIds.includes(card.id)) {
+      setSelectedIds(selectedIds.filter(id => id !== card.id));
+      return;
+    }
+
+    const newSelected = [...selectedIds, card.id];
+    if (newSelected.length <= 3) {
+      setSelectedIds(newSelected);
+    }
+
+    if (newSelected.length === 3) {
+      checkSelectedSet(newSelected);
+    }
+  };
+
+  const checkSelectedSet = (ids) => {
+    const selectedCards = grid.filter(c => ids.includes(c.id));
+    
+    if (isSet(selectedCards[0], selectedCards[1], selectedCards[2])) {
+      setScore(s => s + 1);
+      setFeedback({ type: 'success', msg: '정답! 훌륭한 눈썰미예요! 🎉' });
+    } else {
+      const reasons = getReasonNotSet(selectedCards[0], selectedCards[1], selectedCards[2]);
+      setFeedback({ type: 'error', msg: `${reasons.join(', ')}이(가) 애매해요! 다시 찾아보세요.` });
+      // 1.5초 후 선택 해제
+      setTimeout(() => {
+        setSelectedIds([]);
+        setFeedback(null);
+      }, 2000);
+    }
+  };
+
+  const showHint = () => {
+    const answer = findAnySetInGrid(grid);
+    if (answer) {
+      setFeedback({ type: 'hint', msg: '도움이 필요하군요! 이 3장 중에 정답이 숨어있어요.' });
+      setSelectedIds([answer[0].id]); // 하나만 살짝 알려줌
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center w-full max-w-6xl mx-auto p-4 animate-fade-in">
+      <div className="flex justify-between items-center w-full mb-4">
+        <button onClick={onBack} className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-bold hover:bg-gray-300">
+          돌아가기
+        </button>
+        <div className="text-xl font-bold bg-white px-4 py-2 rounded-full shadow text-blue-600">
+          찾은 세트: {score}개
+        </div>
+        <button onClick={showHint} className="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-lg font-bold hover:bg-yellow-500">
+          힌트 보기
+        </button>
+      </div>
+
+      <div className="flex flex-col md:flex-row w-full gap-8 justify-center items-start">
+        {/* 왼쪽: 체크리스트 */}
+        <RuleChecklist key={resetKey} />
+
+        {/* 오른쪽: 게임 영역 */}
+        <div className="flex flex-col items-center flex-1 w-full">
+          <div className="text-center mb-4">
+            <h2 className="text-2xl font-bold text-gray-800">12장 중에서 SET 3장을 찾아 클릭하세요!</h2>
+            <p className="text-gray-600">선택한 카드: {selectedIds.length}/3</p>
+          </div>
+
+          {feedback && (
+            <div className={`mb-4 p-3 rounded-lg text-lg font-bold text-center w-full max-w-lg ${
+              feedback.type === 'success' ? 'bg-green-100 text-green-700 border border-green-400' : 
+              feedback.type === 'error' ? 'bg-red-100 text-red-700 border border-red-400 animate-pulse' : 
+              'bg-yellow-100 text-yellow-700 border border-yellow-400'
+            }`}>
+              {feedback.msg}
+              {feedback.type === 'success' && (
+                <button onClick={startNewGame} className="ml-4 bg-green-500 text-white px-4 py-1 rounded-full text-sm hover:bg-green-600">
+                  다음 판
+                </button>
+              )}
+            </div>
+          )}
+
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 sm:gap-6 bg-gray-100 p-6 rounded-2xl shadow-inner w-full max-w-3xl">
+            {grid.map(card => (
+              <Card 
+                key={card.id} 
+                card={card} 
+                small={true}
+                selected={selectedIds.includes(card.id)} 
+                onClick={handleCardClick} 
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 5. 메인 앱 (메뉴)
+const App = () => {
+  const [mode, setMode] = useState('menu'); // menu, learn, ox, play
+  const deck = React.useMemo(() => generateDeck(), []);
+
+  return (
+    <div className="min-h-screen bg-blue-50 font-sans selection:bg-blue-200 py-8">
+      {/* 헤더 */}
+      <header className="text-center mb-8">
+        <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-2 drop-shadow-sm">
+          🃏 SET 게임 훈련소
+        </h1>
+        <p className="text-lg text-gray-600 font-medium">1, 2학년 친구들 환영해요! 재미있게 규칙을 배워볼까요?</p>
+      </header>
+
+      {/* 모드 렌더링 */}
+      {mode === 'menu' && (
+        <div className="flex flex-col items-center gap-6 max-w-md mx-auto animate-fade-in mt-12">
+          <button 
+            onClick={() => setMode('learn')}
+            className="w-full bg-white border-4 border-yellow-400 text-yellow-600 p-6 rounded-3xl shadow-lg hover:bg-yellow-50 hover:-translate-y-2 transition flex items-center justify-between group"
+          >
+            <span className="text-2xl font-bold">1단계: 규칙 배우기</span>
+            <span className="text-4xl group-hover:scale-125 transition">📖</span>
+          </button>
+          
+          <button 
+            onClick={() => setMode('ox')}
+            className="w-full bg-white border-4 border-green-400 text-green-600 p-6 rounded-3xl shadow-lg hover:bg-green-50 hover:-translate-y-2 transition flex items-center justify-between group"
+          >
+            <span className="text-2xl font-bold">2단계: O/X 퀴즈</span>
+            <span className="text-4xl group-hover:scale-125 transition">🤔</span>
+          </button>
+          
+          <button 
+            onClick={() => setMode('play')}
+            className="w-full bg-white border-4 border-blue-400 text-blue-600 p-6 rounded-3xl shadow-lg hover:bg-blue-50 hover:-translate-y-2 transition flex items-center justify-between group"
+          >
+            <span className="text-2xl font-bold">3단계: 12장 연습게임</span>
+            <span className="text-4xl group-hover:scale-125 transition">🔍</span>
+          </button>
+        </div>
+      )}
+
+      {mode === 'learn' && <Learn onBack={() => setMode('menu')} />}
+      {mode === 'ox' && <OXQuiz deck={deck} onBack={() => setMode('menu')} />}
+      {mode === 'play' && <FindSet deck={deck} onBack={() => setMode('menu')} />}
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.4s ease-out forwards;
+        }
+      `}} />
+    </div>
+  );
+};
+
+export default App;
