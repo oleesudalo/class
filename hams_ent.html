@@ -51,9 +51,49 @@
             text-decoration: line-through;
             color: #94a3b8;
         }
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.7); /* Dark slate overlay */
+            z-index: 1050;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s ease-out;
+            backdrop-filter: blur(2px);
+        }
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.2s ease-out;
+        }
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased selection:bg-blue-200 selection:text-blue-900">
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="modal-overlay" onclick="closeQrModal(event)">
+        <div class="modal-content shadow-2xl border border-slate-100" onclick="event.stopPropagation()">
+            <button onclick="closeQrModal()" class="absolute -top-4 -right-4 bg-white text-slate-500 hover:text-slate-800 hover:bg-slate-50 border border-slate-200 rounded-full w-10 h-10 flex items-center justify-center shadow-md transition-colors">
+                <i class="ph ph-x font-bold text-lg"></i>
+            </button>
+            <h3 class="text-center font-bold text-slate-800 mb-4 text-lg">가이드 공유 QR코드</h3>
+            <img src="hamqr.png" alt="QR Code Large" class="w-60 h-60 sm:w-72 sm:h-72 object-contain rounded-xl border border-slate-100 mx-auto">
+            <p class="text-center text-slate-500 mt-4 text-sm bg-slate-50 py-2 rounded-lg">스마트폰 카메라로 스캔하세요</p>
+        </div>
+    </div>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast shadow-lg font-medium text-sm flex items-center justify-center gap-2">
@@ -78,10 +118,19 @@
                 </h1>
                 <p class="text-slate-500 mt-2 text-sm sm:text-base">"연결은 되었는데 블록이 안 떠요!" 문제를 완벽하게 해결해 드립니다.</p>
             </div>
-            <button onclick="shareGuide()" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-colors shadow-sm w-full sm:w-auto justify-center">
-                <i class="ph ph-share-network text-lg"></i>
-                동료와 공유하기
-            </button>
+            
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end mt-4 sm:mt-0">
+                <!-- QR Thumbnail Button -->
+                <button onclick="openQrModal()" class="flex-shrink-0 w-11 h-11 p-1 bg-white border-2 border-slate-200 rounded-xl hover:border-blue-400 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" aria-label="QR 코드 크게 보기" title="QR 코드 보기">
+                    <img src="hamqr.png" alt="QR Thumbnail" class="w-full h-full object-contain rounded-md">
+                </button>
+                
+                <!-- Share Button -->
+                <button onclick="shareGuide()" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-colors shadow-sm w-full sm:w-auto justify-center flex-1 sm:flex-none">
+                    <i class="ph ph-share-network text-lg"></i>
+                    동료와 공유하기
+                </button>
+            </div>
         </header>
 
         <!-- Navigation Tabs -->
@@ -248,7 +297,7 @@
         // --- Share/Copy Logic ---
         function shareGuide() {
             // We use document.execCommand as requested for iframe support
-            const dummyText = window.location.href;
+            const dummyText = window.location.href + " (햄스터봇 x 엔트리 오류 해결 가이드)";
             const textArea = document.getElementById("copyArea");
             
             textArea.value = dummyText;
@@ -322,6 +371,27 @@
 
         function resetChecklist() {
             renderChecklist();
+        }
+
+        // --- QR Modal Logic ---
+        function openQrModal() {
+            const modal = document.getElementById('qrModal');
+            modal.style.display = 'flex';
+            // Slight delay to allow display:flex to apply before adding opacity class for transition
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        function closeQrModal(event) {
+            // Close if no event (X button clicked) OR if clicked element is the overlay background itself
+            if (!event || event.target.id === 'qrModal') {
+                const modal = document.getElementById('qrModal');
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 200); // match transition duration
+            }
         }
 
         // Initialize checklist on load
