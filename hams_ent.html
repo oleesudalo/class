@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>햄스터봇 x 엔트리 연결 가이드</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Pretendard (Korean optimized) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        body {
+            font-family: 'Pretendard', 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* Custom Checkbox */
+        .checklist-item.checked {
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-blue-200 selection:text-blue-900">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast shadow-lg font-medium text-sm flex items-center justify-center gap-2">
+        <i class="ph ph-check-circle text-green-400 text-lg"></i>
+        가이드 주소가 복사되었습니다!
+    </div>
+
+    <!-- Hidden text area for clipboard copying (iframe fallback) -->
+    <textarea id="copyArea" class="hidden" aria-hidden="true"></textarea>
+
+    <div class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+        
+        <!-- Header -->
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2.5 py-0.5 rounded-full">선생님용 가이드</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-3">
+                    <i class="ph ph-robot text-blue-600"></i>
+                    햄스터봇 x 엔트리 해결 사전
+                </h1>
+                <p class="text-slate-500 mt-2 text-sm sm:text-base">"연결은 되었는데 블록이 안 떠요!" 문제를 완벽하게 해결해 드립니다.</p>
+            </div>
+            <button onclick="shareGuide()" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-colors shadow-sm w-full sm:w-auto justify-center">
+                <i class="ph ph-share-network text-lg"></i>
+                동료와 공유하기
+            </button>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="flex space-x-2 bg-slate-200/50 p-1.5 rounded-xl mb-6 overflow-x-auto">
+            <button onclick="switchTab('tab-web')" id="btn-web" class="flex-1 py-2.5 px-4 text-sm font-bold rounded-lg transition-all bg-white text-blue-600 shadow-sm whitespace-nowrap">
+                <i class="ph ph-globe mr-1"></i> 웹 연결 오류 해결
+            </button>
+            <button onclick="switchTab('tab-offline')" id="btn-offline" class="flex-1 py-2.5 px-4 text-sm font-semibold rounded-lg transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-200 whitespace-nowrap">
+                <i class="ph ph-download-simple mr-1"></i> 오프라인 추천 (강추)
+            </button>
+            <button onclick="switchTab('tab-checklist')" id="btn-checklist" class="flex-1 py-2.5 px-4 text-sm font-semibold rounded-lg transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-200 whitespace-nowrap">
+                <i class="ph ph-check-square mr-1"></i> 수업 전 체크리스트
+            </button>
+        </div>
+
+        <!-- TAB 1: Web Troubleshooting -->
+        <main id="tab-web" class="tab-content active">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 sm:p-8">
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-slate-800">
+                    <i class="ph ph-warning-circle text-orange-500"></i> 웹 환경 연결 문제 해결 3단계
+                </h2>
+                
+                <div class="space-y-6">
+                    <!-- Step 1 -->
+                    <div class="flex gap-4 items-start">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mt-1">1</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">하드웨어 연결 프로그램 업데이트 <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded ml-2 font-semibold">가장 유력</span></h3>
+                            <p class="text-slate-600 mt-2 text-sm leading-relaxed">최근 엔트리 보안 인증서가 갱신되면서 구버전(1.9.39 이하)을 사용하면 브라우저가 통신을 보안 위험으로 간주해 블록을 차단합니다.</p>
+                            <div class="mt-3 bg-slate-50 p-4 rounded-lg border border-slate-100 text-sm">
+                                <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                    <li>현재 켜진 엔트리 하드웨어 프로그램을 **완전히 종료**합니다.</li>
+                                    <li>엔트리 홈페이지 [다운로드] 탭에서 **최신 버전**을 새로 받아 덮어쓰기 설치합니다.</li>
+                                    <li><span class="font-bold text-blue-600">확인:</span> 설치 후 버전이 1.9.40 이상인지 확인하세요.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="border-slate-100">
+
+                    <!-- Step 2 -->
+                    <div class="flex gap-4 items-start">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mt-1">2</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">브라우저 새로고침 및 상태 확인</h3>
+                            <p class="text-slate-600 mt-2 text-sm leading-relaxed">하드웨어 프로그램 우측 상단에 <strong class="text-red-500">'엔트리 서버 연결 안 됨'</strong>이라 뜬다면 브라우저가 하드웨어를 인식하지 못한 것입니다.</p>
+                            
+                            <img src="image_28d824.png" alt="엔트리 서버 연결 안 됨" class="my-4 rounded-lg shadow-sm border border-slate-200 w-full max-w-sm">
+
+                            <div class="mt-3 bg-slate-50 p-4 rounded-lg border border-slate-100 text-sm">
+                                <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                    <li>가급적 **구글 크롬(Chrome)** 브라우저를 사용해 주세요.</li>
+                                    <li><strong class="text-red-600">매우 중요:</strong> 웹 브라우저용 엔트리와 오프라인 설치형 엔트리를 **동시에 켜두면 신호가 충돌**합니다. 둘 중 하나는 무조건 완전히 꺼주세요.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- TAB 2: Offline Version -->
+        <main id="tab-offline" class="tab-content">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 sm:p-8">
+                
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+                        <i class="ph ph-thumbs-up text-3xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">피지컬 교구 수업은 <span class="text-indigo-600">오프라인 버전</span>을 강력 추천합니다!</h2>
+                    <p class="text-slate-500 mt-2">네트워크나 브라우저 업데이트에 영향을 받지 않아 에러 발생률이 현저히 낮습니다.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-6 mb-8">
+                    <!-- Web limitations -->
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <div class="flex items-center gap-2 text-slate-700 font-bold mb-3 text-lg">
+                            <i class="ph ph-browser text-xl"></i> 웹 버전의 한계
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><i class="ph ph-x text-red-500 mt-0.5"></i> <span>웹 브라우저의 까다로운 보안 정책으로 통신(WebSocket)이 자주 차단됩니다.</span></li>
+                            <li class="flex gap-2"><i class="ph ph-x text-red-500 mt-0.5"></i> <span>학교 방화벽이나 불안정한 인터넷 환경에 영향을 받습니다.</span></li>
+                            <li class="flex gap-2"><i class="ph ph-x text-red-500 mt-0.5"></i> <span>별도의 하드웨어 연결 프로그램을 관리해야 합니다.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Offline advantages -->
+                    <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 shadow-inner">
+                        <div class="flex items-center gap-2 text-indigo-700 font-bold mb-3 text-lg">
+                            <i class="ph ph-monitor text-xl"></i> 오프라인 버전의 장점
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-700">
+                            <li class="flex gap-2"><i class="ph ph-check text-green-500 mt-0.5"></i> <span class="font-semibold">프로그램 자체에 통신 기능이 내장되어 브라우저 보안 정책을 우회합니다.</span></li>
+                            <li class="flex gap-2"><i class="ph ph-check text-green-500 mt-0.5"></i> <span>인터넷이 끊기거나 느려도 안정적으로 로봇 제어가 가능합니다.</span></li>
+                            <li class="flex gap-2"><i class="ph ph-check text-green-500 mt-0.5"></i> <span>엔트리 프로그램 내에서 [하드웨어] -> [연결 프로그램 열기]로 쉽게 바로 연결됩니다.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
+                    <h4 class="font-bold text-amber-800 flex items-center gap-1"><i class="ph ph-warning"></i> 오프라인 수업 시 주의사항</h4>
+                    <p class="text-amber-700 text-sm mt-1">학생들 PC에 엔트리 오프라인 프로그램과 햄스터봇 USB 드라이버가 사전에 설치되어 있어야 합니다. 또한, 수업 중 웹 브라우저로 엔트리를 함께 켜두지 않도록 지도해 주세요 (포트 충돌 원인).</p>
+                </div>
+
+                <!-- Download Button -->
+                <div class="mt-8 text-center">
+                    <a href="https://playentry.org/download/offline" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl shadow-md transition-all group">
+                        <i class="ph ph-download-simple text-2xl group-hover:-translate-y-1 transition-transform"></i>
+                        <span class="text-lg">엔트리 오프라인 프로그램 다운로드</span>
+                    </a>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- TAB 3: Checklist -->
+        <main id="tab-checklist" class="tab-content">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 sm:p-8">
+                <h2 class="text-xl font-bold mb-2 flex items-center gap-2 text-slate-800">
+                    <i class="ph ph-list-checks text-emerald-500"></i> 수업 전 체크리스트
+                </h2>
+                <p class="text-slate-500 text-sm mb-6">항목을 클릭하여 완료 여부를 체크해 보세요. 완벽한 수업 준비를 도와줍니다.</p>
+                
+                <div class="space-y-3" id="checklist-container">
+                    <!-- Checklists injected by JS -->
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="resetChecklist()" class="text-slate-400 hover:text-slate-600 text-sm underline transition-colors">
+                        체크리스트 초기화
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-8 text-center text-slate-400 text-sm flex items-center justify-center gap-2">
+            <i class="ph ph-chalkboard-teacher"></i> 선생님들의 원활한 피지컬 컴퓨팅 수업을 응원합니다!
+        </footer>
+
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // --- Tab Switching Logic ---
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Reset all buttons
+            document.querySelectorAll('button[id^="btn-"]').forEach(btn => {
+                btn.className = "flex-1 py-2.5 px-4 text-sm font-semibold rounded-lg transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-200 whitespace-nowrap";
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            // Highlight selected button
+            const activeBtn = document.getElementById('btn-' + tabId.replace('tab-', ''));
+            activeBtn.className = "flex-1 py-2.5 px-4 text-sm font-bold rounded-lg transition-all bg-white text-blue-600 shadow-sm whitespace-nowrap";
+        }
+
+        // --- Share/Copy Logic ---
+        function shareGuide() {
+            // We use document.execCommand as requested for iframe support
+            const dummyText = window.location.href + " (햄스터봇 x 엔트리 오류 해결 가이드)";
+            const textArea = document.getElementById("copyArea");
+            
+            textArea.value = dummyText;
+            textArea.classList.remove("hidden");
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+                alert("URL 복사에 실패했습니다. 브라우저 주소창을 복사해주세요.");
+            } finally {
+                textArea.classList.add("hidden");
+            }
+        }
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "toast shadow-lg font-medium text-sm flex items-center justify-center gap-2 show";
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+        }
+
+        // --- Checklist Logic ---
+        const checklistItems = [
+            "하드웨어 연결 프로그램이 최신 버전(1.9.40 이상)인가요?",
+            "동글(USB)이 노트북에 잘 꽂혀 있고, 햄스터봇 전원이 켜져 있나요?",
+            "오프라인 프로그램 사용 시, 웹 브라우저용 엔트리는 모두 종료했나요?",
+            "학생들 PC에 햄스터봇 USB 드라이버가 모두 설치되어 있나요?",
+            "하드웨어 프로그램 우측 상단에 '엔트리 서버 연결됨'이 표시되나요?"
+        ];
+
+        const checklistContainer = document.getElementById('checklist-container');
+
+        function renderChecklist() {
+            checklistContainer.innerHTML = '';
+            checklistItems.forEach((text, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'checklist-item cursor-pointer flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors select-none';
+                itemDiv.onclick = () => toggleCheck(itemDiv, index);
+
+                const icon = document.createElement('i');
+                icon.className = 'ph ph-circle text-2xl text-slate-300';
+                icon.id = `icon-${index}`;
+
+                const textSpan = document.createElement('span');
+                textSpan.className = 'font-medium';
+                textSpan.innerText = text;
+
+                itemDiv.appendChild(icon);
+                itemDiv.appendChild(textSpan);
+                checklistContainer.appendChild(itemDiv);
+            });
+        }
+
+        function toggleCheck(element, index) {
+            const icon = document.getElementById(`icon-${index}`);
+            element.classList.toggle('checked');
+            element.classList.toggle('bg-slate-50');
+            element.classList.toggle('bg-emerald-50');
+            element.classList.toggle('border-emerald-200');
+            
+            if (element.classList.contains('checked')) {
+                icon.className = 'ph ph-check-circle text-2xl text-emerald-500';
+            } else {
+                icon.className = 'ph ph-circle text-2xl text-slate-300';
+            }
+        }
+
+        function resetChecklist() {
+            renderChecklist();
+        }
+
+        // Initialize checklist on load
+        window.onload = function() {
+            renderChecklist();
+        }
+    </script>
+</body>
+</html>
