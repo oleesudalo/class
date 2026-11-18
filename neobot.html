@@ -29,7 +29,7 @@
         /* PDF 생성용 CSS (PDF 변환 시 불필요한 요소 숨기고 레이아웃 최적화) */
         .pdf-mode {
             background-color: white !important;
-            padding: 20px !important;
+            padding: 10px !important;
         }
         .pdf-mode .no-print {
             display: none !important;
@@ -53,6 +53,8 @@
             border: 1px solid #d1d5db !important;
             color: #374151 !important;
             background-color: white !important;
+            padding: 4px 12px !important; /* 체크박스 여백 축소 */
+            font-size: 0.875rem !important; /* 체크박스 글씨 축소 */
         }
         /* PDF 변환 시 체크된 항목을 시각적으로 표시 */
         .pdf-mode .part-checkbox:checked + label {
@@ -63,6 +65,18 @@
         .pdf-mode .part-checkbox:checked + label::before {
             content: "✔️ ";
         }
+
+        /* PDF용 레이아웃 여백 및 폰트 크기 대폭 축소 (한 장에 들어가도록 압축) */
+        .pdf-mode header { margin-bottom: 10px !important; }
+        .pdf-mode header h1 { font-size: 1.5rem !important; margin-bottom: 5px !important; }
+        .pdf-mode header p { font-size: 0.875rem !important; }
+        .pdf-mode .mt-6 { margin-top: 10px !important; }
+        .pdf-mode .mb-10, .pdf-mode .mb-8, .pdf-mode .mb-6, .pdf-mode .mb-4, .pdf-mode .mb-3, .pdf-mode .mb-2 { margin-bottom: 8px !important; }
+        .pdf-mode .p-6, .pdf-mode .p-4 { padding: 12px !important; }
+        .pdf-mode .text-lg { font-size: 1rem !important; }
+        .pdf-mode .text-2xl { font-size: 1.25rem !important; }
+        .pdf-mode .text-xl { font-size: 1.1rem !important; }
+        .pdf-mode textarea { height: 120px !important; }
 
         /* 인쇄용 CSS (프린트할 때 불필요한 요소 숨기고 레이아웃 최적화) */
         @media print {
@@ -336,12 +350,12 @@
             // PDF 변환 시 적용할 스타일 클래스 추가 (버튼 숨김 등)
             element.classList.add('pdf-mode');
             
-            // html2pdf 옵션 설정 (A4 포맷)
+            // html2pdf 옵션 설정 (A4 포맷, 여백 축소 및 너비 고정)
             const opt = {
-                margin:       10,
+                margin:       [5, 10, 5, 10], // 상단, 우측, 하단, 좌측 여백 설정 (상/하 여백을 줄임)
                 filename:     '환경지킴이_네오봇_기획서.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true }, // 선명도 향상을 위해 scale 2 사용
+                html2canvas:  { scale: 2, useCORS: true, windowWidth: 800 }, // windowWidth 고정으로 압축된 레이아웃 유지
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
