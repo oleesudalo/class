@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>환경 지킴이 네오봇 기획서</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
         
@@ -23,6 +24,44 @@
             background-color: #10b981; /* green-500 */
             color: white;
             border-color: #10b981;
+        }
+
+        /* PDF 생성용 CSS (PDF 변환 시 불필요한 요소 숨기고 레이아웃 최적화) */
+        .pdf-mode {
+            background-color: white !important;
+            padding: 20px !important;
+        }
+        .pdf-mode .no-print {
+            display: none !important;
+        }
+        .pdf-mode .print-border {
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .pdf-mode input, .pdf-mode textarea {
+            border: 1px solid #d1d5db !important;
+            background-color: transparent !important;
+            resize: none;
+        }
+        .pdf-mode .pdf-header-input {
+            border: none !important;
+            border-bottom: 2px solid #374151 !important;
+            border-radius: 0;
+            color: black;
+        }
+        .pdf-mode .part-checkbox + label {
+            border: 1px solid #d1d5db !important;
+            color: #374151 !important;
+            background-color: white !important;
+        }
+        /* PDF 변환 시 체크된 항목을 시각적으로 표시 */
+        .pdf-mode .part-checkbox:checked + label {
+            background-color: #e5e7eb !important;
+            border-color: #9ca3af !important;
+            font-weight: bold;
+        }
+        .pdf-mode .part-checkbox:checked + label::before {
+            content: "✔️ ";
         }
 
         /* 인쇄용 CSS (프린트할 때 불필요한 요소 숨기고 레이아웃 최적화) */
@@ -61,20 +100,16 @@
 </head>
 <body class="text-gray-800 p-4 md:p-8 min-h-screen flex justify-center items-start">
 
-    <div class="max-w-4xl w-full bg-white rounded-3xl shadow-xl p-6 md:p-10 print-border">
+    <div id="capture-area" class="max-w-4xl w-full bg-white rounded-3xl shadow-xl p-6 md:p-10 print-border">
         
         <!-- 헤더 영역 -->
         <header class="text-center mb-10">
             <h1 class="text-3xl md:text-4xl font-black text-emerald-600 mb-2">🌍 환경 지킴이 네오봇 기획서</h1>
             <p class="text-gray-500 font-medium">아이디어 룰렛을 돌리고 나만의 멋진 로봇을 기획해 보세요!</p>
             
-            <div class="mt-4 flex justify-end gap-2 text-sm no-print">
-                <input type="text" placeholder="학년 반" class="border-b-2 border-emerald-200 focus:border-emerald-500 outline-none w-20 px-1 py-1 text-center font-bold">
-                <input type="text" placeholder="이름" class="border-b-2 border-emerald-200 focus:border-emerald-500 outline-none w-24 px-1 py-1 text-center font-bold">
-            </div>
-            <div class="hidden print:flex justify-end gap-4 text-lg font-bold mb-4">
-                <span>학년 반 : ______________</span>
-                <span>이름 : ______________</span>
+            <div class="mt-6 flex justify-end gap-3 text-lg font-bold">
+                <input type="text" placeholder="학년 반" class="pdf-header-input border-b-2 border-emerald-200 focus:border-emerald-500 outline-none w-24 px-2 py-1 text-center bg-transparent">
+                <input type="text" placeholder="이름" class="pdf-header-input border-b-2 border-emerald-200 focus:border-emerald-500 outline-none w-28 px-2 py-1 text-center bg-transparent">
             </div>
         </header>
 
@@ -142,20 +177,14 @@
                 <textarea rows="5" placeholder="예)&#13;&#10;1. IR 센서가 앞에 있는 플라스틱 병을 감지한다.&#13;&#10;2. 부저가 '삐' 소리를 내며 경고음을 울린다.&#13;&#10;3. 서보모터가 작동해서 집게로 플라스틱 병을 잡는다.&#13;&#10;4. DC모터로 바퀴를 굴려 분리수거함으로 이동한다." class="w-full bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-400 focus:bg-white transition-colors text-gray-700 leading-relaxed resize-y"></textarea>
             </div>
 
-            <!-- 4. 자유 스케치 (인쇄용) -->
-            <div class="hidden print:block mb-8">
-                <label class="block text-gray-700 font-bold mb-2 text-lg">4. 로봇의 모습을 상상해서 스케치해 보세요.</label>
-                <div class="w-full h-64 border-2 border-dashed border-gray-300 rounded-xl"></div>
-            </div>
-
         </section>
 
-        <!-- 하단 인쇄 버튼 -->
+        <!-- 하단 PDF 저장 버튼 -->
         <div class="mt-8 text-center no-print">
-            <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-10 rounded-full shadow-lg transition-transform transform active:scale-95 flex items-center gap-2 mx-auto">
-                🖨️ 기획서 인쇄하기 (또는 PDF 저장)
+            <button onclick="downloadPDF()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-10 rounded-full shadow-lg transition-transform transform active:scale-95 flex items-center gap-2 mx-auto">
+                💾 기획서 PDF로 저장하기
             </button>
-            <p class="text-xs text-gray-400 mt-3">※ 인쇄 시 이 버튼과 룰렛은 숨겨지고 깔끔하게 출력됩니다.</p>
+            <p class="text-xs text-gray-400 mt-3">※ 버튼과 룰렛은 제외되고 작성된 내용만 깔끔하게 A4 형태로 저장됩니다.</p>
         </div>
 
     </div>
@@ -299,6 +328,28 @@
                 }
             }, intervalTime);
         });
+
+        // PDF 다운로드 함수 구현
+        function downloadPDF() {
+            const element = document.getElementById('capture-area');
+            
+            // PDF 변환 시 적용할 스타일 클래스 추가 (버튼 숨김 등)
+            element.classList.add('pdf-mode');
+            
+            // html2pdf 옵션 설정 (A4 포맷)
+            const opt = {
+                margin:       10,
+                filename:     '환경지킴이_네오봇_기획서.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true }, // 선명도 향상을 위해 scale 2 사용
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // PDF 생성 및 저장 후 UI 복구
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.classList.remove('pdf-mode');
+            });
+        }
     </script>
 </body>
 </html>
