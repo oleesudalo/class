@@ -1,293 +1,484 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>환경 지킴이 네오봇 기획서</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
-        
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>환경 지킴이 네오봇 기획서</title>
+  <style>
+    :root { color-scheme: light; --green:#059669; --green-dark:#047857; --ink:#1f2937; --muted:#6b7280; --line:#d1d5db; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:32px 16px 50px; font-family:"Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; color:var(--ink); background:#f0fdf4; line-height:1.5; }
+    button, input, textarea { font:inherit; }
+    .screen-wrap { max-width:880px; margin:0 auto; }
+    .paper { background:#fff; padding:38px 40px 42px; border-radius:24px; box-shadow:0 16px 38px rgba(6,95,70,.10); }
+    .main-title { text-align:center; margin:0; font-size:35px; font-weight:900; letter-spacing:-1.2px; color:var(--green); line-height:1.35; }
+    .subtitle { margin:8px 0 0; text-align:center; color:var(--muted); font-size:14px; }
+    .student-line { display:flex; justify-content:flex-end; gap:14px; margin:22px 0 29px; }
+    .student-line input { width:130px; text-align:center; font-size:18px; font-weight:700; padding:9px 4px; border:0; border-bottom:2px solid #a7f3d0; outline:none; border-radius:0; background:transparent; min-width:0; }
+    .student-line input:focus { border-bottom-color:var(--green); }
+    .roulette { background:#ecfdf5; border-radius:18px; padding:24px; margin-bottom:31px; }
+    .roulette-top { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:18px; }
+    .roulette-top h2 { margin:0; font-size:21px; }
+    .spin-btn { border:0; background:#10b981; color:#fff; padding:11px 22px; border-radius:999px; cursor:pointer; font-weight:800; white-space:nowrap; box-shadow:0 4px 12px rgba(16,185,129,.25); }
+    .spin-btn:hover { background:var(--green-dark); }
+    .spin-btn:disabled { cursor:wait; opacity:.65; }
+    .slot-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; }
+    .slot { text-align:center; background:#fff; border:2px solid #a7f3d0; border-radius:12px; padding:15px 12px; }
+    .slot:nth-child(2) { border-color:#bfdbfe; }
+    .slot:nth-child(3) { border-color:#fed7aa; }
+    .slot-label { font-weight:800; color:#059669; font-size:13px; margin-bottom:8px; }
+    .slot:nth-child(2) .slot-label { color:#2563eb; }
+    .slot:nth-child(3) .slot-label { color:#ea580c; }
+    .slot-result { min-height:49px; display:flex; align-items:center; justify-content:center; font-size:19px; font-weight:900; word-break:keep-all; overflow-wrap:anywhere; }
+    .section-title { border-bottom:2px solid #f3f4f6; padding-bottom:9px; margin:0 0 22px; font-size:26px; }
+    .summary { margin:0 0 30px; padding:16px 19px; border-left:4px solid #facc15; background:#fefce8; border-radius:0 10px 10px 0; font-size:18px; line-height:1.9; font-weight:500; word-break:keep-all; }
+    .highlight { font-weight:800; padding:0 3px; border-bottom:2px solid; }
+    .place { color:#059669; border-color:#6ee7b7; }
+    .target { color:#2563eb; border-color:#93c5fd; }
+    .action { color:#ea580c; border-color:#fdba74; }
+    .question { margin-bottom:27px; }
+    .question:last-child { margin-bottom:0; }
+    .question-title { display:block; font-size:18px; font-weight:800; margin-bottom:11px; }
+    .field { display:block; width:100%; border:2px solid #e5e7eb; background:#f9fafb; border-radius:12px; color:var(--ink); outline:none; padding:13px 15px; }
+    .field:focus { background:white; border-color:#34d399; }
+    .name-field { font-size:17px; font-weight:600; }
+    .parts { display:flex; flex-wrap:wrap; gap:10px; }
+    .part { position:relative; display:inline-block; }
+    .part input { position:absolute; opacity:0; width:1px; height:1px; }
+    .part label { display:inline-block; padding:8px 15px; border:2px solid #e5e7eb; background:#f9fafb; border-radius:999px; color:#4b5563; font-weight:600; cursor:pointer; user-select:none; transition:background .15s,border-color .15s,color .15s; }
+    .part input:checked + label { color:#fff; background:#10b981; border-color:#10b981; }
+    .part input:focus-visible + label { outline:3px solid #93c5fd; outline-offset:3px; }
+    .help-text { color:#6b7280; margin:-3px 0 11px; font-size:13px; }
+    textarea.field { min-height:170px; resize:vertical; line-height:1.7; font-size:15px; }
+    .footer { margin:28px 0 0; text-align:center; }
+    .print-btn { padding:14px 30px; color:#fff; background:#1f2937; font-weight:800; font-size:16px; border:0; border-radius:999px; cursor:pointer; box-shadow:0 4px 13px rgba(17,24,39,.2); }
+    .print-btn:hover { background:#374151; }
+    .print-actions { display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center; }
+    .fallback-btn { background:#fff; color:#374151; border:2px solid #cbd5e1; padding:12px 24px;box-shadow:none; }
+    .fallback-btn:hover { background:#f3f4f6; }
+    .print-btn:disabled { opacity:.6;cursor:wait; }
+    .pdf-status { margin:10px auto 0;color:#047857;font-size:13px;min-height:20px; }
+    .footer-note { color:#6b7280; font-size:12px; margin:13px auto 0; line-height:1.8; }
+    .print-document { display:none; }
+    @media (max-width:650px) {
+      .print-actions { flex-direction:column; }
+      .print-btn { width:100%;max-width:340px; }
+      body { padding:12px 10px 28px; }
+      .paper { padding:26px 18px 30px; border-radius:18px; }
+      .main-title { font-size:26px; letter-spacing:-.7px; }
+      .student-line { gap:10px; }
+      .student-line input { width:98px; font-size:16px; }
+      .roulette { padding:17px 13px; }
+      .roulette-top h2 { font-size:18px; }
+      .spin-btn { padding:10px 16px; font-size:14px; }
+      .slot-grid { grid-template-columns:1fr; gap:9px; }
+      .slot { padding:10px 12px; }
+      .slot-result { min-height:32px; }
+      .section-title { font-size:22px; }
+      .summary { font-size:16px; }
+      .question-title { font-size:16px; }
+    }
 
-        /* 커스텀 체크박스 스타일 */
-        .part-checkbox {
-            display: none;
-        }
-        .part-label {
-            transition: all 0.2s ease-in-out;
-            border: 2px solid transparent;
-        }
-        .part-checkbox:checked + .part-label {
-            background-color: #d1fae5; /* green-100 */
-            border-color: #10b981; /* green-500 */
-            color: #047857; /* green-800 */
-            font-weight: 700;
-        }
-
-        /* PDF 변환용 특수 스타일 */
-        .pdf-mode {
-            padding: 1.5rem 2rem !important; /* 패딩 축소 */
-            box-shadow: none !important;
-            border-radius: 0 !important;
-            max-width: 100% !important;
-            width: 100% !important;
-        }
-        
-        .pdf-mode .pdf-hide {
-            display: none !important;
-        }
-
-        /* 입력 폼 PDF 최적화 */
-        .pdf-mode input[type="text"], 
-        .pdf-mode textarea {
-            background-color: transparent !important;
-            border: 1px solid #d1d5db !important; /* 연한 테두리만 남김 */
-            resize: none !important;
-        }
-        .pdf-mode textarea {
-            height: 100px !important; /* 높이 고정으로 레이아웃 밀림 방지 */
-        }
-        
-        .pdf-mode .info-input {
-            border: none !important;
-            border-bottom: 1px solid #000 !important;
-            border-radius: 0;
-        }
-
-        /* 룰렛 텍스트 깜빡임 효과 */
-        .slot-text {
-            display: inline-block;
-            min-width: 80px;
-            text-align: center;
-        }
-    </style>
+    /* 인쇄 전용 문서: 화면의 버튼·입력창·반응형 레이아웃과 독립되어 A4에 맞춤 */
+    @page { size:A4 portrait; margin:15mm 16mm 16mm; }
+    @media print {
+      html, body { margin:0 !important; padding:0 !important; background:#fff !important; color:#111827 !important; width:auto !important; min-height:0 !important; }
+      .screen-wrap { display:none !important; }
+      .print-document { display:block !important; font-family:"Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; font-size:10.5pt; line-height:1.55; }
+      .print-head { text-align:center; padding-bottom:11mm; border-bottom:2px solid #059669; margin-bottom:8mm; }
+      .print-head h1 { margin:0 0 5mm; font-size:20pt; letter-spacing:-.8px; line-height:1.25; color:#047857; font-weight:900; }
+      .print-meta { text-align:right; font-size:10.5pt; }
+      .print-meta span { display:inline-block; min-width:31mm; text-align:center; border-bottom:1px solid #6b7280; padding:1mm 2mm; }
+      .print-meta span + span { margin-left:5mm; }
+      .print-section-title { font-weight:800; font-size:15pt; margin:0 0 5mm; }
+      .print-summary { padding:4mm 5mm; border-left:3px solid #dca80b; background:#fffdf0; line-height:1.8; margin-bottom:8mm; word-break:keep-all; }
+      .print-summary strong { color:#047857; }
+      .print-block { margin-bottom:7mm; break-inside:avoid; page-break-inside:avoid; }
+      .print-block h2 { margin:0 0 2.8mm; font-size:12pt; font-weight:800; }
+      .print-answer { border:1px solid #bfc7cf; border-radius:3mm; padding:3.5mm 4mm; min-height:14mm; overflow-wrap:anywhere; white-space:pre-wrap; }
+      .print-answer.empty { color:#9ca3af; }
+      .print-parts { display:flex; flex-wrap:wrap; gap:2mm; min-height:14mm; }
+      .print-chip { display:inline-block; white-space:nowrap; border:1px solid #bfc7cf; border-radius:5mm; padding:1.5mm 3mm; }
+      .print-chip::before { content:"✓ "; font-weight:900; }
+      .print-help { color:#6b7280; font-size:9pt; margin:0 0 3mm; }
+      .print-steps-block { break-inside:auto; page-break-inside:auto; margin-bottom:0; }
+      .print-steps-block h2 { break-after:avoid; page-break-after:avoid; }
+      .print-steps { white-space:pre-wrap; overflow-wrap:anywhere; font-size:10.3pt; line-height:1.85; border:1px solid #bfc7cf; border-radius:3mm; padding:4mm; min-height:46mm; }
+      .print-steps.empty { min-height:57mm; background:repeating-linear-gradient(to bottom,#fff 0,#fff 10mm,#cbd5e1 10.1mm,#fff 10.3mm); }
+      .print-note { margin-top:5mm; color:#6b7280; font-size:8pt; text-align:right; }
+      * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 flex justify-center p-4 min-h-screen text-gray-800">
-
-    <!-- 레이아웃을 고정해주는 Outer Wrapper (이 부분이 중요합니다) -->
-    <div class="max-w-3xl w-full">
-        
-        <!-- 실제 PDF 캡처 타겟 영역 -->
-        <div id="capture-area" class="bg-white p-8 rounded-xl shadow-lg w-full mb-6">
-            
-            <!-- 타이틀 및 기본 정보 -->
-            <header class="text-center mb-6">
-                <h1 class="text-green-600 font-bold text-3xl mb-2">🌍 환경 지킴이 네오봇 기획서</h1>
-                <p class="text-gray-500 font-medium">아이디어 룰렛을 돌리고 나만의 멋진 로봇을 기획해 보세요!</p>
-                
-                <div class="flex justify-end gap-3 mt-6 text-lg font-bold">
-                    <div class="flex items-end gap-1">
-                        <input type="text" placeholder="학년" class="info-input w-12 border-b-2 border-green-300 focus:border-green-600 outline-none text-center bg-transparent py-1">
-                        <span class="text-sm text-gray-600 mb-1">학년</span>
-                    </div>
-                    <div class="flex items-end gap-1">
-                        <input type="text" placeholder="반" class="info-input w-12 border-b-2 border-green-300 focus:border-green-600 outline-none text-center bg-transparent py-1">
-                        <span class="text-sm text-gray-600 mb-1">반</span>
-                    </div>
-                    <div class="flex items-end gap-1">
-                        <input type="text" placeholder="이름" class="info-input w-24 border-b-2 border-green-300 focus:border-green-600 outline-none text-center bg-transparent py-1">
-                    </div>
-                </div>
-            </header>
-
-            <!-- 룰렛 결과 요약 박스 -->
-            <div class="bg-green-50 border-l-4 border-green-500 p-5 rounded-r-lg mb-4 shadow-sm">
-                <p class="text-lg md:text-xl font-medium leading-loose break-keep">
-                    "나는 
-                    <span id="r-place" class="slot-text font-bold text-green-700 border-b-2 border-green-300 mx-1 px-1">_____</span>에서 
-                    <span id="r-target" class="slot-text font-bold text-blue-700 border-b-2 border-blue-300 mx-1 px-1">_____</span>을(를) 위해 
-                    <span id="r-function" class="slot-text font-bold text-orange-700 border-b-2 border-orange-300 mx-1 px-1">_____</span> 로봇을 만들거야!"
-                </p>
-            </div>
-            
-            <!-- 룰렛 돌리기 버튼 (PDF 변환 시 숨김) -->
-            <div class="text-center mb-8 pdf-hide">
-                <button id="roulette-btn" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-6 rounded-full shadow transition-transform transform active:scale-95 text-lg">
-                    🎲 아이디어 룰렛 돌리기
-                </button>
-            </div>
-
-            <!-- 기획서 폼 섹션 1 -->
-            <div class="mb-6">
-                <label class="block text-gray-800 font-bold mb-2 text-lg">1. 로봇의 이름은 무엇인가요?</label>
-                <input type="text" placeholder="로봇의 멋진 이름을 지어주세요." class="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 focus:bg-white text-lg">
-            </div>
-
-            <!-- 기획서 폼 섹션 2 -->
-            <div class="mb-6">
-                <label class="block text-gray-800 font-bold mb-3 text-lg">2. 어떤 네오봇 부품이 필요할까요? (모두 선택)</label>
-                <div class="flex flex-wrap gap-2" id="parts-container">
-                    <!-- 체크박스 항목들 (하드코딩으로 깔끔하게 배치) -->
-                    <label class="cursor-pointer"><input type="checkbox" class="part-checkbox"><span class="part-label inline-block bg-gray-100 text-gray-700 px-3 py-2 rounded-md font-medium">👁️ 적외선센서</span></label>
-                    <label class="cursor-pointer"><input type="checkbox" class="part-checkbox"><span class="part-label inline-block bg-gray-100 text-gray-700 px-3 py-2 rounded-md font-medium">👂 소리센서</span></label>
-                    <label class="cursor-pointer"><input type="checkbox" class="part-checkbox"><span class="part-label inline-block bg-gray-100 text-gray-700 px-3 py-2 rounded-md font-medium">👆 접촉센서</span></label>
-                    <label class="cursor-pointer"><input type="checkbox" class="part-checkbox"><span class="part-label inline-block bg-gray-100 text-gray-700 px-3 py-2 rounded-md font-medium">☀️ 빛센서</span></label>
-                    <label class="cursor-pointer"><input type="checkbox" class="part-checkbox"><span class="part-label inline-block bg-gray-100 text-gray-700 px-3 py-2 rounded-md font-medium">💡 LED</span></label>
-                    <label class="cursor-pointer"><input type="checkbox" class="part-checkbox"><span class="part-label inline-block bg-gray-100 text-gray-700 px-3 py-2 rounded-md font-medium">⚙️ 모터</span></label>
-                    <label class="cursor-pointer"><input type="checkbox" class="part-checkbox"><span class="part-label inline-block bg-gray-100 text-gray-700 px-3 py-2 rounded-md font-medium">🔔 부저</span></label>
-                </div>
-            </div>
-
-            <!-- 기획서 폼 섹션 3 -->
-            <div class="mb-2">
-                <label class="block text-gray-800 font-bold mb-2 text-lg">3. 로봇의 주요 기능과 특징을 자세히 적어주세요.</label>
-                <textarea rows="5" placeholder="선택한 부품들이 어떻게 작동해서 임무를 수행하는지 구체적으로 설명해주세요." class="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:bg-white text-base leading-relaxed"></textarea>
-            </div>
-
+<body>
+  <main class="screen-wrap">
+    <div class="paper">
+      <header>
+        <h1 class="main-title">🌍 환경 지킴이 네오봇 기획서</h1>
+        <p class="subtitle">아이디어 룰렛을 돌리고 나만의 멋진 로봇을 기획해 보세요!</p>
+        <div class="student-line">
+          <input id="student-class" type="text" placeholder="학년 반" aria-label="학년 반" />
+          <input id="student-name" type="text" placeholder="이름" aria-label="이름" />
         </div>
-
-        <!-- PDF 저장 버튼 (캡처 영역 밖) -->
-        <div class="text-center">
-            <button id="pdf-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition-transform transform active:scale-95 text-lg flex items-center justify-center mx-auto gap-2 w-full md:w-auto">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
-                기획서 PDF로 저장하기
-            </button>
+      </header>
+      <section class="roulette" aria-label="아이디어 룰렛">
+        <div class="roulette-top">
+          <h2>🎰 아이디어 룰렛</h2>
+          <button class="spin-btn" id="spinBtn" type="button">돌리기! 🔄</button>
         </div>
-
+        <div class="slot-grid">
+          <div class="slot"><div class="slot-label">어디서? (장소)</div><div id="slot-place" class="slot-result">????</div></div>
+          <div class="slot"><div class="slot-label">무엇을? (대상)</div><div id="slot-target" class="slot-result">????</div></div>
+          <div class="slot"><div class="slot-label">어떻게 할까? (기능)</div><div id="slot-function" class="slot-result">????</div></div>
+        </div>
+      </section>
+      <section aria-label="나의 로봇 기획">
+        <h2 class="section-title">✏️ 나의 로봇 기획</h2>
+        <div class="summary">"나는 <span id="summary-place" class="highlight place">_____</span>에서 <span id="summary-target" class="highlight target">_____</span> <span id="summary-function" class="highlight action">_____</span> 로봇을 만들거야!"</div>
+        <div class="question">
+          <label for="robot-name" class="question-title">1. 로봇의 이름은 무엇인가요?</label>
+          <input id="robot-name" class="field name-field" type="text" placeholder="예: 바다 쓰레기 청소부 '씨클린'" />
+        </div>
+        <div class="question">
+          <div class="question-title" id="parts-label">2. 어떤 네오봇 부품이 필요할까요? (모두 선택)</div>
+          <div class="parts" id="parts-container" role="group" aria-labelledby="parts-label"></div>
+        </div>
+        <div class="question">
+          <label for="robot-steps" class="question-title">3. 로봇은 어떤 원리로 작동하나요?</label>
+          <p class="help-text">센서가 무엇을 감지하고, 모터가 어떻게 움직이는지 순서대로 자세히 적어보세요.</p>
+          <textarea id="robot-steps" class="field" rows="6" placeholder="예)&#10;1. 적외선센서가 앞에 있는 플라스틱 병을 감지한다.&#10;2. 부저가 '삐' 소리를 내며 경고음을 울린다.&#10;3. 서보모터가 작동해서 집게로 쓰레기를 잡는다.&#10;4. 모터로 바퀴를 굴려 분리수거함으로 이동한다."></textarea>
+        </div>
+      </section>
     </div>
+    <footer class="footer">
+      <div class="print-actions"><button class="print-btn" type="button" id="printButton">💾 기획서 PDF 다운로드</button><button class="print-btn fallback-btn" type="button" id="printFallbackButton">🖨️ 인쇄창으로 저장</button></div><p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+      <p class="footer-note">첫 번째 버튼은 <b>PDF 파일을 바로 다운로드</b>합니다. 다운로드가 차단되면 두 번째 버튼을 눌러 <b>대상 → PDF로 저장</b>을 선택하세요.<br />룰렛과 버튼은 제외되고 작성한 내용만 A4 서류 형태로 저장됩니다.</p>
+    </footer>
+  </main>
 
-    <script>
-        // 1. 테마 데이터베이스 구성 (문맥이 맞도록 세트별 분류)
-        const themesData = [
-            {
-                theme: "바다",
-                places: ['해안가', '깊은 바다', '갯벌'],
-                targets: ['해양 생물', '바다 거북이', '산호초'],
-                functions: ['떠다니는 플라스틱을 건져내는', '기름 유출을 막아주는', '버려진 그물을 수거하는']
-            },
-            {
-                theme: "도시",
-                places: ['동네 골목길', '아파트 분리수거장', '번화가'],
-                targets: ['환경 미화원', '길고양이', '시민들'],
-                functions: ['재활용품을 자동으로 분류하는', '길거리 쓰레기를 쓸어담는', '미세먼지를 정화해주는']
-            },
-            {
-                theme: "숲",
-                places: ['국립공원', '등산로', '계곡'],
-                targets: ['야생동물', '등산객', '나무들'],
-                functions: ['산불을 감지하고 경고하는', '버려진 쓰레기를 찾아내는', '다친 동물을 구조하는']
-            },
-            {
-                theme: "학교",
-                places: ['학교 운동장', '급식실', '교실'],
-                targets: ['학생들', '청소 당번', '선생님'],
-                functions: ['남은 음식물을 퇴비로 만드는', '올바른 분리수거 방법을 알려주는', '바닥의 먼지를 청소하는']
-            }
-        ];
+  <!-- 오직 인쇄할 때만 나타나는 별도 서식. 긴 답변은 자동으로 다음 페이지로 이어집니다. -->
+  <article id="print-document" class="print-document" aria-label="PDF 출력용 기획서">
+    <header class="print-head">
+      <h1>환경 지킴이 네오봇 기획서</h1>
+      <div class="print-meta"><span id="print-class">학년 반: ______</span><span id="print-name">이름: ______</span></div>
+    </header>
+    <h2 class="print-section-title">나의 로봇 기획</h2>
+    <div id="print-summary" class="print-summary"></div>
+    <section class="print-block">
+      <h2>1. 로봇의 이름은 무엇인가요?</h2>
+      <div id="print-robot-name" class="print-answer"></div>
+    </section>
+    <section class="print-block">
+      <h2>2. 어떤 네오봇 부품이 필요할까요? (모두 선택)</h2>
+      <div id="print-parts" class="print-parts"></div>
+    </section>
+    <section class="print-block print-steps-block">
+      <h2>3. 로봇은 어떤 원리로 작동하나요?</h2>
+      <p class="print-help">센서가 무엇을 감지하고, 모터가 어떻게 움직이는지 순서대로 자세히 적어보세요.</p>
+      <div id="print-steps" class="print-steps"></div>
+    </section>
+  </article>
 
-        // 룰렛 시각 효과용 모든 데이터 통합
-        const allPlaces = themesData.flatMap(t => t.places);
-        const allTargets = themesData.flatMap(t => t.targets);
-        const allFunctions = themesData.flatMap(t => t.functions);
+  <script>
+    const themes = [
+      { name:"바다", places:["해안가","바다 한가운데","백사장"], targets:["떠다니는 쓰레기를","바다에 빠진 플라스틱을","기름띠를","버려진 그물을"], functions:["건져내는","빨아들이는","모아서 압축하는","안전하게 치우는"] },
+      { name:"도시", places:["동네 골목길","아파트 분리수거장","도심 공원"], targets:["길거리에 버려진 캔을","섞여있는 재활용품을","전봇대 밑 쓰레기를"], functions:["쓸어담는","자동으로 분류해주는","발견하고 경고음을 내는"] },
+      { name:"숲/산", places:["깊은 산속","등산로 입구","국립공원"], targets:["버려진 등산 쓰레기를","산불의 원인이 되는 낙엽을","야생동물을 위협하는 덫을"], functions:["주워오는","밀어서 치우는","찾아서 제거하는"] },
+      { name:"학교", places:["학교 운동장","교실 뒷정리 시간","급식실"], targets:["바닥에 떨어진 지우개 가루를","다 마신 우유갑을","버려진 종이 쓰레기를"], functions:["빨아들이는","씻어서 납작하게 누르는","모아서 버려주는"] }
+    ];
+    const neobotParts = [
+      {id:"p1",name:"🔴 적외선센서",plain:"적외선센서"}, {id:"p2",name:"🎤 소리센서",plain:"소리센서"},
+      {id:"p3",name:"👆 접촉센서",plain:"접촉센서"}, {id:"p4",name:"☀️ 빛센서",plain:"빛센서"},
+      {id:"p5",name:"💡 LED",plain:"LED"}, {id:"p6",name:"⚙️ 모터",plain:"모터"}, {id:"p7",name:"🔔 부저",plain:"부저"}
+    ];
 
-        // 2. 룰렛 로직
-        const rBtn = document.getElementById('roulette-btn');
-        const spanPlace = document.getElementById('r-place');
-        const spanTarget = document.getElementById('r-target');
-        const spanFunction = document.getElementById('r-function');
+    const partsContainer = document.getElementById("parts-container");
+    neobotParts.forEach(part => {
+      const wrap = document.createElement("div"); wrap.className="part";
+      const cb = document.createElement("input"); cb.type="checkbox"; cb.id=part.id;
+      const label = document.createElement("label"); label.htmlFor=part.id; label.textContent=part.name;
+      wrap.append(cb,label); partsContainer.appendChild(wrap);
+    });
 
-        let isSpinning = false;
-
-        function getRandomElement(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
+    const getRandomItem = items => items[Math.floor(Math.random()*items.length)];
+    const allPlaces = themes.flatMap(t=>t.places);
+    const allTargets = themes.flatMap(t=>t.targets);
+    const allFunctions = themes.flatMap(t=>t.functions);
+    let isSpinning=false;
+    let chosen = null;
+    const spinBtn = document.getElementById("spinBtn");
+    spinBtn.addEventListener("click", () => {
+      if (isSpinning) return;
+      isSpinning=true; spinBtn.disabled=true; spinBtn.textContent="고민 중... 🔄";
+      const theme=getRandomItem(themes);
+      const finish={place:getRandomItem(theme.places), target:getRandomItem(theme.targets), action:getRandomItem(theme.functions)};
+      let ticks=0;
+      const timer=setInterval(() => {
+        document.getElementById("slot-place").textContent=getRandomItem(allPlaces);
+        document.getElementById("slot-target").textContent=getRandomItem(allTargets);
+        document.getElementById("slot-function").textContent=getRandomItem(allFunctions);
+        if (++ticks >= 20) {
+          clearInterval(timer); chosen=finish;
+          document.getElementById("slot-place").textContent=chosen.place;
+          document.getElementById("slot-target").textContent=chosen.target;
+          document.getElementById("slot-function").textContent=chosen.action;
+          document.getElementById("summary-place").textContent=chosen.place;
+          document.getElementById("summary-target").textContent=chosen.target;
+          document.getElementById("summary-function").textContent=chosen.action;
+          spinBtn.textContent="다시 돌리기! 🔄"; spinBtn.disabled=false; isSpinning=false;
         }
+      },80);
+    });
 
-        rBtn.addEventListener('click', () => {
-            if (isSpinning) return;
-            isSpinning = true;
-            rBtn.disabled = true;
-            rBtn.classList.add('opacity-75');
-            rBtn.innerText = "🎲 섞는 중...";
+    function putText(id, value, emptyValue) {
+      const el=document.getElementById(id);
+      el.textContent=value.trim() || emptyValue;
+      el.classList.toggle("empty", !value.trim());
+    }
+    function buildPrintDocument() {
+      const klass=document.getElementById("student-class").value.trim();
+      const student=document.getElementById("student-name").value.trim();
+      document.getElementById("print-class").textContent="학년 반: " + (klass || "________");
+      document.getElementById("print-name").textContent="이름: " + (student || "________");
+      const summary=document.getElementById("print-summary");
+      summary.replaceChildren();
+      const summaryText = chosen
+        ? `나는 ${chosen.place}에서 ${chosen.target} ${chosen.action} 로봇을 만들거야!`
+        : "나는 __________에서 __________ __________ 로봇을 만들거야!";
+      summary.textContent=summaryText;
+      putText("print-robot-name",document.getElementById("robot-name").value,"로봇 이름을 적어주세요.");
+      const selected=neobotParts.filter(part=>document.getElementById(part.id).checked);
+      const printParts=document.getElementById("print-parts"); printParts.replaceChildren();
+      if (selected.length) {
+        selected.forEach(part => { const chip=document.createElement("span"); chip.className="print-chip"; chip.textContent=part.plain; printParts.appendChild(chip); });
+      } else {
+        const empty=document.createElement("span"); empty.textContent="선택한 부품이 없습니다."; empty.style.color="#9ca3af"; printParts.appendChild(empty);
+      }
+      putText("print-steps",document.getElementById("robot-steps").value," ");
+    }
+    window.__neobotChosen = () => chosen;
+    window.addEventListener("beforeprint",buildPrintDocument);
+  </script>
+  <script>
+  /* 외부 라이브러리/네트워크 연결 없이 캔버스로 인쇄용 PDF를 생성합니다. */
+  (() => {
+    const W=794, H=1123, SCALE=2;
+    const LEFT=63, RIGHT=731, BODY_W=RIGHT-LEFT, BOTTOM=1028;
+    const GREEN='#047857', INK='#1f2937', MUTED='#6b7280';
+    const pages=[];
+    let current;
 
-            let ticks = 0;
-            const maxTicks = 15; // 룰렛 돌아가는 횟수
-
-            // 룰렛 효과
-            const interval = setInterval(() => {
-                spanPlace.innerText = getRandomElement(allPlaces);
-                spanTarget.innerText = getRandomElement(allTargets);
-                spanFunction.innerText = getRandomElement(allFunctions);
-                
-                spanPlace.style.opacity = Math.random() * 0.5 + 0.5;
-                spanTarget.style.opacity = Math.random() * 0.5 + 0.5;
-                spanFunction.style.opacity = Math.random() * 0.5 + 0.5;
-
-                ticks++;
-
-                if (ticks >= maxTicks) {
-                    clearInterval(interval);
-                    
-                    // 최종 결과 선정 (동일 테마에서 뽑아 자연스럽게 연결)
-                    const selectedTheme = getRandomElement(themesData);
-                    spanPlace.innerText = getRandomElement(selectedTheme.places);
-                    spanTarget.innerText = getRandomElement(selectedTheme.targets);
-                    spanFunction.innerText = getRandomElement(selectedTheme.functions);
-
-                    // 스타일 원상복구
-                    [spanPlace, spanTarget, spanFunction].forEach(el => {
-                        el.style.opacity = 1;
-                        // 결과 강조 애니메이션
-                        el.style.transform = "scale(1.1)";
-                        setTimeout(() => el.style.transform = "scale(1)", 200);
-                    });
-
-                    isSpinning = false;
-                    rBtn.disabled = false;
-                    rBtn.classList.remove('opacity-75');
-                    rBtn.innerText = "🎲 아이디어 룰렛 다시 돌리기";
-                }
-            }, 80);
-        });
-
-        // 3. PDF 저장 로직 (에러 원천 차단 구조)
-        const pdfBtn = document.getElementById('pdf-btn');
-        const captureArea = document.getElementById('capture-area');
-        const rouletteBtn = document.getElementById('roulette-btn');
-
-        pdfBtn.addEventListener('click', () => {
-            // 버튼 상태 변경
-            pdfBtn.disabled = true;
-            const originalBtnText = pdfBtn.innerHTML;
-            pdfBtn.innerHTML = `⏳ 생성 중...`;
-
-            // 중요: 스크롤을 맨 위로 고정하여 빈 공간 캡처 방지
-            window.scrollTo(0, 0);
-
-            // PDF 전용 스타일 적용 (여백 조절 및 특정 UI 숨김)
-            captureArea.classList.add('pdf-mode');
-
-            // html2pdf 옵션 설정
-            const opt = {
-                margin:       10, // 여백 (mm)
-                filename:     '환경지킴이_네오봇_기획서.pdf',
-                image:        { type: 'jpeg', quality: 1 },
-                html2canvas:  { 
-                    scale: 2, 
-                    scrollY: 0, 
-                    scrollX: 0,
-                    useCORS: true 
-                },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            // PDF 생성 시작
-            html2pdf().set(opt).from(captureArea).save().then(() => {
-                // PDF 생성 후 원래 화면으로 복구
-                captureArea.classList.remove('pdf-mode');
-                pdfBtn.disabled = false;
-                pdfBtn.innerHTML = originalBtnText;
-            }).catch(err => {
-                alert("PDF 저장 중 오류가 발생했습니다.");
-                captureArea.classList.remove('pdf-mode');
-                pdfBtn.disabled = false;
-                pdfBtn.innerHTML = originalBtnText;
-                console.error(err);
-            });
-        });
-    </script>
+    function font(ctx, size, weight=400) {
+      ctx.font=`${weight} ${size}px "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif`;
+    }
+    function rounded(ctx,x,y,w,h,r,fill,border) {
+      const rr=Math.min(r,w/2,h/2);
+      ctx.beginPath(); ctx.moveTo(x+rr,y);
+      ctx.arcTo(x+w,y,x+w,y+h,rr); ctx.arcTo(x+w,y+h,x,y+h,rr);
+      ctx.arcTo(x,y+h,x,y,rr); ctx.arcTo(x,y,x+w,y,rr); ctx.closePath();
+      if(fill){ctx.fillStyle=fill;ctx.fill();}
+      if(border){ctx.strokeStyle=border;ctx.lineWidth=1.3;ctx.stroke();}
+    }
+    function text(ctx,t,x,y,size=16,weight=400,color=INK,align='left'){
+      ctx.fillStyle=color; ctx.textAlign=align; ctx.textBaseline='alphabetic'; font(ctx,size,weight);
+      ctx.fillText(t,x,y); ctx.textAlign='left';
+    }
+    function linesFor(ctx,input,maxWidth){
+      const lines=[];
+      const raw=String(input || '').replace(/\r\n?/g,'\n');
+      for(const paragraph of raw.split('\n')){
+        if(!paragraph.trim()){lines.push('');continue;}
+        let line='';
+        const tokens=paragraph.trim().match(/\S+|\s+/g) || [];
+        for(const token of tokens){
+          if(/^\s+$/.test(token)) { if(line) line+=' '; continue; }
+          if(ctx.measureText(line+token).width<=maxWidth){line+=token;continue;}
+          if(line.trim()){lines.push(line.trimEnd());line='';}
+          if(ctx.measureText(token).width<=maxWidth){line=token;continue;}
+          for(const ch of Array.from(token)){
+            if(line && ctx.measureText(line+ch).width>maxWidth){lines.push(line);line='';}
+            line+=ch;
+          }
+        }
+        lines.push(line.trimEnd());
+      }
+      return lines.length?lines:[''];
+    }
+    function newPage(continuation=false){
+      const canvas=document.createElement('canvas'); canvas.width=W*SCALE;canvas.height=H*SCALE;
+      const ctx=canvas.getContext('2d',{alpha:false}); ctx.scale(SCALE,SCALE);
+      ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+      current={canvas,ctx,y:0};pages.push(current);
+      if(continuation){
+        text(ctx,'환경 지킴이 네오봇 기획서',LEFT,80,23,800,GREEN);
+        text(ctx,'작성 내용 계속',RIGHT,80,12,400,MUTED,'right');
+        ctx.strokeStyle='#059669';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(LEFT,99);ctx.lineTo(RIGHT,99);ctx.stroke();
+        current.y=139;
+      }else{
+        text(ctx,'환경 지킴이 네오봇 기획서',W/2,89,31,900,GREEN,'center');
+        const klass=document.getElementById('student-class').value.trim();
+        const student=document.getElementById('student-name').value.trim();
+        text(ctx,'학년 반: '+(klass || '________'),RIGHT-170,133,15,600,INK,'right');
+        text(ctx,'이름: '+(student || '________'),RIGHT,133,15,600,INK,'right');
+        ctx.strokeStyle='#059669';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(LEFT,155);ctx.lineTo(RIGHT,155);ctx.stroke();
+        current.y=205;
+      }
+      return current;
+    }
+    function ensureHeight(height){if(current.y+height>BOTTOM) newPage(true);}
+    function drawTitle(title){
+      ensureHeight(37);
+      text(current.ctx,title,LEFT,current.y+22,18,800,INK);
+      current.y+=42;
+    }
+    function drawAnswerCard(value,placeholder,minH=65){
+      const ctx=current.ctx;
+      font(ctx,16,500);
+      const out=linesFor(ctx,value.trim()||placeholder,BODY_W-39);
+      const needed=Math.max(minH,28+out.length*26);
+      ensureHeight(needed+25);
+      const {y}=current;
+      rounded(ctx,LEFT,y,BODY_W,needed,9,'#f9fafb','#cbd5e1');
+      out.forEach((line,i)=>text(ctx,line,LEFT+19,y+28+i*26,16,500,value.trim()?INK:'#9ca3af'));
+      current.y+=needed+32;
+    }
+    function drawSummary(){
+      const ctx=current.ctx;
+      const chosen=window.__neobotChosen ? window.__neobotChosen() : null;
+      const summary=chosen
+        ? `나는 ${chosen.place}에서 ${chosen.target} ${chosen.action} 로봇을 만들거야!`
+        : '나는 __________에서 __________ __________ 로봇을 만들거야!';
+      font(ctx,17,700);
+      const arr=linesFor(ctx,summary,BODY_W-44), h=29+arr.length*28;
+      ensureHeight(h+20);
+      rounded(ctx,LEFT,current.y,BODY_W,h,8,'#fffbeb',null);
+      ctx.fillStyle='#f59e0b';ctx.fillRect(LEFT,current.y,4,h);
+      arr.forEach((line,i)=>text(ctx,line,LEFT+20,current.y+29+i*28,17,700,'#374151'));
+      current.y+=h+32;
+    }
+    function drawSelectedParts(){
+      const ctx=current.ctx;
+      const names=[['p1','적외선센서'],['p2','소리센서'],['p3','접촉센서'],['p4','빛센서'],['p5','LED'],['p6','모터'],['p7','부저']]
+        .filter(([id])=>document.getElementById(id)?.checked).map(([,v])=>v);
+      const chips=names.length?names:['선택한 부품 없음'];
+      let x=LEFT, y=current.y;
+      font(ctx,15,700);
+      for(const name of chips){
+        const tw=ctx.measureText(name).width,chipW=tw+33;
+        if(x+chipW>RIGHT){x=LEFT;y+=43;}
+        rounded(ctx,x,y,chipW,33,15,names.length?'#ecfdf5':'#f3f4f6',names.length?'#6ee7b7':'#d1d5db');
+        text(ctx,name,x+16,y+23,15,700,names.length?GREEN:MUTED);
+        x+=chipW+10;
+      }
+      current.y=y+64;
+    }
+    function drawSteps(value){
+      let ctx=current.ctx;
+      const isEmpty=!value.trim();
+      font(ctx,15.5,400);
+      const arr=isEmpty ? [] : linesFor(ctx,value,BODY_W-38);
+      let index=0, start=true;
+      do {
+        ctx=current.ctx;
+        if(!start){
+          drawTitle('3. 로봇은 어떤 원리로 작동하나요? (계속)');
+        }
+        let available=BOTTOM-current.y;
+        if(available<115){newPage(true);start=false;continue;}
+        let lineCount;
+        if(isEmpty) lineCount=8;
+        else lineCount=Math.max(1,Math.min(Math.floor((available-30)/27),arr.length-index));
+        const blockH=isEmpty?Math.min(Math.max(248, lineCount*27+34),available):Math.min(available,Math.max(258,30+lineCount*27));
+        rounded(ctx,LEFT,current.y,BODY_W,blockH,9,'#fff','#cbd5e1');
+        if(isEmpty){
+          ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;
+          for(let i=0;i<7;i++){
+            const ry=current.y+39+i*28;
+            if(ry<current.y+blockH-10){ctx.beginPath();ctx.moveTo(LEFT+19,ry);ctx.lineTo(RIGHT-19,ry);ctx.stroke();}
+          }
+          index=1;
+        }else{
+          for(let i=0;i<lineCount;i++)text(ctx,arr[index+i],LEFT+19,current.y+28+i*27,15.5,400,INK);
+          index+=lineCount;
+        }
+        current.y+=blockH+24;
+        if(!isEmpty && index<arr.length){newPage(true);start=false;}
+      }while(!isEmpty && index<arr.length);
+    }
+    function renderPages(){
+      pages.length=0;
+      newPage(false);
+      text(current.ctx,'나의 로봇 기획',LEFT,current.y,23,800,INK);
+      current.y+=28;
+      drawSummary();
+      drawTitle('1. 로봇의 이름은 무엇인가요?');
+      drawAnswerCard(document.getElementById('robot-name').value,"로봇 이름을 적어주세요.",65);
+      drawTitle('2. 어떤 네오봇 부품이 필요할까요? (모두 선택)');
+      ensureHeight(72);
+      drawSelectedParts();
+      drawTitle('3. 로봇은 어떤 원리로 작동하나요?');
+      text(current.ctx,'센서가 무엇을 감지하고, 모터가 어떻게 움직이는지 순서대로 적어보세요.',LEFT,current.y+7,13,400,MUTED);
+      current.y+=28;
+      drawSteps(document.getElementById('robot-steps').value);
+      pages.forEach((p,i)=>{
+        const ctx=p.ctx;
+        ctx.strokeStyle='#e5e7eb';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(LEFT,1073);ctx.lineTo(RIGHT,1073);ctx.stroke();
+        text(ctx,`환경 지킴이 네오봇 기획서`,LEFT,1096,11,400,MUTED);
+        text(ctx,`${i+1} / ${pages.length}`,RIGHT,1096,11,400,MUTED,'right');
+      });
+      return pages.map(p=>p.canvas.toDataURL('image/jpeg',.94));
+    }
+    // 최소 PDF 1.4 파일 작성기: 여러 장의 JPEG 이미지를 A4 PDF 페이지에 삽입합니다.
+    function buildPDF(imageUrls){
+      const encoder=new TextEncoder(), chunks=[], offsets=[0];
+      let pos=0;
+      const append=(v)=>{const bytes=typeof v==='string'?encoder.encode(v):v;chunks.push(bytes);pos+=bytes.length;};
+      const obj=(id,body)=>{offsets[id]=pos;append(`${id} 0 obj\n`); if(Array.isArray(body))body.forEach(append);else append(body);append('\nendobj\n');};
+      append('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
+      const kids=imageUrls.map((_,i)=>`${3+3*i} 0 R`).join(' ');
+      obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+      obj(2,`<< /Type /Pages /Kids [${kids}] /Count ${imageUrls.length} >>`);
+      imageUrls.forEach((dataUrl,i)=>{
+        const page=3+3*i,stream=page+1,img=page+2;
+        const name='Im'+i, pdfWidth=595.28,pdfHeight=841.89;
+        obj(page,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pdfWidth} ${pdfHeight}] /Resources << /XObject << /${name} ${img} 0 R >> >> /Contents ${stream} 0 R >>`);
+        const content=`q\n${pdfWidth} 0 0 ${pdfHeight} 0 0 cm\n/${name} Do\nQ\n`;
+        obj(stream,[`<< /Length ${encoder.encode(content).length} >>\nstream\n`,content,'endstream']);
+        const binary=atob(dataUrl.split(',')[1]);
+        const bytes=new Uint8Array(binary.length);
+        for(let j=0;j<binary.length;j++)bytes[j]=binary.charCodeAt(j);
+        obj(img,[`<< /Type /XObject /Subtype /Image /Width ${W*SCALE} /Height ${H*SCALE} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${bytes.length} >>\nstream\n`,bytes,'\nendstream']);
+      });
+      const xref=pos;
+      append(`xref\n0 ${3*imageUrls.length+3}\n0000000000 65535 f \n`);
+      for(let i=1;i<3*imageUrls.length+3;i++)append(`${String(offsets[i]).padStart(10,'0')} 00000 n \n`);
+      append(`trailer\n<< /Size ${3*imageUrls.length+3} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);
+      return new Blob(chunks,{type:'application/pdf'});
+    }
+    async function saveDirect(){
+      const btn=document.getElementById('printButton'),state=document.getElementById('pdf-status');
+      btn.disabled=true; state.textContent='PDF 파일을 만드는 중입니다...';
+      try{
+        await new Promise(resolve=>requestAnimationFrame(()=>resolve()));
+        const pdf=buildPDF(renderPages());
+        const url=URL.createObjectURL(pdf);
+        const link=document.createElement('a');link.href=url;link.download='환경지킴이_네오봇_기획서.pdf';
+        document.body.appendChild(link);link.click();link.remove();
+        state.textContent='PDF 다운로드를 요청했습니다. 다운로드 폴더를 확인하세요.';
+        setTimeout(()=>URL.revokeObjectURL(url),60000);
+      }catch(err){
+        console.error('PDF 다운로드 오류',err);
+        state.textContent='PDF 저장에 문제가 생겼어요. 옆의 「인쇄창으로 저장」 버튼을 이용해 주세요.';
+        alert('PDF 저장 중 오류가 발생했습니다. 인쇄창으로 저장 버튼을 이용해주세요.');
+      }finally{btn.disabled=false;}
+    }
+    // PDF 저장 기능은 다운로드이며, 브라우저 인쇄창은 별도 예비 버튼에만 연결합니다.
+    document.getElementById('printButton').addEventListener('click',saveDirect);
+    document.getElementById('printFallbackButton').addEventListener('click',()=>{
+      buildPrintDocument();window.print();
+    });
+  })();
+  </script>
 </body>
 </html>
