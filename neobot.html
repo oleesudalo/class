@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환경 지킴이 네오봇 기획서</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f0fdf4; /* tailwind green-50 */
+        }
+
+        /* 룰렛 텍스트 애니메이션용 */
+        .slot-text {
+            transition: all 0.1s;
+        }
+
+        /* 커스텀 체크박스 (부품 선택) */
+        .part-checkbox:checked + label {
+            background-color: #10b981; /* green-500 */
+            color: white;
+            border-color: #10b981;
+        }
+
+        /* 인쇄용 CSS (프린트할 때 불필요한 요소 숨기고 레이아웃 최적화) */
+        @media print {
+            body {
+                background-color: white;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-border {
+                border: 1px solid #e5e7eb;
+                box-shadow: none;
+            }
+            input, textarea {
+                border: 1px solid #d1d5db !important;
+                background-color: transparent !important;
+                resize: none;
+            }
+            .part-checkbox + label {
+                border: 1px solid #d1d5db !important;
+                color: #374151 !important;
+                background-color: white !important;
+            }
+            /* 인쇄 시 체크된 항목을 시각적으로 표시 */
+            .part-checkbox:checked + label {
+                background-color: #e5e7eb !important; /* 연한 회색 */
+                border-color: #9ca3af !important;
+                font-weight: bold;
+            }
+            .part-checkbox:checked + label::before {
+                content: "✔️ ";
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 md:p-8 min-h-screen flex justify-center items-start">
+
+    <div class="max-w-4xl w-full bg-white rounded-3xl shadow-xl p-6 md:p-10 print-border">
+        
+        <!-- 헤더 영역 -->
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-black text-emerald-600 mb-2">🌍 환경 지킴이 네오봇 기획서</h1>
+            <p class="text-gray-500 font-medium">아이디어 룰렛을 돌리고 나만의 멋진 로봇을 기획해 보세요!</p>
+            
+            <div class="mt-4 flex justify-end gap-2 text-sm no-print">
+                <input type="text" placeholder="학년 반" class="border-b-2 border-emerald-200 focus:border-emerald-500 outline-none w-20 px-1 py-1 text-center font-bold">
+                <input type="text" placeholder="이름" class="border-b-2 border-emerald-200 focus:border-emerald-500 outline-none w-24 px-1 py-1 text-center font-bold">
+            </div>
+            <div class="hidden print:flex justify-end gap-4 text-lg font-bold mb-4">
+                <span>학년 반 : ______________</span>
+                <span>이름 : ______________</span>
+            </div>
+        </header>
+
+        <!-- 아이디어 룰렛 영역 -->
+        <section class="bg-emerald-50 rounded-2xl p-6 mb-10 no-print">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold flex items-center gap-2">
+                    <span>🎰 아이디어 룰렛</span>
+                </h2>
+                <button id="spinBtn" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition-transform transform active:scale-95 flex items-center gap-2">
+                    <span>돌리기!</span> 🔄
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <!-- 장소 -->
+                <div class="bg-white rounded-xl shadow-sm border-2 border-emerald-200 p-4">
+                    <div class="text-xs text-emerald-600 font-bold mb-2">어디서? (장소)</div>
+                    <div id="slot-place" class="text-xl font-black text-gray-700 slot-text min-h-[3rem] flex items-center justify-center break-keep px-1">????</div>
+                </div>
+                <!-- 대상 -->
+                <div class="bg-white rounded-xl shadow-sm border-2 border-blue-200 p-4">
+                    <div class="text-xs text-blue-600 font-bold mb-2">무엇을? (목적어)</div>
+                    <div id="slot-target" class="text-xl font-black text-gray-700 slot-text min-h-[3rem] flex items-center justify-center break-keep px-1">????</div>
+                </div>
+                <!-- 기능 -->
+                <div class="bg-white rounded-xl shadow-sm border-2 border-orange-200 p-4">
+                    <div class="text-xs text-orange-600 font-bold mb-2">어떻게 할까? (동사/기능)</div>
+                    <div id="slot-function" class="text-xl font-black text-gray-700 slot-text min-h-[3rem] flex items-center justify-center break-keep px-1">????</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 기획서 작성 폼 -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-gray-100 pb-2">✏️ 나의 로봇 기획</h2>
+            
+            <!-- 룰렛 결과 요약 문장 -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-8">
+                <p class="text-lg font-medium text-gray-700">
+                    "나는 <span id="summary-place" class="font-bold text-emerald-600 border-b-2 border-emerald-300 px-1 inline-block min-w-[50px] text-center">_____</span>에서 
+                    <span id="summary-target" class="font-bold text-blue-600 border-b-2 border-blue-300 px-1 inline-block min-w-[50px] text-center">_____</span> 
+                    <span id="summary-function" class="font-bold text-orange-600 border-b-2 border-orange-300 px-1 inline-block min-w-[50px] text-center">_____</span> 로봇을 만들거야!"
+                </p>
+            </div>
+
+            <!-- 1. 로봇 이름 -->
+            <div class="mb-8">
+                <label class="block text-gray-700 font-bold mb-2 text-lg">1. 로봇의 이름은 무엇인가요?</label>
+                <input type="text" placeholder="예: 무적의 바다 쓰레기 청소부 '씨클린(Sea-Clean)'" class="w-full bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-400 focus:bg-white transition-colors text-lg font-medium text-gray-800">
+            </div>
+
+            <!-- 2. 필요 부품 -->
+            <div class="mb-8">
+                <label class="block text-gray-700 font-bold mb-3 text-lg">2. 어떤 네오봇 부품이 필요할까요? (모두 선택)</label>
+                <div class="flex flex-wrap gap-3" id="parts-container">
+                    <!-- JS로 부품 체크박스 동적 생성 -->
+                </div>
+            </div>
+
+            <!-- 3. 핵심 작동 원리 -->
+            <div class="mb-8">
+                <label class="block text-gray-700 font-bold mb-2 text-lg">3. 로봇은 어떤 원리로 작동하나요?</label>
+                <p class="text-sm text-gray-500 mb-3 no-print">센서가 무엇을 감지하고, 모터가 어떻게 움직이는지 순서대로 자세히 적어보세요.</p>
+                <textarea rows="5" placeholder="예)&#13;&#10;1. IR 센서가 앞에 있는 플라스틱 병을 감지한다.&#13;&#10;2. 부저가 '삐' 소리를 내며 경고음을 울린다.&#13;&#10;3. 서보모터가 작동해서 집게로 플라스틱 병을 잡는다.&#13;&#10;4. DC모터로 바퀴를 굴려 분리수거함으로 이동한다." class="w-full bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-400 focus:bg-white transition-colors text-gray-700 leading-relaxed resize-y"></textarea>
+            </div>
+
+            <!-- 4. 자유 스케치 (인쇄용) -->
+            <div class="hidden print:block mb-8">
+                <label class="block text-gray-700 font-bold mb-2 text-lg">4. 로봇의 모습을 상상해서 스케치해 보세요.</label>
+                <div class="w-full h-64 border-2 border-dashed border-gray-300 rounded-xl"></div>
+            </div>
+
+        </section>
+
+        <!-- 하단 인쇄 버튼 -->
+        <div class="mt-8 text-center no-print">
+            <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-10 rounded-full shadow-lg transition-transform transform active:scale-95 flex items-center gap-2 mx-auto">
+                🖨️ 기획서 인쇄하기 (또는 PDF 저장)
+            </button>
+            <p class="text-xs text-gray-400 mt-3">※ 인쇄 시 이 버튼과 룰렛은 숨겨지고 깔끔하게 출력됩니다.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // 데이터 베이스 (환경보호 테마별 그룹화 - 목적어와 동사 분리)
+        const themes = [
+            {
+                name: "바다",
+                places: ["해안가", "바다 한가운데", "백사장"],
+                targets: ["떠다니는 쓰레기를", "바다에 빠진 플라스틱을", "기름띠를", "버려진 그물을"],
+                functions: ["건져내는", "빨아들이는", "모아서 압축하는", "안전하게 치우는"]
+            },
+            {
+                name: "도시",
+                places: ["동네 골목길", "아파트 분리수거장", "도심 공원"],
+                targets: ["길거리에 버려진 캔을", "섞여있는 재활용품을", "전봇대 밑 쓰레기를"],
+                functions: ["쓸어담는", "자동으로 분류해주는", "발견하고 경고음을 내는"]
+            },
+            {
+                name: "숲/산",
+                places: ["깊은 산속", "등산로 입구", "국립공원"],
+                targets: ["버려진 등산 쓰레기를", "산불의 원인이 되는 낙엽을", "야생동물을 위협하는 덫을"],
+                functions: ["주워오는", "밀어서 치우는", "찾아서 제거하는"]
+            },
+            {
+                name: "학교",
+                places: ["학교 운동장", "교실 뒷정리 시간", "급식실"],
+                targets: ["바닥에 떨어진 지우개 가루를", "다 마신 우유갑을", "버려진 종이 쓰레기를"],
+                functions: ["빨아들이는", "씻어서 납작하게 누르는", "모아서 버려주는"]
+            }
+        ];
+
+        // 애니메이션용 전체 단어 모음
+        const allPlaces = themes.flatMap(t => t.places);
+        const allTargets = themes.flatMap(t => t.targets);
+        const allFunctions = themes.flatMap(t => t.functions);
+
+        const neobotParts = [
+            { id: "p1", name: "🔴 적외선센서" },
+            { id: "p2", name: "🎤 소리센서" },
+            { id: "p3", name: "👆 접촉센서" },
+            { id: "p4", name: "☀️ 빛센서" },
+            { id: "p5", name: "💡 LED" },
+            { id: "p6", name: "⚙️ 모터" },
+            { id: "p7", name: "🔔 부저" }
+        ];
+
+        // 초기화
+        document.addEventListener('DOMContentLoaded', () => {
+            // 부품 체크박스 렌더링
+            const partsContainer = document.getElementById('parts-container');
+            neobotParts.forEach(part => {
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = `
+                    <input type="checkbox" id="${part.id}" class="hidden part-checkbox">
+                    <label for="${part.id}" class="cursor-pointer border-2 border-gray-200 text-gray-600 bg-gray-50 font-medium px-4 py-2 rounded-full transition-all hover:bg-gray-100 select-none inline-block">
+                        ${part.name}
+                    </label>
+                `;
+                partsContainer.appendChild(wrapper);
+            });
+        });
+
+        // 룰렛 로직
+        const spinBtn = document.getElementById('spinBtn');
+        const slotPlace = document.getElementById('slot-place');
+        const slotTarget = document.getElementById('slot-target');
+        const slotFunction = document.getElementById('slot-function');
+        
+        const sumPlace = document.getElementById('summary-place');
+        const sumTarget = document.getElementById('summary-target');
+        const sumFunction = document.getElementById('summary-function');
+
+        let isSpinning = false;
+
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        spinBtn.addEventListener('click', () => {
+            if (isSpinning) return;
+            isSpinning = true;
+            
+            spinBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            spinBtn.innerHTML = `<span>고민 중...</span> 🔄`;
+
+            let ticks = 0;
+            const maxTicks = 20; // 룰렛 돌아가는 횟수
+            const intervalTime = 80; // 룰렛 속도 (ms)
+
+            // 최종 결과 미리 선정 (같은 테마 내에서 무작위 선택)
+            const selectedTheme = getRandomItem(themes);
+            const finalPlace = getRandomItem(selectedTheme.places);
+            const finalTarget = getRandomItem(selectedTheme.targets);
+            const finalFunction = getRandomItem(selectedTheme.functions);
+
+            const timer = setInterval(() => {
+                // 돌아가는 효과 (전체 단어 중 랜덤으로 돌려서 화려하게 연출)
+                slotPlace.textContent = getRandomItem(allPlaces);
+                slotTarget.textContent = getRandomItem(allTargets);
+                slotFunction.textContent = getRandomItem(allFunctions);
+                
+                // 시각적 효과 (글자 흔들림)
+                [slotPlace, slotTarget, slotFunction].forEach(el => {
+                    el.style.transform = `scale(${1 + Math.random() * 0.1}) translateY(${Math.random() * 4 - 2}px)`;
+                    el.style.color = `#${Math.floor(Math.random()*16777215).toString(16)}`; // 랜덤 색상
+                });
+
+                ticks++;
+
+                if (ticks >= maxTicks) {
+                    clearInterval(timer);
+                    isSpinning = false;
+                    
+                    // 화면 표시 (선정된 테마 결과 반영)
+                    slotPlace.textContent = finalPlace;
+                    slotTarget.textContent = finalTarget;
+                    slotFunction.textContent = finalFunction;
+
+                    // 스타일 초기화
+                    [slotPlace, slotTarget, slotFunction].forEach(el => {
+                        el.style.transform = 'scale(1) translateY(0)';
+                        el.style.color = ''; // 원래 색상으로 복구
+                    });
+
+                    // 기획서 요약 문장에 반영
+                    sumPlace.textContent = finalPlace;
+                    sumTarget.textContent = finalTarget;
+                    sumFunction.textContent = finalFunction;
+
+                    // 요약 문장 하이라이트 효과
+                    [sumPlace, sumTarget, sumFunction].forEach(el => {
+                        el.classList.add('bg-yellow-200');
+                        setTimeout(() => el.classList.remove('bg-yellow-200'), 500);
+                    });
+
+                    // 버튼 초기화
+                    spinBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    spinBtn.innerHTML = `<span>다시 돌리기!</span> 🔄`;
+                }
+            }, intervalTime);
+        });
+    </script>
+</body>
+</html>
